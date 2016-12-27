@@ -2,6 +2,7 @@ package br.com.wsbasestructure.domain.abstracts;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +36,7 @@ public abstract class Entity implements Serializable{
     }
 
     public void setDateReg(Timestamp dateReg) {
-        this.dateReg = dateReg;
+        this.dateReg = dateReg != null ? dateReg : new Timestamp(Calendar.getInstance().getTimeInMillis());
     }
 
     public String getStatus() {
@@ -46,6 +47,9 @@ public abstract class Entity implements Serializable{
         this.status = status;
     }
     
-    
+    public void merge(Entity e){
+        this.dateReg = e.dateReg != null ? e.dateReg : this.dateReg;
+        this.status = e.status != null ? e.status : this.status;
+    }
     
 }
