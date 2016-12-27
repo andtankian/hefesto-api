@@ -31,6 +31,7 @@ public class Ticket extends Entity {
 
     private Service service;
     private Equipment equipment;
+    private String title;
     private String problem;
     private String priority;
     private String resolution;
@@ -120,6 +121,15 @@ public class Ticket extends Entity {
         this.resolution = t.resolution != null ? t.resolution : this.resolution;
         this.responsible = t.responsible != null ? t.responsible : this.responsible;
         this.service = t.service != null ? t.service : this.service;
+    }
+
+    @Column
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
     
     
