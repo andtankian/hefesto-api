@@ -48,5 +48,16 @@ public class Department extends Entity{
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
+    @Override
+    public void merge(Entity e) {
+        super.merge(e);
+        Department d = (Department)e;
+        this.description = d.description != null ? d.description : this.description;
+        this.name = d.name != null ? d.name : this.name;
+        this.users = d.users != null ? d.users : this.users;
+    }
+    
+    
     
 }

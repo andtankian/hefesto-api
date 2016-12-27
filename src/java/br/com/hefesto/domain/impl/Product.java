@@ -8,11 +8,11 @@ import javax.persistence.Column;
  * @author Andrew Ribeiro
  */
 @javax.persistence.Entity
-public class Product extends Entity{
-    
+public class Product extends Entity {
+
     public final static String PRODUCT = "Produto";
     public final static String COMPONENT = "Componente";
-    
+
     private String name;
     private String description;
     private String link;
@@ -45,13 +45,23 @@ public class Product extends Entity{
         this.link = link;
     }
 
-    
     @Column
     public String getType() {
         return type;
     }
-    
+
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public void merge(Entity e) {
+        super.merge(e);
+        Product p = (Product) e;
+        this.description = p.description != null ? p.description : this.description;
+        this.link = p.link != null ? p.link : this.link;
+        this.name = p.name != null ? p.name : this.name;
+        this.type = p.type != null ? p.type : this.type;
+    }
+
 }

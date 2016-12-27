@@ -4,6 +4,7 @@ import br.com.wsbasestructure.domain.abstracts.Entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -70,7 +71,7 @@ public class RequestedProduct extends Entity{
         this.type = type;
     }
 
-    @Column
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Ticket.class)
     public Ticket getTicket() {
         return ticket;
     }
@@ -78,5 +79,19 @@ public class RequestedProduct extends Entity{
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }
+
+    @Override
+    public void merge(Entity e) {
+        super.merge(e);
+        RequestedProduct rp = (RequestedProduct)e;
+        this.amount = rp.amount != null ? rp.amount : this.amount;
+        this.price = rp.price != null ? rp.price : this.price;
+        this.product = rp.product != null ? rp.product : this.product;
+        this.statusPurchase = rp.statusPurchase != null ? rp.statusPurchase : this.statusPurchase;
+        this.ticket = rp.ticket != null ? rp.ticket : this.ticket;
+        this.type = rp.type != null ? rp.type : this.type;
+    }
+    
+    
    
 }

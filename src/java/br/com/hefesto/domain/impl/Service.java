@@ -1,6 +1,7 @@
 package br.com.hefesto.domain.impl;
 
 import br.com.wsbasestructure.domain.abstracts.Entity;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 
 /**
@@ -18,6 +19,7 @@ public class Service extends Entity{
     private String description;
     private SLA sla;
 
+    @Column
     public String getName() {
         return name;
     }
@@ -26,6 +28,7 @@ public class Service extends Entity{
         this.name = name;
     }
 
+    @Column
     public String getDescription() {
         return description;
     }
@@ -43,6 +46,7 @@ public class Service extends Entity{
         this.sla = sla;
     }
 
+    @Column
     public String getType() {
         return type;
     }
@@ -50,5 +54,17 @@ public class Service extends Entity{
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public void merge(Entity e) {
+        super.merge(e);
+        Service s = (Service)e;
+        this.description = s.description != null ? s.description : this.description;
+        this.name = s.name != null ? s.name : this.name;
+        this.sla = s.sla != null ? s.sla : this.sla;
+        this.type = s.type != null ? s.type : this.type;
+    }
+    
+    
     
 }

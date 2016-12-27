@@ -23,6 +23,7 @@ public class Equipment extends Entity{
         this.name = name;
     }
 
+    @Column
     public String getDescription() {
         return description;
     }
@@ -31,6 +32,7 @@ public class Equipment extends Entity{
         this.description = description;
     }
 
+    @Column
     public String getPatrimonial() {
         return patrimonial;
     }
@@ -38,5 +40,15 @@ public class Equipment extends Entity{
     public void setPatrimonial(String patrimonial) {
         this.patrimonial = patrimonial;
     }
+
+    @Override
+    public void merge(Entity e) {
+        super.merge(e);
+        Equipment eq = (Equipment)e;
+        this.description = eq.description != null ? eq.description : this.description;
+        this.name = eq.name != null ? eq.name : this.name;
+        this.patrimonial = eq.patrimonial != null ? eq.patrimonial : this.patrimonial;
+    }
+    
     
 }

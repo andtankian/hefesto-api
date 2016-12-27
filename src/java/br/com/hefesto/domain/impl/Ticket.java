@@ -108,4 +108,20 @@ public class Ticket extends Entity {
         this.resolution = resolution;
     }
 
+    @Override
+    public void merge(Entity e) {
+        super.merge(e);
+        Ticket t = (Ticket)e;
+        this.equipment = t.equipment != null ? t.equipment : this.equipment;
+        this.interactions = t.interactions != null ? t.interactions : this.interactions;
+        this.priority = t.priority != null ? t.priority : this.priority;
+        this.problem = t.problem != null ? t.problem : this.problem;
+        this.requestedProducts = t.requestedProducts != null ? t.requestedProducts : this.requestedProducts;
+        this.resolution = t.resolution != null ? t.resolution : this.resolution;
+        this.responsible = t.responsible != null ? t.responsible : this.responsible;
+        this.service = t.service != null ? t.service : this.service;
+    }
+    
+    
+
 }

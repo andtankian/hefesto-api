@@ -55,5 +55,16 @@ public class User extends Entity{
     public void setDepartment(Department department) {
         this.department = department;
     }
+
+    @Override
+    public void merge(Entity e) {
+        super.merge(e);
+        User u = (User)e;
+        this.department = u.department != null ? u.department : this.department;
+        this.fullName = u.fullName != null ? u.fullName : this.fullName;
+        this.login = u.login != null ? u.login : this.login;
+        this.password = u.password != null ? u.password : this.password;
+    }
+    
     
 }

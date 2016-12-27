@@ -48,4 +48,15 @@ public class Interaction extends Entity{
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }
+
+    @Override
+    public void merge(Entity e) {
+        super.merge(e);
+        Interaction i = (Interaction)e;
+        this.ticket = i.ticket != null ? i.ticket : this.ticket;
+        this.type = i.type != null ? i.type : this.type;
+        this.user = i.user != null ? i.user : this.user;
+    }
+    
+    
 }
