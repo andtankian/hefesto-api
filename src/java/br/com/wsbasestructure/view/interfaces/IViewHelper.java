@@ -4,6 +4,7 @@ import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.interfaces.ICommand;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -12,7 +13,7 @@ import javax.ws.rs.core.UriInfo;
  */
 public interface IViewHelper {
     public String setView(Result result);
-    public IHolder getView(UriInfo uriInfo);
+    public IHolder getView(UriInfo uriInfo, HttpServletRequest httpReq);
     public String getTypeRequest();
     public void loadBusinessRulesBeforeMainFlow();
     public void loadBusinessRulesAfterMainFlow();

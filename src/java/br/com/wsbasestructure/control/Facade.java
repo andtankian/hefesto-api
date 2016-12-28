@@ -118,7 +118,7 @@ public class Facade {
 
     public String process(FlowContainer flowContainer) {
         IViewHelper v = flowContainer.getViewHelper();
-        IHolder h = v.getView(flowContainer.getUriInfo());
+        IHolder h = v.getView(flowContainer.getUriInfo(), flowContainer.getHttprequest());
         try {
             runBusinessRulesAfterMainFlow(v.getRulesBeforeMainFlow(), h);
             runMainFlow(flowContainer.getSession(), h, flowContainer.getRequest().getMethod(), v.getTypeRequest());

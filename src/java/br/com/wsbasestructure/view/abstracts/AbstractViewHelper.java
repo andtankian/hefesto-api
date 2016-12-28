@@ -7,6 +7,7 @@ import br.com.wsbasestructure.view.interfaces.IViewHelper;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -24,7 +25,7 @@ public abstract class AbstractViewHelper implements IViewHelper{
      protected String typeRequest;
 
     @Override
-    public IHolder getView(UriInfo uriInfo) {
+    public IHolder getView(UriInfo uriInfo, HttpServletRequest httpReq) {
         List l = uriInfo.getQueryParameters().get("treq");
         typeRequest = l != null ? (String)l.get(0) : "crud";
         return null;
