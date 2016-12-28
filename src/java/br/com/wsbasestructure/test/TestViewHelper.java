@@ -5,6 +5,7 @@ import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -14,8 +15,8 @@ import javax.ws.rs.core.UriInfo;
 public class TestViewHelper extends AbstractViewHelper{
 
     @Override
-    public IHolder getView(UriInfo uriInfo) {
-        super.getView(uriInfo);
+    public IHolder getView(UriInfo uriInfo, HttpServletRequest httpReq) {
+        super.getView(uriInfo, httpReq);
         TestEntity e = new TestEntity();
         e.setDateReg(new Timestamp(Calendar.getInstance().getTimeInMillis()));
         
