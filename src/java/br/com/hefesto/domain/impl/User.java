@@ -46,7 +46,7 @@ public class User extends Entity{
     }
 
     @ManyToOne(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             targetEntity = Department.class)
     public Department getDepartment() {
         return department;
