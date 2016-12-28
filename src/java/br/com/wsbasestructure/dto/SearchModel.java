@@ -1,6 +1,7 @@
 package br.com.wsbasestructure.dto;
 
 import java.sql.Timestamp;
+import javax.ws.rs.core.UriInfo;
 
 /**
  *
@@ -43,6 +44,22 @@ public class SearchModel {
 
     public void setOrder(String order) {
         this.order = order;
+    }
+    
+    public void getBasics(UriInfo uriInfo){
+        String amount = uriInfo.getQueryParameters().get("amount") != null ? uriInfo.getQueryParameters().get("amount").get(0) : "5";
+        String from = uriInfo.getQueryParameters().get("from") != null ? uriInfo.getQueryParameters().get("from").get(0) : "0";
+        try {
+            this.amount = Long.parseLong(amount);
+        } catch(NumberFormatException n){
+            this.amount = (long)5;
+        }
+        
+        try {
+            this.from = Long.parseLong(from) - 1;
+        }catch(NumberFormatException n){
+            this.from = (long)0;
+        }
     }
     
 }

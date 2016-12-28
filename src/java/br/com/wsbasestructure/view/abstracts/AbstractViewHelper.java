@@ -49,12 +49,10 @@ public abstract class AbstractViewHelper implements IViewHelper{
 
     @Override
     public void loadBusinessRulesBeforeMainFlow() {
-        return;
     }
 
     @Override
     public void loadBusinessRulesAfterMainFlow() {
-        return;
     }
 
     
