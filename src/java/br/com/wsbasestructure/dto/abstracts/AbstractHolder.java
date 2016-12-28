@@ -11,8 +11,8 @@ import java.util.List;
  */
 public abstract class AbstractHolder implements IHolder {
     
-    List entities;
-    private SearchModel sm;
+    protected List entities;
+    protected SearchModel sm;
 
     @Override
     public List getEntities() {
@@ -24,10 +24,12 @@ public abstract class AbstractHolder implements IHolder {
         this.entities = entities;
     }
 
+    @Override
     public SearchModel getSm() {
         return sm;
     }
 
+    @Override
     public void setSm(SearchModel sm) {
         this.sm = sm;
     }
