@@ -99,25 +99,23 @@ public class Facade {
      * @param session
      * @param view
      * @param holder
-     * @return
+     * @param method
+     * @param typeRequest
      * @throws Exception
      *
      * This method will serve as container to above methods.
      */
-    public Result run(Session session, IViewHelper view, IHolder holder, String method, String typeRequest) throws Exception {
+    public void run(Session session, IViewHelper view, IHolder holder, String method, String typeRequest) throws Exception {
         runBusinessRulesBeforeMainFlow(view.getRulesBeforeMainFlow(), holder);
         runMainFlow(session, holder, method, typeRequest);
         runBusinessRulesAfterMainFlow(view.getRulesAfterMainFlow(), holder);
-        return this.flowC.getResult();
     }
 
     public String process() {
         IViewHelper v = this.flowC.getViewHelper();
         IHolder h = v.getView(this.flowC);
         try {
-            runBusinessRulesAfterMainFlow(v.getRulesBeforeMainFlow(), h);
-            runMainFlow(this.flowC.getSession(), h, this.flowC.getCr().getMethod(), v.getTypeRequest());
-            runBusinessRulesAfterMainFlow(v.getRulesAfterMainFlow(), h);
+            run(this.flowC.getSession(), v, h, this.flowC.getCr().getMethod(), v.getTypeRequest());
         } catch (Exception ex) {
             try {
                 DefaultStructureException dse = (DefaultStructureException) ex;
