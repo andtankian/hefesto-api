@@ -2,8 +2,6 @@ package br.com.wsbasestructure.dto;
 
 import br.com.wsbasestructure.view.interfaces.IViewHelper;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.UriInfo;
 import org.glassfish.jersey.server.ContainerRequest;
 import org.hibernate.Session;
 
@@ -33,6 +31,8 @@ public class FlowContainer {
     private Session session;
     private ContainerRequest cr;
     private HttpServletRequest httprequest;
+    private Result result;
+    private FlowControl fc;
 
     public ContainerRequest getCr() {
         return cr;
@@ -64,6 +64,22 @@ public class FlowContainer {
 
     public void setSession(Session session) {
         this.session = session;
+    }
+
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
+    }
+
+    public FlowControl getFc() {
+        return fc;
+    }
+
+    public void setFc(FlowControl fc) {
+        this.fc = fc;
     }
     
     

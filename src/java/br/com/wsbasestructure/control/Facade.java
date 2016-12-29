@@ -3,7 +3,6 @@ package br.com.wsbasestructure.control;
 import br.com.wsbasestructure.dao.impl.CRUDCenter;
 import br.com.wsbasestructure.dao.interfaces.IPersistenceCenter;
 import br.com.wsbasestructure.dto.FlowContainer;
-import br.com.wsbasestructure.dto.FlowControl;
 import br.com.wsbasestructure.dto.Message;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
@@ -26,17 +25,13 @@ public class Facade {
      *
      */
     private IPersistenceCenter persistenceCenter;
-    private final FlowControl fc;
-    private Result result;
+    private final FlowContainer flowC;
 
-    /**
-     * Private constructor
-     */
-    public Facade() {
-        this.fc = new FlowControl();
-        this.result = new Result();
-
+    public Facade(FlowContainer flowC) {
+        this.flowC = flowC;
     }
+    
+    
 
     /**
      *
@@ -51,7 +46,7 @@ public class Facade {
         for (Object rule : rules) {
             //Just execute it
             ICommand r = (ICommand) rule;
-            r.exe(holder, this.fc, result);
+            r.exe(holder, this.flowC);
             //Aftet each loop, it needs to verify if there is any error, then it will decide if the flow have to go on or stop
             verify();
         }
@@ -75,7 +70,7 @@ public class Facade {
         for (Object rule : rules) {
             //Just execute it
             ICommand r = (ICommand) rule;
-            r.exe(holder, this.fc, result);
+            r.exe(holder, this.flowC);
             //Aftet each loop, it needs to verify if there is any error, then it will decide if the flow have to go on or stop
             verify();
         }
@@ -96,7 +91,7 @@ public class Facade {
         }
 
         //Now, it needs to execute the action as requested and the persistence center will execute according to the action
-        result = persistenceCenter.perform(session, holder, fc, result, method);
+        this.flowC.setResult(persistenceCenter.perform(session, holder, this.flowC.getFc(), this.flowC.getResult(), method));
     }
 
     /**
@@ -113,28 +108,28 @@ public class Facade {
         runBusinessRulesBeforeMainFlow(view.getRulesBeforeMainFlow(), holder);
         runMainFlow(session, holder, method, typeRequest);
         runBusinessRulesAfterMainFlow(view.getRulesAfterMainFlow(), holder);
-        return result;
+        return this.flowC.getResult();
     }
 
-    public String process(FlowContainer flowContainer) {
-        IViewHelper v = flowContainer.getViewHelper();
-        IHolder h = v.getView(flowContainer);
+    public String process() {
+        IViewHelper v = this.flowC.getViewHelper();
+        IHolder h = v.getView(this.flowC);
         try {
             runBusinessRulesAfterMainFlow(v.getRulesBeforeMainFlow(), h);
-            runMainFlow(flowContainer.getSession(), h, flowContainer.getCr().getMethod(), v.getTypeRequest());
+            runMainFlow(this.flowC.getSession(), h, this.flowC.getCr().getMethod(), v.getTypeRequest());
             runBusinessRulesAfterMainFlow(v.getRulesAfterMainFlow(), h);
         } catch (Exception ex) {
             try {
                 DefaultStructureException dse = (DefaultStructureException) ex;
-                result = dse.getResult();
+                this.flowC.setResult(dse.getResult());
             } catch (Exception ex2) {
                 Message m = new Message();
                 m.setError("Não é um erro conhecido (Unknow): " + ex2.getMessage());
-                result.setMessage(m);
+                this.flowC.getResult().setMessage(m);
             }
         }
 
-        return v.setView(result);
+        return v.setView(this.flowC.getResult());
     }
 
     /**
@@ -146,9 +141,9 @@ public class Facade {
      * flow.
      */
     private void verify() throws Exception {
-        if (!this.fc.isMustContinue()) {
+        if (!this.flowC.getFc().isMustContinue()) {
             DefaultStructureException dse = new DefaultStructureException();
-            dse.setResult(result);
+            dse.setResult(this.flowC.getResult());
             throw dse;
         }
     }

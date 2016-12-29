@@ -26,9 +26,7 @@ public class ResourceTest extends AbstractResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String getJson() {
 
-        return new Facade().process(
-                new FlowContainer(
-                        new TestViewHelper(), cr, httpRequest)
-        );
+        return new Facade(new FlowContainer(
+                        new TestViewHelper(), cr, httpRequest)).process();
     }
 }

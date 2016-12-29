@@ -16,7 +16,7 @@ import org.hibernate.Session;
  *
  * @author Andrew Ribeiro
  */
-@WebFilter(filterName = "SessionInViewManager", urlPatterns = {"/*"}, dispatcherTypes = {DispatcherType.REQUEST})
+@WebFilter(filterName = "SessionInViewManager", urlPatterns = {"/ws/*"}, dispatcherTypes = {DispatcherType.REQUEST})
 public class SessionInViewManager implements Filter {
     private Connection conn = null;
 
@@ -69,6 +69,7 @@ public class SessionInViewManager implements Filter {
      * This method set requests and responses free to be executed by servlets.
      * It serves as a doBefore and doAfter container.
      */
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
