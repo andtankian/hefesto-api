@@ -4,6 +4,7 @@ import br.com.wsbasestructure.view.interfaces.IViewHelper;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
+import org.glassfish.jersey.server.ContainerRequest;
 import org.hibernate.Session;
 
 /**
@@ -12,30 +13,33 @@ import org.hibernate.Session;
  */
 public class FlowContainer {
 
-    public FlowContainer(IViewHelper viewHelper, Session session, UriInfo uriInfo, Request request, HttpServletRequest httprequest) {
+    public FlowContainer(IViewHelper viewHelper, Session session, ContainerRequest cr, HttpServletRequest httprequest) {
         this.viewHelper = viewHelper;
         this.session = session;
-        this.uriInfo = uriInfo;
-        this.request = request;
+        this.cr = cr;
         this.httprequest = httprequest;
     }
 
-   
-    
-    
+    public FlowContainer(IViewHelper viewHelper, ContainerRequest cr, HttpServletRequest httprequest) {
+        this.viewHelper = viewHelper;
+        this.cr = cr;
+        this.httprequest = httprequest;
+        this.session = null;
+    }
+
+      
     
     private IViewHelper viewHelper;
     private Session session;
-    private UriInfo uriInfo;
-    private Request request;
+    private ContainerRequest cr;
     private HttpServletRequest httprequest;
 
-    public Request getRequest() {
-        return request;
+    public ContainerRequest getCr() {
+        return cr;
     }
 
-    public void setRequest(Request request) {
-        this.request = request;
+    public void setCr(ContainerRequest cr) {
+        this.cr = cr;
     }
 
     public HttpServletRequest getHttprequest() {
@@ -52,14 +56,6 @@ public class FlowContainer {
 
     public void setViewHelper(IViewHelper viewHelper) {
         this.viewHelper = viewHelper;
-    }
-
-    public UriInfo getUriInfo() {
-        return uriInfo;
-    }
-
-    public void setUriInfo(UriInfo uriInfo) {
-        this.uriInfo = uriInfo;
     }
 
     public Session getSession() {

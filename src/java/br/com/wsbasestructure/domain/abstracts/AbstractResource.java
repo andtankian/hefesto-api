@@ -2,8 +2,7 @@ package br.com.wsbasestructure.domain.abstracts;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Request;
-import javax.ws.rs.core.UriInfo;
+import org.glassfish.jersey.server.ContainerRequest;
 
 /**
  *
@@ -12,35 +11,11 @@ import javax.ws.rs.core.UriInfo;
 public class AbstractResource {
     
     @Context
-    protected UriInfo uriInfo;
-    
-    @Context
-    protected Request request;
+    protected ContainerRequest cr;
     
     @Context
     protected HttpServletRequest httpRequest;
-
-    public UriInfo getUriInfo() {
-        return uriInfo;
-    }
-
-    public void setUriInfo(UriInfo uriInfo) {
-        this.uriInfo = uriInfo;
-    }
-
-    public Request getRequest() {
-        return request;
-    }
-
-    public void setRequest(Request request) {
-        this.request = request;
-    }
-
-    public HttpServletRequest getHttpRequest() {
-        return httpRequest;
-    }
-
-    public void setHttpRequest(HttpServletRequest httpRequest) {
-        this.httpRequest = httpRequest;
-    }
+    
+    
+    
 }
