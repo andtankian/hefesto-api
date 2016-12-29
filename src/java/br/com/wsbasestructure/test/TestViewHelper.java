@@ -1,5 +1,6 @@
 package br.com.wsbasestructure.test;
 
+import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
 import java.sql.Timestamp;
@@ -14,8 +15,8 @@ import javax.ws.rs.core.UriInfo;
 public class TestViewHelper extends AbstractViewHelper{
 
     @Override
-    public IHolder getView(UriInfo uriInfo) {
-        super.getView(uriInfo);
+    public IHolder getView(FlowContainer fc) {
+        super.getView(fc);
         TestEntity e = new TestEntity();
         e.setDateReg(new Timestamp(Calendar.getInstance().getTimeInMillis()));
         

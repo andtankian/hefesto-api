@@ -28,12 +28,7 @@ public class ResourceTest extends AbstractResource {
 
         return new Facade().process(
                 new FlowContainer(
-                        new TestViewHelper(),
-                        null,
-                        uriInfo,
-                        request,
-                        httpRequest
-                )
+                        new TestViewHelper(), cr, httpRequest)
         );
     }
 }
