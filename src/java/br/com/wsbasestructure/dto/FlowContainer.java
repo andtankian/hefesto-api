@@ -16,6 +16,8 @@ public class FlowContainer {
         this.session = session;
         this.cr = cr;
         this.httprequest = httprequest;
+        this.result = new Result();
+        this.fc = new FlowControl();
     }
 
     public FlowContainer(IViewHelper viewHelper, ContainerRequest cr, HttpServletRequest httprequest) {
@@ -23,6 +25,8 @@ public class FlowContainer {
         this.cr = cr;
         this.httprequest = httprequest;
         this.session = null;
+        this.result = new Result();
+        this.fc = new FlowControl();
     }
 
       
