@@ -1,7 +1,6 @@
 package br.com.wsbasestructure.rules.interfaces;
 
-import br.com.wsbasestructure.dto.FlowControl;
-import br.com.wsbasestructure.dto.Result;
+import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 
 
@@ -14,11 +13,10 @@ public interface ICommand {
     /**
      * 
      * @param holder
-     * @param fc
-     * @param result
+     * @param flowContainer
      * @return
      * 
      * This method will execute all the business rules.
      */
-    public IHolder exe(IHolder holder, FlowControl fc, Result result);
+    public IHolder exe(IHolder holder, FlowContainer flowContainer);
 }
