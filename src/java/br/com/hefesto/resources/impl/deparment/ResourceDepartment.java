@@ -52,6 +52,7 @@ public class ResourceDepartment extends AbstractResource {
     @Path("/{id}")
     public String updateDepartment(){
         return new Facade(new FlowContainer(new UpdateDepartmentViewHelper(),
+                (Session)httpRequest.getAttribute("session"),
                 cr, httpRequest)).process();
     }
 }
