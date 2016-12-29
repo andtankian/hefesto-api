@@ -5,7 +5,6 @@ import br.com.hefesto.resources.impl.deparment.view.ReadDepartmentViewHelper;
 import br.com.wsbasestructure.control.Facade;
 import br.com.wsbasestructure.domain.abstracts.AbstractResource;
 import br.com.wsbasestructure.dto.FlowContainer;
-import com.sun.prism.impl.BaseMesh;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -33,15 +32,12 @@ public class ResourceDepartment extends AbstractResource {
     public String getDepartments() {
         return new Facade().process(new FlowContainer(new ReadDepartmentViewHelper(),
                 (Session) this.httpRequest.getAttribute("session"),
-                uriInfo,
-                request,
-                httpRequest));
+                cr, httpRequest));
     }
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.APPLICATION_JSON)
     public String newDepartment() {
-        return new Facade().process(new FlowContainer(new NewDepartmentViewHelper(), null, uriInfo, request, httpRequest));
+        return new Facade().process(new FlowContainer(new NewDepartmentViewHelper(), null, cr, httpRequest));
     }
 }
