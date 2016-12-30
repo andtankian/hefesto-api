@@ -49,7 +49,8 @@ public abstract class Entity implements Serializable{
     
     public void merge(Entity e){
         this.dateReg = e.dateReg != null ? e.dateReg : this.dateReg;
-        this.status = e.status != null ? e.status : this.status;
+        if(e.status != null && e.status.equalsIgnoreCase("activate")) this.status = null;
+        else if(e.status != null) this.status = e.status;
     }
     
 }
