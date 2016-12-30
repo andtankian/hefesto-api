@@ -1,7 +1,9 @@
 package br.com.hefesto.resources.impl.deparment;
 
 import br.com.hefesto.resources.impl.deparment.view.DeleteDepartmentViewHelper;
+import br.com.hefesto.resources.impl.deparment.view.DumpDepartmentViewHelper;
 import br.com.hefesto.resources.impl.deparment.view.NewDepartmentViewHelper;
+import br.com.hefesto.resources.impl.deparment.view.ReadAllDepartmentsViewHelper;
 import br.com.hefesto.resources.impl.deparment.view.ReadDepartmentViewHelper;
 import br.com.hefesto.resources.impl.deparment.view.ReadOneDepartmentViewHelper;
 import br.com.hefesto.resources.impl.deparment.view.UpdateDepartmentViewHelper;
@@ -36,6 +38,24 @@ public class ResourceDepartment extends AbstractResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String getDepartments() {
         return new Facade(new FlowContainer(new ReadDepartmentViewHelper(),
+                (Session) this.httpRequest.getAttribute("session"),
+                cr, httpRequest)).process();
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/all")
+    public String allDepartments() {
+        return new Facade(new FlowContainer(new ReadAllDepartmentsViewHelper(),
+                (Session) this.httpRequest.getAttribute("session"),
+                cr, httpRequest)).process();
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/dump")
+    public String dumpDepartments() {
+        return new Facade(new FlowContainer(new DumpDepartmentViewHelper(),
                 (Session) this.httpRequest.getAttribute("session"),
                 cr, httpRequest)).process();
     }

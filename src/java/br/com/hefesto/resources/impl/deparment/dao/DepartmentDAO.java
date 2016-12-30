@@ -6,6 +6,7 @@ import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -29,6 +30,12 @@ public class DepartmentDAO extends GenericCRUDDAO {
             }
         } else {
             Criteria c = session.createCriteria(Department.class);
+            if(holder.getSm().getEntity() != null && 
+                    holder.getSm().getEntity().getStatus() != null){
+                c.add(Restrictions.eq("status", holder.getSm().getEntity().getStatus()));
+            } else {
+                c.add(Restrictions.isNull("status"));
+            }
             c.setMaxResults(holder.getSm().getLimit().intValue());
             c.setFirstResult(holder.getSm().getOffset().intValue());
             holder.setEntities(c.list());
