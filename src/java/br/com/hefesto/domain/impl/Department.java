@@ -1,7 +1,9 @@
 package br.com.hefesto.domain.impl;
 
 import br.com.wsbasestructure.domain.abstracts.Entity;
+import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Transient;
 
 /**
  *
@@ -12,6 +14,8 @@ public class Department extends Entity{
     
     private String name;
     private String description;
+    
+    private List<User> users;
     
 
     @Column
@@ -31,6 +35,15 @@ public class Department extends Entity{
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    @Transient
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     @Override
     public void merge(Entity e) {
@@ -38,8 +51,5 @@ public class Department extends Entity{
         Department d = (Department)e;
         this.description = d.description != null ? d.description : this.description;
         this.name = d.name != null ? d.name : this.name;
-    }
-    
-    
-    
+    }   
 }

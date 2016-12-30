@@ -1,13 +1,16 @@
 package br.com.hefesto.resources.impl.deparment;
 
+import br.com.hefesto.resources.impl.deparment.view.DeleteDepartmentViewHelper;
 import br.com.hefesto.resources.impl.deparment.view.NewDepartmentViewHelper;
 import br.com.hefesto.resources.impl.deparment.view.ReadDepartmentViewHelper;
+import br.com.hefesto.resources.impl.deparment.view.ReadOneDepartmentViewHelper;
 import br.com.hefesto.resources.impl.deparment.view.UpdateDepartmentViewHelper;
 import br.com.wsbasestructure.control.Facade;
 import br.com.wsbasestructure.domain.abstracts.AbstractResource;
 import br.com.wsbasestructure.dto.FlowContainer;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -37,22 +40,41 @@ public class ResourceDepartment extends AbstractResource {
                 cr, httpRequest)).process();
     }
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public String getDepartment() {
+        return new Facade(new FlowContainer(new ReadOneDepartmentViewHelper(),
+                (Session) this.httpRequest.getAttribute("session"),
+                cr, httpRequest)).process();
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public String newDepartment() {
-        return new Facade(new FlowContainer(new NewDepartmentViewHelper(), 
-                (Session)httpRequest.getAttribute("session"), 
+        return new Facade(new FlowContainer(new NewDepartmentViewHelper(),
+                (Session) httpRequest.getAttribute("session"),
                 cr, httpRequest)).process();
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
-    public String updateDepartment(){
+    public String updateDepartment() {
         return new Facade(new FlowContainer(new UpdateDepartmentViewHelper(),
-                (Session)httpRequest.getAttribute("session"),
+                (Session) httpRequest.getAttribute("session"),
+                cr, httpRequest)).process();
+    }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{id}")
+    public String deactiveDepartment() {
+        return new Facade(new FlowContainer(new DeleteDepartmentViewHelper(),
+                (Session) httpRequest.getAttribute("session"),
                 cr, httpRequest)).process();
     }
 }

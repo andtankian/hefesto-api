@@ -11,20 +11,31 @@ import org.hibernate.Session;
  *
  * @author Andrew Ribeiro
  */
-public class DepartmentDAO extends GenericCRUDDAO{
+public class DepartmentDAO extends GenericCRUDDAO {
 
     public DepartmentDAO(Session session, IHolder holder) {
         super(session, holder);
-    }   
+    }
 
     @Override
     public Result read() {
-        Criteria c = session.createCriteria(Department.class);
-        c.setMaxResults(holder.getSm().getAmount().intValue());
-        c.setFirstResult(holder.getSm().getFrom().intValue());
-        holder.setEntities(c.list());
+        if (holder.getSm().getEntity() != null
+                && holder.getSm().getEntity().getId() != null) {
+            holder.getEntities().set(0, session.get(Department.class, holder.getSm().getEntity().getId()));
+            if (holder.getEntities().get(0) == null) {
+                message.setError("not found");
+            } else {
+                message.setText("read");
+            }
+        } else {
+            Criteria c = session.createCriteria(Department.class);
+            c.setMaxResults(holder.getSm().getLimit().intValue());
+            c.setFirstResult(holder.getSm().getOffset().intValue());
+            holder.setEntities(c.list());
+            message.setText("read");
+            result.setStatus(Result.SUCCESS);
+        }
         result.setMessage(message);
-        result.setStatus(Result.SUCCESS);
         result.setHolder(holder);
 
         return result;
