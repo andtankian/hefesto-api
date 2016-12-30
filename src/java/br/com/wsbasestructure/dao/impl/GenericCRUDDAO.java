@@ -22,7 +22,7 @@ public abstract class GenericCRUDDAO extends AbstractDAO implements ICRUD {
         super.perform(fc, result, method);
         if (method.equalsIgnoreCase("post")) {
             return create();
-        } else if (method.equalsIgnoreCase("read")) {
+        } else if (method.equalsIgnoreCase("get")) {
             return read();
         } else if (method.equalsIgnoreCase("put")) {
             return update();
@@ -38,7 +38,7 @@ public abstract class GenericCRUDDAO extends AbstractDAO implements ICRUD {
             session.getTransaction().commit();
             message.setText("inserted");
             result.setStatus(Result.SUCCESS);
-        } catch(Exception e){
+        } catch (Exception e) {
             message.setError(e.getMessage());
             result.setStatus(Result.ERROR);
             fc.setMustContinue(false);
@@ -46,18 +46,32 @@ public abstract class GenericCRUDDAO extends AbstractDAO implements ICRUD {
             result.setHolder(holder);
             result.setMessage(message);
         }
-        
+
         return result;
     }
-    
+
     @Override
     public Result update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            session.update(holder.getEntities().get(0));
+            session.getTransaction().commit();
+            message.setText("updated");
+            result.setStatus(Result.SUCCESS);
+        } catch (Exception e) {
+            message.setError(e.getMessage());
+            result.setStatus(Result.ERROR);
+            fc.setMustContinue(false);
+        } finally {
+            result.setHolder(holder);
+            result.setMessage(message);
+        }
+
+        return result;
     }
 
     @Override
     public Result delete() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return update();
     }
 
 }
