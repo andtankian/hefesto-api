@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface IHolder {
 
+    public Long getTotalEntities();
+    public void setTotalEntities(Long totalEntities);
     public List getEntities();
     public void setEntities(List entities);
     public SearchModel getSm();

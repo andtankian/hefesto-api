@@ -13,6 +13,7 @@ public abstract class AbstractHolder implements IHolder {
     
     protected List entities;
     protected SearchModel sm;
+    private Long totalEntities;
 
     @Override
     public List getEntities() {
@@ -32,6 +33,16 @@ public abstract class AbstractHolder implements IHolder {
     @Override
     public void setSm(SearchModel sm) {
         this.sm = sm;
+    }
+
+    @Override
+    public Long getTotalEntities() {
+        return totalEntities;
+    }
+
+    @Override
+    public void setTotalEntities(Long totalEntities) {
+        this.totalEntities = totalEntities;
     }
        
 
