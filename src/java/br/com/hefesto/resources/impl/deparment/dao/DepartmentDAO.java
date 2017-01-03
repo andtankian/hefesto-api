@@ -6,6 +6,7 @@ import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -39,6 +40,9 @@ public class DepartmentDAO extends GenericCRUDDAO {
             c.setMaxResults(holder.getSm().getLimit().intValue());
             c.setFirstResult(holder.getSm().getOffset().intValue());
             holder.setEntities(c.list());
+            
+            c.setProjection(Projections.rowCount());
+            holder.setTotalEntities((Long)c.uniqueResult());
             message.setText("read");
             result.setStatus(Result.SUCCESS);
         }
