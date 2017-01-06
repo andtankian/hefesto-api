@@ -13,6 +13,7 @@ public class SearchModel {
     private Long offset;
     private String[] sort;
     private Entity entity;
+    private String search;
 
     public Entity getEntity() {
         return entity;
@@ -61,6 +62,14 @@ public class SearchModel {
 
     public void setSort(String[] sort) {
         this.sort = sort;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
     
 }
