@@ -41,7 +41,7 @@ public class ResourceDepartment extends AbstractResource {
                 (Session) this.httpRequest.getAttribute("session"),
                 cr, httpRequest)).process();
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/all")
