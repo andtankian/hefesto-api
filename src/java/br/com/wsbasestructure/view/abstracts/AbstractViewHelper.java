@@ -4,8 +4,11 @@ import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.interfaces.ICommand;
+import br.com.wsbasestructure.view.impl.GenericExclusionStrategy;
 import br.com.wsbasestructure.view.interfaces.IViewHelper;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,7 @@ public abstract class AbstractViewHelper implements IViewHelper{
      private List<ICommand> rulesBeforeMainFlow;
      private List<ICommand> rulesAfterMainFlow;
      protected String typeRequest;
+     protected List rejects;
 
     @Override
     public IHolder getView(FlowContainer fc) {
@@ -58,7 +62,18 @@ public abstract class AbstractViewHelper implements IViewHelper{
     
     @Override
     public String setView(Result result) {
-        Gson g = new Gson();
+        GsonBuilder gb = new GsonBuilder();
+
+        if (rejects != null && !rejects.isEmpty()) {
+            gb.addSerializationExclusionStrategy(new GenericExclusionStrategy() {
+                @Override
+                public boolean shouldSkipField(FieldAttributes fa) {
+                    return rejects.contains(fa.getName());
+                }
+            });
+        }
+        Gson g = gb.create();
+
         return g.toJson(result);
     }
 
