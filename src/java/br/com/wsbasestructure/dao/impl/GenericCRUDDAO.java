@@ -73,5 +73,9 @@ public abstract class GenericCRUDDAO extends AbstractDAO implements ICRUD {
     public Result delete() {
         return update();
     }
+    
+    public void readOne(){
+        
+    }
 
 }
