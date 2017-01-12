@@ -21,7 +21,7 @@ public class DumpDepartmentViewHelper extends AbstractViewHelper {
         GenericHolder gh = new GenericHolder();
         SearchModel sm = gh.getSm();
         d.setStatus("deactivated");
-        sm.setEntity(d);
+        //sm.setEntity(d);
         sm.getBasics(fc.getCr().getUriInfo());
         gh.getEntities().add(d);
         

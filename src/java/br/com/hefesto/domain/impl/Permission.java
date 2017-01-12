@@ -44,5 +44,16 @@ public class Permission extends Entity{
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
+    @Override
+    public void merge(Entity e) {
+        super.merge(e);
+        Permission p1 = (Permission)e;
+        this.description = p1.getDescription() != null ? p1.getDescription() : this.description;
+        this.name = p1.getName() != null ? p1.getName() : this.name;
+        this.users = p1.getUsers() != null ? p1.getUsers() : this.users;
+    }
+    
+    
     
 }

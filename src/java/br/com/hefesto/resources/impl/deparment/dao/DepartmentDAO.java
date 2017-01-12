@@ -55,9 +55,8 @@ public class DepartmentDAO extends GenericCRUDDAO {
             result.setStatus(Result.SUCCESS);
         } else {
             Criteria c = session.createCriteria(Department.class);
-            if (sm.getEntity() != null
-                    && sm.getEntity().getStatus() != null) {
-                c.add(Restrictions.eq("status", sm.getEntity().getStatus()));
+            if (((Department)holder.getEntities().get(0)).getStatus() != null) {
+                c.add(Restrictions.eq("status", ((Department)holder.getEntities().get(0)).getStatus()));
             } else {
                 c.add(Restrictions.isNull("status"));
             }

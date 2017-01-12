@@ -1,10 +1,10 @@
 package br.com.hefesto.resources.impl.deparment.view;
 
 import br.com.hefesto.domain.impl.Department;
-import br.com.hefesto.resources.impl.department.rules.impl.ValidateAndMergeDepartmentCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
+import br.com.wsbasestructure.rules.impl.ValidateAndMergeEntityCommand;
 import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
 import javax.ws.rs.core.UriInfo;
 
@@ -39,7 +39,7 @@ public class DeleteDepartmentViewHelper extends AbstractViewHelper{
     @Override
     public void loadBusinessRulesBeforeMainFlow() {
         
-        this.getRulesBeforeMainFlow().add(new ValidateAndMergeDepartmentCommand());
+        this.getRulesBeforeMainFlow().add(new ValidateAndMergeEntityCommand());
     }
     
     
