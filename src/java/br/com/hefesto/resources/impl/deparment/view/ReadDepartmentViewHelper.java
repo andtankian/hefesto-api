@@ -1,7 +1,7 @@
 package br.com.hefesto.resources.impl.deparment.view;
 
 import br.com.hefesto.domain.impl.Department;
-import br.com.hefesto.resources.impl.department.rules.impl.ValidateSearchDepartmentsCommand;
+import br.com.hefesto.resources.impl.rules.ValidateSearchEntitiesCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.SearchModel;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
@@ -48,7 +48,7 @@ public class ReadDepartmentViewHelper extends AbstractViewHelper{
     @Override
     public void loadBusinessRulesBeforeMainFlow() {
         super.loadBusinessRulesBeforeMainFlow();
-        this.getRulesBeforeMainFlow().add(new ValidateSearchDepartmentsCommand());
+        this.getRulesBeforeMainFlow().add(new ValidateSearchEntitiesCommand());
     }
     
     

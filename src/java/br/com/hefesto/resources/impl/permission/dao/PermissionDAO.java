@@ -1,6 +1,6 @@
-package br.com.hefesto.resources.impl.deparment.dao;
+package br.com.hefesto.resources.impl.permission.dao;
 
-import br.com.hefesto.domain.impl.Department;
+import br.com.hefesto.domain.impl.Permission;
 import br.com.wsbasestructure.dao.impl.GenericCRUDDAO;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.SearchModel;
@@ -15,9 +15,9 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author Andrew Ribeiro
  */
-public class DepartmentDAO extends GenericCRUDDAO {
+public class PermissionDAO extends GenericCRUDDAO{
 
-    public DepartmentDAO(Session session, IHolder holder) {
+    public PermissionDAO(Session session, IHolder holder) {
         super(session, holder);
     }
 
@@ -26,21 +26,20 @@ public class DepartmentDAO extends GenericCRUDDAO {
         SearchModel sm = holder.getSm();
         if (sm.getEntity() != null
                 && sm.getEntity().getId() != null) {
-            readOne();
+           readOne();
         } else if (sm.getEntity() != null) {
-            Department d = (Department) sm.getEntity();
+            Permission p = (Permission) sm.getEntity();
             try {
-                d.setId(Long.parseLong(sm.getSearch()));
+                p.setId(Long.parseLong(sm.getSearch()));
             } catch (NumberFormatException n) {
-                d.setId((long) -1);
+                p.setId((long) -1);
             }
-            Criteria crSearch = session.createCriteria(Department.class);
+            Criteria crSearch = session.createCriteria(Permission.class);
             crSearch.setMaxResults(sm.getLimit().intValue());
             crSearch.setFirstResult(sm.getOffset().intValue());
             crSearch.add(Restrictions.disjunction(
-                    Restrictions.ilike("name", d.getName(), MatchMode.ANYWHERE),
-                    Restrictions.ilike("description", d.getDescription(), MatchMode.ANYWHERE),
-                    Restrictions.sqlRestriction("lower(id) like '%" + String.valueOf(d.getId()) + "%'"),
+                    Restrictions.ilike("name", p.getName(), MatchMode.ANYWHERE),
+                    Restrictions.sqlRestriction("lower(id) like '%" + String.valueOf(p.getId()) + "%'"),
                     Restrictions.sqlRestriction("lower(dateReg) like '%" + String.valueOf(sm.getSearch()) + "%'")
             ));
 
@@ -54,7 +53,7 @@ public class DepartmentDAO extends GenericCRUDDAO {
             message.setText("read");
             result.setStatus(Result.SUCCESS);
         } else {
-            Criteria c = session.createCriteria(Department.class);
+            Criteria c = session.createCriteria(Permission.class);
             if (sm.getEntity() != null
                     && sm.getEntity().getStatus() != null) {
                 c.add(Restrictions.eq("status", sm.getEntity().getStatus()));
@@ -77,5 +76,5 @@ public class DepartmentDAO extends GenericCRUDDAO {
 
         return result;
     }
-
+    
 }

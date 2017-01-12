@@ -1,4 +1,4 @@
-package br.com.hefesto.resources.impl.department.rules.impl;
+package br.com.hefesto.resources.impl.rules;
 
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
@@ -8,7 +8,7 @@ import br.com.wsbasestructure.rules.interfaces.ICommand;
  *
  * @author Andrew Ribeiro
  */
-public class ValidateSearchDepartmentsCommand implements ICommand{
+public class ValidateSearchEntitiesCommand implements ICommand{
 
     @Override
     public IHolder exe(IHolder holder, FlowContainer flowContainer) {
