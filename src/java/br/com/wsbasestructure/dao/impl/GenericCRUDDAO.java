@@ -2,6 +2,7 @@ package br.com.wsbasestructure.dao.impl;
 
 import br.com.wsbasestructure.dao.abstracts.AbstractDAO;
 import br.com.wsbasestructure.dao.interfaces.ICRUD;
+import br.com.wsbasestructure.domain.abstracts.Entity;
 import br.com.wsbasestructure.dto.FlowControl;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
@@ -75,7 +76,9 @@ public abstract class GenericCRUDDAO extends AbstractDAO implements ICRUD {
     }
     
     public void readOne(){
-        
+        Entity e = (Entity)holder.getEntities().get(0);
+        e = (Entity) session.get(e.getClass(), e.getId());
+        holder.getEntities().set(0, e);
     }
 
 }
