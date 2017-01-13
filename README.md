@@ -1,3 +1,3 @@
-WSBaseStructure
+Hefesto 2.0
 
-This is a project that serve as a base structure for Webservice API Rest development using MVC + Hibernate.
+This is a project that implements the WSBaseStructure to build an IT Ticket Application made to attend ETEC Itaqua
