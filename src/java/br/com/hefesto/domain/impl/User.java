@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 public class User extends Entity{
     
     private String login;
+    private String email;
     private String password;
     private String fullName;
     private Department department;
@@ -76,6 +77,14 @@ public class User extends Entity{
 
     public void setPermissions(List<Permission> permissions) {
         this.permissions = permissions;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     

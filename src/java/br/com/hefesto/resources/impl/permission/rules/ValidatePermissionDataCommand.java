@@ -29,7 +29,7 @@ public class ValidatePermissionDataCommand implements ICommand {
         description = p.getDescription();
         List users = p.getUsers();
         p.setUsers(new ArrayList<>());
-        
+
         Session s = flowContainer.getSession();
 
         if (name == null || name.isEmpty()) {
@@ -56,21 +56,25 @@ public class ValidatePermissionDataCommand implements ICommand {
                     flowContainer.getFc().setMustContinue(false);
                     m.setError("user id invalid");
                     flowContainer.getResult().setStatus(Result.ERROR);
+                    flowContainer.getResult().setMessage(m);
+                    flowContainer.getResult().setHolder(holder);
                     return holder;
                 }
-                
-                User u = (User)s.get(User.class, (Long)idl);
-                if(u == null){
+
+                User u = (User) s.get(User.class, (Long) idl);
+                if (u == null) {
                     flowContainer.getFc().setMustContinue(false);
                     m.setError("user doesn't exist");
                     flowContainer.getResult().setStatus(Result.ERROR);
+                    flowContainer.getResult().setMessage(m);
+                    flowContainer.getResult().setHolder(holder);
                     return holder;
                 } else {
                     p.getUsers().add(u);
                 }
             }
         }
-
+        flowContainer.getResult().setHolder(holder);
         return holder;
     }
 
