@@ -1,5 +1,6 @@
 package br.com.hefesto.resources.impl.permission;
 
+import br.com.hefesto.resources.impl.permission.view.DeletePermissionViewHelper;
 import br.com.hefesto.resources.impl.permission.view.NewPermissionViewHelper;
 import br.com.hefesto.resources.impl.permission.view.ReadAllPermissionsViewHelper;
 import br.com.hefesto.resources.impl.permission.view.ReadOnePermissionViewHelper;
@@ -10,6 +11,7 @@ import br.com.wsbasestructure.domain.abstracts.AbstractResource;
 import br.com.wsbasestructure.dto.FlowContainer;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -46,6 +48,12 @@ public class ResourcePermission extends AbstractResource {
         return new Facade(new FlowContainer(new ReadAllPermissionsViewHelper(), (Session)httpRequest.getAttribute("session"), cr, httpRequest))
                 .process();
     }
+    
+    @GET
+    @Path("/dump")
+    public String getDumpPermissions(){
+        return null;
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -59,6 +67,14 @@ public class ResourcePermission extends AbstractResource {
     @Path("/{id}")
     public String updatePermission(){
         return new Facade(new FlowContainer(new UpdatePermissionViewHelper(), (Session)httpRequest.getAttribute("session"), cr, httpRequest))
+                .process();
+    }
+    
+    @DELETE
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("/{id}")
+    public String deletePermission(){
+        return new Facade(new FlowContainer(new DeletePermissionViewHelper(), (Session)httpRequest.getAttribute("session"), cr, httpRequest))
                 .process();
     }
 
