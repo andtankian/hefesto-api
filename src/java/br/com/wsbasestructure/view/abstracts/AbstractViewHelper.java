@@ -6,7 +6,6 @@ import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.interfaces.ICommand;
 import br.com.wsbasestructure.view.impl.GenericExclusionStrategy;
 import br.com.wsbasestructure.view.interfaces.IViewHelper;
-import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
