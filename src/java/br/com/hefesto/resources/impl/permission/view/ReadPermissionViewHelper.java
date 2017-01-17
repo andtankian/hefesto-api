@@ -10,7 +10,6 @@ import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
 import br.com.wsbasestructure.view.impl.GenericExclusionStrategy;
-import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
-import org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer;
 
 /**
  *
