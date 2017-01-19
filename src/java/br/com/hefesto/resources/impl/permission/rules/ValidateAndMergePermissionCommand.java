@@ -7,8 +7,8 @@ import br.com.wsbasestructure.dto.Message;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.interfaces.ICommand;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.Session;
 
 /**
@@ -44,10 +44,10 @@ public class ValidateAndMergePermissionCommand implements ICommand {
             }
 
             /*Let's validate the users updated*/
-            List users = p.getUsers();
+            Set users = p.getUsers();
             p.setUsers(null);
             if (users != null) {
-                p.setUsers(new ArrayList<>());
+                p.setUsers(new HashSet<>());
                 for (Object user : users) {
                     String id = (String) user;
                     Long idl;

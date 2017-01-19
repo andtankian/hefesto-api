@@ -9,7 +9,9 @@ import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MultivaluedHashMap;
 
@@ -29,7 +31,7 @@ public class NewPermissionViewHelper extends AbstractViewHelper {
         MultivaluedHashMap fields = (MultivaluedHashMap) f.asMap();
         String description;
         String name;
-        List users;
+        Set users;
         try {
             description = (String) fields.get("description").get(0);
         } catch (NullPointerException n) {
@@ -42,7 +44,11 @@ public class NewPermissionViewHelper extends AbstractViewHelper {
             name = null;
         }
 
-        users = fields.get("users");
+        try {
+            users = new HashSet<>(fields.get("users"));
+        } catch (NullPointerException e) {
+            users = null;
+        }
 
         p.setDescription(description);
         p.setName(name);
@@ -68,5 +74,4 @@ public class NewPermissionViewHelper extends AbstractViewHelper {
         this.getRulesAfterMainFlow().add(new AcceptPermissionAttributes(new String[]{"none"}, this.rejects));
     }
 
-    
 }

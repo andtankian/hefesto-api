@@ -1,7 +1,7 @@
 package br.com.hefesto.resources.impl.user.view;
 
 import br.com.hefesto.domain.impl.User;
-import br.com.hefesto.resources.impl.user.AcceptUserAttributesCommand;
+import br.com.hefesto.resources.impl.user.rules.AcceptUserAttributesCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.SearchModel;
 import br.com.wsbasestructure.dto.impl.GenericHolder;

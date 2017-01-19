@@ -1,4 +1,4 @@
-package br.com.hefesto.resources.impl.user;
+package br.com.hefesto.resources.impl.user.rules;
 
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.interfaces.IHolder;

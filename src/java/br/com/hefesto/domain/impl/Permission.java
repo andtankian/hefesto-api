@@ -1,7 +1,7 @@
 package br.com.hefesto.domain.impl;
 
 import br.com.wsbasestructure.domain.abstracts.Entity;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
@@ -16,7 +16,7 @@ public class Permission extends Entity{
     
     private String name;
     private String description;
-    private List<User> users;
+    private Set users;
 
     @Column
     public String getName() {
@@ -36,12 +36,12 @@ public class Permission extends Entity{
         this.description = description;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    public List<User> getUsers() {
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = User.class)
+    public Set getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set users) {
         this.users = users;
     }
 

@@ -7,8 +7,8 @@ import br.com.wsbasestructure.dto.Message;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.interfaces.ICommand;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.Session;
 
 /**
@@ -27,8 +27,8 @@ public class ValidatePermissionDataCommand implements ICommand {
 
         name = p.getName();
         description = p.getDescription();
-        List users = p.getUsers();
-        p.setUsers(new ArrayList<>());
+        Set users = p.getUsers();
+        p.setUsers(new HashSet<>());
 
         Session s = flowContainer.getSession();
 

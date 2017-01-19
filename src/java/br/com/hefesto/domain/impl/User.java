@@ -1,7 +1,7 @@
 package br.com.hefesto.domain.impl;
 
 import br.com.wsbasestructure.domain.abstracts.Entity;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
@@ -20,7 +20,7 @@ public class User extends Entity{
     private String password;
     private String fullName;
     private Department department;
-    private List<Permission> permissions;
+    private Set permissions;
     
     @Column
     public String getLogin() {
@@ -70,12 +70,12 @@ public class User extends Entity{
         this.password = u.password != null ? u.password : this.password;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "users")
-    public List<Permission> getPermissions() {
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "users", targetEntity = Permission.class)
+    public Set getPermissions() {
         return permissions;
     }
 
-    public void setPermissions(List<Permission> permissions) {
+    public void setPermissions(Set permissions) {
         this.permissions = permissions;
     }
 
