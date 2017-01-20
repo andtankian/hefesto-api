@@ -61,7 +61,7 @@ public class ValidatePermissionDataCommand implements ICommand {
                     return holder;
                 }
 
-                User u = (User) s.get(User.class, (Long) idl);
+                User u = (User) s.get(User.class, idl);
                 if (u == null) {
                     flowContainer.getFc().setMustContinue(false);
                     m.setError("user doesn't exist");

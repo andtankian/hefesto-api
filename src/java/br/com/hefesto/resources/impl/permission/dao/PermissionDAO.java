@@ -27,6 +27,14 @@ public class PermissionDAO extends GenericCRUDDAO{
         if (sm.getEntity() != null
                 && sm.getEntity().getId() != null) {
            readOne();
+           if(holder.getEntities().get(0) == null){
+               message.setError("permission doesn't exist");
+               result.setStatus(Result.ERROR);
+               fc.setMustContinue(false);
+           } else {
+               message.setText("read");
+               result.setStatus(Result.SUCCESS);
+           }
         } else if (sm.getEntity() != null) {
             Permission p = (Permission) sm.getEntity();
             try {
