@@ -38,7 +38,7 @@ public class UpdatePermissionViewHelper extends AbstractViewHelper {
         try {
             users = new HashSet<>(mvhm.get("users"));
         } catch (NullPointerException e) {
-            users = null;
+            users = new HashSet<>();
         }
 
         p.setDescription(mvhm.get("description") != null ? (String) mvhm.get("description").get(0) : null);

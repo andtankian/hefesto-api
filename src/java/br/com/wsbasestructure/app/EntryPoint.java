@@ -1,6 +1,7 @@
 package br.com.wsbasestructure.app;
 
 import br.com.hefesto.resources.impl.deparment.ResourceDepartment;
+import br.com.hefesto.resources.impl.resourcepage.ResourceResourcePage;
 import br.com.hefesto.resources.impl.permission.ResourcePermission;
 import br.com.hefesto.resources.impl.user.ResourceUser;
 import br.com.wsbasestructure.filter.CORSFilter;
@@ -21,6 +22,7 @@ public class EntryPoint extends ResourceConfig {
                 ResourceDepartment.class, 
                 ResourcePermission.class,
                 ResourceUser.class,
+                ResourceResourcePage.class,
                 MultiPartFeature.class, CORSFilter.class);
     }
     

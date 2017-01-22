@@ -79,6 +79,18 @@ public abstract class GenericCRUDDAO extends AbstractDAO implements ICRUD {
         Entity e = (Entity)holder.getEntities().get(0);
         e = (Entity) session.get(e.getClass(), e.getId());
         holder.getEntities().set(0, e);
+        if(e == null){
+            message.setError("entity doesn't exist");
+            result.setStatus(Result.ERROR);
+            result.setMessage(message);
+            result.setHolder(holder);
+            fc.setMustContinue(false);
+        } else {
+            message.setText("read");
+            result.setStatus(Result.SUCCESS);
+            result.setMessage(message);
+            result.setHolder(holder);
+        }
     }
 
 }
