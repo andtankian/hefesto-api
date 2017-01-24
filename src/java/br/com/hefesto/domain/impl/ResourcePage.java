@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 /**
  *
@@ -14,13 +15,13 @@ import javax.persistence.OneToMany;
 @javax.persistence.Entity
 public class ResourcePage extends Entity {
 
+    @Transient
     private Set read;
+    @Transient
     private Set write;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
-            targetEntity = Permission.class)
+   
     public Set getRead() {
         return read;
     }
@@ -29,9 +30,6 @@ public class ResourcePage extends Entity {
         this.read = read;
     }
 
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
-            targetEntity = Permission.class)
     public Set getWrite() {
         return write;
     }
@@ -48,4 +46,14 @@ public class ResourcePage extends Entity {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public void merge(Entity e) {
+        super.merge(e);
+        ResourcePage r = (ResourcePage) e;
+        this.name = r.name != null ? r.name : this.name;
+        this.read = r.read != null ? r.read : this.read;
+        this.write = r.write != null ? r.write : this.write;
+    }
+
 }
