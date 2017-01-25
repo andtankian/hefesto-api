@@ -1,6 +1,7 @@
 package br.com.hefesto.resources.impl.resourcepage.view;
 
 import br.com.hefesto.domain.impl.ResourcePage;
+import br.com.hefesto.resources.impl.resourcepage.rules.ValidateAndMergeResourcePagesCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
@@ -67,7 +68,7 @@ public class UpdateResourcePageViewHelper extends AbstractViewHelper {
 
     @Override
     public void loadBusinessRulesBeforeMainFlow() {
-        this.getRulesBeforeMainFlow().add(new ValidateAndMergeEntityCommand());
+        this.getRulesBeforeMainFlow().add(new ValidateAndMergeResourcePagesCommand());
     }
     
     
