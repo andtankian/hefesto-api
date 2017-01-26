@@ -1,8 +1,8 @@
-package br.com.hefesto.resources.impl.permission.view;
+package br.com.hefesto.resources.impl.group.view;
 
-import br.com.hefesto.domain.impl.Permission;
-import br.com.hefesto.resources.impl.permission.rules.AcceptPermissionAttributes;
-import br.com.hefesto.resources.impl.permission.rules.ValidatePermissionDataCommand;
+import br.com.hefesto.domain.impl.Groups;
+import br.com.hefesto.resources.impl.group.rules.AcceptGroupAttributes;
+import br.com.hefesto.resources.impl.group.rules.ValidateGroupDataCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
@@ -19,14 +19,14 @@ import javax.ws.rs.core.MultivaluedHashMap;
  *
  * @author Andrew Ribeiro
  */
-public class NewPermissionViewHelper extends AbstractViewHelper {
+public class NewGroupViewHelper extends AbstractViewHelper {
 
     @Override
     public IHolder getView(FlowContainer fc) {
         super.getView(fc);
 
         GenericHolder gh = new GenericHolder();
-        Permission p = new Permission();
+        Groups p = new Groups();
         Form f = fc.getCr().readEntity(Form.class);
         MultivaluedHashMap fields = (MultivaluedHashMap) f.asMap();
         String description;
@@ -66,12 +66,12 @@ public class NewPermissionViewHelper extends AbstractViewHelper {
 
     @Override
     public void loadBusinessRulesBeforeMainFlow() {
-        this.getRulesBeforeMainFlow().add(new ValidatePermissionDataCommand());
+        this.getRulesBeforeMainFlow().add(new ValidateGroupDataCommand());
     }
 
     @Override
     public void loadBusinessRulesAfterMainFlow() {
-        this.getRulesAfterMainFlow().add(new AcceptPermissionAttributes(new String[]{"none"}, this.rejects));
+        this.getRulesAfterMainFlow().add(new AcceptGroupAttributes(new String[]{"none"}, this.rejects));
     }
 
 }

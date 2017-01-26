@@ -1,6 +1,6 @@
-package br.com.hefesto.resources.impl.permission.dao;
+package br.com.hefesto.resources.impl.group.dao;
 
-import br.com.hefesto.domain.impl.Permission;
+import br.com.hefesto.domain.impl.Groups;
 import br.com.wsbasestructure.dao.impl.GenericCRUDDAO;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.SearchModel;
@@ -15,9 +15,9 @@ import org.hibernate.criterion.Restrictions;
  *
  * @author Andrew Ribeiro
  */
-public class PermissionDAO extends GenericCRUDDAO{
+public class GroupDAO extends GenericCRUDDAO{
 
-    public PermissionDAO(Session session, IHolder holder) {
+    public GroupDAO(Session session, IHolder holder) {
         super(session, holder);
     }
 
@@ -36,13 +36,13 @@ public class PermissionDAO extends GenericCRUDDAO{
                result.setStatus(Result.SUCCESS);
            }
         } else if (sm.getEntity() != null) {
-            Permission p = (Permission) sm.getEntity();
+            Groups p = (Groups) sm.getEntity();
             try {
                 p.setId(Long.parseLong(sm.getSearch()));
             } catch (NumberFormatException n) {
                 p.setId((long) -1);
             }
-            Criteria crSearch = session.createCriteria(Permission.class);
+            Criteria crSearch = session.createCriteria(Groups.class);
             crSearch.setMaxResults(sm.getLimit().intValue());
             crSearch.setFirstResult(sm.getOffset().intValue());
             crSearch.add(Restrictions.disjunction(
@@ -61,7 +61,7 @@ public class PermissionDAO extends GenericCRUDDAO{
             message.setText("read");
             result.setStatus(Result.SUCCESS);
         } else {
-            Criteria c = session.createCriteria(Permission.class);
+            Criteria c = session.createCriteria(Groups.class);
             if (sm.getEntity() != null
                     && sm.getEntity().getStatus() != null) {
                 c.add(Restrictions.eq("status", sm.getEntity().getStatus()));

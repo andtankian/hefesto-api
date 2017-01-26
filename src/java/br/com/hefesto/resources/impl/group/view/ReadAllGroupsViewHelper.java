@@ -1,7 +1,7 @@
-package br.com.hefesto.resources.impl.permission.view;
+package br.com.hefesto.resources.impl.group.view;
 
-import br.com.hefesto.domain.impl.Permission;
-import br.com.hefesto.resources.impl.permission.rules.AcceptPermissionAttributes;
+import br.com.hefesto.domain.impl.Groups;
+import br.com.hefesto.resources.impl.group.rules.AcceptGroupAttributes;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.SearchModel;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
@@ -12,13 +12,13 @@ import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
  *
  * @author Andrew Ribeiro
  */
-public class ReadAllPermissionsViewHelper extends AbstractViewHelper{
+public class ReadAllGroupsViewHelper extends AbstractViewHelper{
 
     @Override
     public IHolder getView(FlowContainer fc) {
         super.getView(fc);
         
-        Permission p = new Permission();
+        Groups p = new Groups();
         GenericHolder gh = new GenericHolder();
         SearchModel sm = gh.getSm();
         sm.setLimit((long)0);
@@ -31,7 +31,7 @@ public class ReadAllPermissionsViewHelper extends AbstractViewHelper{
 
     @Override
     public void loadBusinessRulesAfterMainFlow() {
-        this.getRulesAfterMainFlow().add(new AcceptPermissionAttributes(new String[]{"none"}, rejects));
+        this.getRulesAfterMainFlow().add(new AcceptGroupAttributes(new String[]{"none"}, rejects));
     }
 
     

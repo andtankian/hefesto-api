@@ -1,6 +1,6 @@
-package br.com.hefesto.resources.impl.permission.rules;
+package br.com.hefesto.resources.impl.group.rules;
 
-import br.com.hefesto.domain.impl.Permission;
+import br.com.hefesto.domain.impl.Groups;
 import br.com.hefesto.domain.impl.User;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Message;
@@ -15,13 +15,13 @@ import org.hibernate.Session;
  *
  * @author Andrew Ribeiro
  */
-public class ValidateAndMergePermissionCommand implements ICommand {
+public class ValidateAndMergeGroupCommand implements ICommand {
 
     @Override
     public IHolder exe(IHolder holder, FlowContainer flowContainer) {
-        Permission p = (Permission) holder.getEntities().get(0);
+        Groups p = (Groups) holder.getEntities().get(0);
         Session s = flowContainer.getSession();
-        Permission loaded = null;
+        Groups loaded = null;
         Message m = new Message();
         if (p.getId() == null || p.getId() == 0) {
             flowContainer.getResult().setStatus(Result.ERROR);
@@ -32,7 +32,7 @@ public class ValidateAndMergePermissionCommand implements ICommand {
             return holder;
         } else {
 
-            loaded = (Permission) s.get(Permission.class, p.getId());
+            loaded = (Groups) s.get(Groups.class, p.getId());
 
             if (loaded == null) {
                 flowContainer.getResult().setStatus(Result.ERROR);

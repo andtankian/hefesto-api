@@ -1,6 +1,6 @@
 package br.com.hefesto.resources.impl.user.rules;
 
-import br.com.hefesto.domain.impl.Permission;
+import br.com.hefesto.domain.impl.Groups;
 import br.com.hefesto.domain.impl.User;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Message;
@@ -31,7 +31,7 @@ public class PermissionAssociationsPersistenceHelperCommand implements ICommand 
             Transaction t = s.beginTransaction();
 
             for (Object permission : u.getPermissions()) {
-                ((Permission)permission).getUsers().add(u);
+                ((Groups)permission).getUsers().add(u);
             }
             t.commit();
         }

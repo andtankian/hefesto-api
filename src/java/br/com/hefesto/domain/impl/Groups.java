@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
  * @author Andrew Ribeiro
  */
 @javax.persistence.Entity
-public class Permission extends Entity{
+public class Groups extends Entity{
     
     private String name;
     private String description;
@@ -48,7 +48,7 @@ public class Permission extends Entity{
     @Override
     public void merge(Entity e) {
         super.merge(e);
-        Permission p1 = (Permission)e;
+        Groups p1 = (Groups)e;
         this.description = p1.getDescription() != null ? p1.getDescription() : this.description;
         this.name = p1.getName() != null ? p1.getName() : this.name;
         this.users = p1.getUsers() != null ? p1.getUsers() : this.users;

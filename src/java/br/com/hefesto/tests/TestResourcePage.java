@@ -1,6 +1,6 @@
 package br.com.hefesto.tests;
 
-import br.com.hefesto.domain.impl.Permission;
+import br.com.hefesto.domain.impl.Groups;
 import br.com.hefesto.domain.impl.ResourcePage;
 import br.com.wsbasestructure.dao.abstracts.Connection;
 import java.util.HashSet;
@@ -27,9 +27,9 @@ public class TestResourcePage {
         r.setRead(new HashSet<>());
         r.setWrite(new HashSet<>());
         for (Object object : read) {
-            Permission p = new Permission();
+            Groups p = new Groups();
             p.setId(Long.parseLong((String) object));
-            p = (Permission) s.get(Permission.class, p.getId());
+            p = (Groups) s.get(Groups.class, p.getId());
             r.getRead().add(p);
             r.getWrite().add(p);
         }

@@ -1,7 +1,7 @@
-package br.com.hefesto.resources.impl.permission.view;
+package br.com.hefesto.resources.impl.group.view;
 
-import br.com.hefesto.domain.impl.Permission;
-import br.com.hefesto.resources.impl.permission.rules.AcceptPermissionAttributes;
+import br.com.hefesto.domain.impl.Groups;
+import br.com.hefesto.resources.impl.group.rules.AcceptGroupAttributes;
 import br.com.hefesto.resources.impl.rules.ValidateSearchEntitiesCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Result;
@@ -23,7 +23,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Andrew Ribeiro
  */
-public class ReadPermissionViewHelper extends AbstractViewHelper{
+public class ReadGroupViewHelper extends AbstractViewHelper{
     
     private String[] accepts;
     private List rejects;
@@ -32,7 +32,7 @@ public class ReadPermissionViewHelper extends AbstractViewHelper{
     public IHolder getView(FlowContainer fc) {
         super.getView(fc);
         
-        Permission p = new Permission();
+        Groups p = new Groups();
         GenericHolder gh = new GenericHolder();
         SearchModel sm = gh.getSm();
         UriInfo u = fc.getCr().getUriInfo();
@@ -73,7 +73,7 @@ public class ReadPermissionViewHelper extends AbstractViewHelper{
     @Override
     public void loadBusinessRulesAfterMainFlow() {
         rejects = new ArrayList<>();
-        this.getRulesAfterMainFlow().add(new AcceptPermissionAttributes(accepts, rejects));
+        this.getRulesAfterMainFlow().add(new AcceptGroupAttributes(accepts, rejects));
     }
     
     

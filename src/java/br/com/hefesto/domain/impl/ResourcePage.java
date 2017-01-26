@@ -21,7 +21,7 @@ public class ResourcePage extends Entity {
 
    @OneToMany(cascade = CascadeType.ALL,
            fetch = FetchType.EAGER,
-           targetEntity = Permission.class)
+           targetEntity = Groups.class)
    @JoinTable(name = "resourcepage_read_permissions")
     public Set getRead() {
         return read;
@@ -33,7 +33,7 @@ public class ResourcePage extends Entity {
 
     @OneToMany(cascade = CascadeType.ALL,
            fetch = FetchType.EAGER,
-           targetEntity = Permission.class)
+           targetEntity = Groups.class)
     @JoinTable(name = "resourcepage_write_permissions")
     public Set getWrite() {
         return write;

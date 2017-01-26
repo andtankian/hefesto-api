@@ -1,6 +1,6 @@
 package br.com.hefesto.resources.impl.resourcepage.rules;
 
-import br.com.hefesto.domain.impl.Permission;
+import br.com.hefesto.domain.impl.Groups;
 import br.com.hefesto.domain.impl.ResourcePage;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Message;
@@ -44,7 +44,7 @@ public class ValidateAndMergeResourcePagesCommand implements ICommand {
                 r.setWrite(new HashSet<>());
 
                 /*To associate read permissiont to ResourcePage*/
-                Permission p;
+                Groups p;
                 for (Object object : read) {
                     String idPerm = (String) object;
                     Long idLongPerm = null;
@@ -57,7 +57,7 @@ public class ValidateAndMergeResourcePagesCommand implements ICommand {
                         flowContainer.getFc().setMustContinue(false);
                         return holder;
                     }
-                    p = (Permission) s.get(Permission.class, idLongPerm);
+                    p = (Groups) s.get(Groups.class, idLongPerm);
                     if (p == null) {
                         m.setError(new StringBuilder("permission id ").append(idLongPerm).append(" doesn't exist").toString());
                         flowContainer.getResult().setStatus(Result.ERROR);
@@ -83,7 +83,7 @@ public class ValidateAndMergeResourcePagesCommand implements ICommand {
                         return holder;
                     }
 
-                    p = (Permission) s.get(Permission.class, idLongPerm);
+                    p = (Groups) s.get(Groups.class, idLongPerm);
                     if (p == null) {
                         m.setError(new StringBuilder("permission id ").append(idLongPerm).append(" doesn't exist").toString());
                         flowContainer.getResult().setStatus(Result.ERROR);

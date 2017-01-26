@@ -1,8 +1,8 @@
-package br.com.hefesto.resources.impl.permission.view;
+package br.com.hefesto.resources.impl.group.view;
 
-import br.com.hefesto.domain.impl.Permission;
-import br.com.hefesto.resources.impl.permission.rules.AcceptPermissionAttributes;
-import br.com.hefesto.resources.impl.permission.rules.ValidateAndMergePermissionCommand;
+import br.com.hefesto.domain.impl.Groups;
+import br.com.hefesto.resources.impl.group.rules.AcceptGroupAttributes;
+import br.com.hefesto.resources.impl.group.rules.ValidateAndMergeGroupCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
@@ -17,13 +17,13 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Andrew Ribeiro
  */
-public class UpdatePermissionViewHelper extends AbstractViewHelper {
+public class UpdateGroupViewHelper extends AbstractViewHelper {
 
     @Override
     public IHolder getView(FlowContainer fc) {
         super.getView(fc); //don't forget
 
-        Permission p = new Permission();
+        Groups p = new Groups();
         GenericHolder gh = new GenericHolder();
         UriInfo u = fc.getCr().getUriInfo();
         String id = u.getPathParameters().get("id") != null ? u.getPathParameters().get("id").get(0) : null;
@@ -56,12 +56,12 @@ public class UpdatePermissionViewHelper extends AbstractViewHelper {
 
     @Override
     public void loadBusinessRulesBeforeMainFlow() {
-        this.getRulesBeforeMainFlow().add(new ValidateAndMergePermissionCommand());
+        this.getRulesBeforeMainFlow().add(new ValidateAndMergeGroupCommand());
     }
 
     @Override
     public void loadBusinessRulesAfterMainFlow() {
-        this.getRulesAfterMainFlow().add(new AcceptPermissionAttributes(new String[]{"none"}, this.rejects));
+        this.getRulesAfterMainFlow().add(new AcceptGroupAttributes(new String[]{"none"}, this.rejects));
     }
 
 }

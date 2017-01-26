@@ -63,7 +63,7 @@ Contributor(s):
     <mapping class="br.com.hefesto.domain.impl.Equipment"/>
     <mapping class="br.com.hefesto.domain.impl.Interaction"/>
     <mapping class="br.com.hefesto.domain.impl.Ticket"/>
-    <mapping class="br.com.hefesto.domain.impl.Permission"/>
+    <mapping class="br.com.hefesto.domain.impl.Groups"/>
     <mapping class="br.com.hefesto.domain.impl.ResourcePage"/>
   </session-factory>
 </hibernate-configuration>

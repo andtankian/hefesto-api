@@ -70,7 +70,7 @@ public class User extends Entity{
         this.password = u.password != null ? u.password : this.password;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "users", targetEntity = Permission.class)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "users", targetEntity = Groups.class)
     public Set getPermissions() {
         return permissions;
     }

@@ -1,7 +1,7 @@
 package br.com.hefesto.resources.impl.user.rules;
 
 import br.com.hefesto.domain.impl.Department;
-import br.com.hefesto.domain.impl.Permission;
+import br.com.hefesto.domain.impl.Groups;
 import br.com.hefesto.domain.impl.User;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Message;
@@ -85,7 +85,7 @@ public class ValidateUserDataCommand implements ICommand {
                 try {
                     idPerm = Long.parseLong((String) permission);
                     try {
-                        Permission p = (Permission) s.get(Permission.class, (long) idPerm);
+                        Groups p = (Groups) s.get(Groups.class, (long) idPerm);
                         if (p == null) {
                             m.setError(new StringBuilder("permission ").append(idPerm).append(" doesn't exist").toString());
                             flowContainer.getFc().setMustContinue(false);

@@ -1,6 +1,6 @@
-package br.com.hefesto.resources.impl.permission.rules;
+package br.com.hefesto.resources.impl.group.rules;
 
-import br.com.hefesto.domain.impl.Permission;
+import br.com.hefesto.domain.impl.Groups;
 import br.com.hefesto.domain.impl.User;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Message;
@@ -15,11 +15,11 @@ import org.hibernate.Session;
  *
  * @author Andrew Ribeiro
  */
-public class ValidatePermissionDataCommand implements ICommand {
+public class ValidateGroupDataCommand implements ICommand {
 
     @Override
     public IHolder exe(IHolder holder, FlowContainer flowContainer) {
-        Permission p = (Permission) holder.getEntities().get(0);
+        Groups p = (Groups) holder.getEntities().get(0);
 
         String name;
         String description;
