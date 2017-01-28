@@ -62,14 +62,12 @@ public abstract class AbstractViewHelper implements IViewHelper {
     public String setView(Result result) {
         GsonBuilder gb = new GsonBuilder();
 
-        if (rejects != null && !rejects.isEmpty()) {
-            gb.addSerializationExclusionStrategy(new GenericExclusionStrategy() {
-                @Override
-                public boolean shouldSkipField(FieldAttributes fa) {
-                    return rejects.contains(fa.getName());
-                }
-            });
-        }
+        gb.addSerializationExclusionStrategy(new GenericExclusionStrategy() {
+            @Override
+            public boolean shouldSkipField(FieldAttributes fa) {
+                return rejects.contains(fa.getName());
+            }
+        });
         Gson g = gb.create();
 
         return g.toJson(result);

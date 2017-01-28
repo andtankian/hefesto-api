@@ -56,7 +56,7 @@ public class ReadOneGroupViewHelper extends AbstractViewHelper{
         Gson g = new GsonBuilder().addSerializationExclusionStrategy(new GenericExclusionStrategy() {
             @Override
             public boolean shouldSkipField(FieldAttributes fa) {
-                return fa.getName().equals("permissions");
+                return fa.getName().equals("groups");
             }
         }).create();
         

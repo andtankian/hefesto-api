@@ -2,6 +2,7 @@ package br.com.hefesto.resources.impl.resourcepage.view;
 
 import br.com.hefesto.domain.impl.ResourcePage;
 import br.com.hefesto.resources.impl.resourcepage.rules.ValidateNameWhenReadingOneResourcePageCommand;
+import br.com.hefesto.resources.impl.rules.GenericAcceptAttributes;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.SearchModel;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
@@ -13,7 +14,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Andrew Ribeiro
  */
-public class ReadOneResourcePageViewHelper extends AbstractViewHelper {
+public class ReadOneByNameResourcePageViewHelper extends AbstractViewHelper {
 
     @Override
     public IHolder getView(FlowContainer fc) {
@@ -38,6 +39,7 @@ public class ReadOneResourcePageViewHelper extends AbstractViewHelper {
         sm.setEntity(r);
         gh.getEntities().add(r);
         this.loadBusinessRulesBeforeMainFlow();
+        this.loadBusinessRulesAfterMainFlow();
         return gh;
     }
 
@@ -45,5 +47,12 @@ public class ReadOneResourcePageViewHelper extends AbstractViewHelper {
     public void loadBusinessRulesBeforeMainFlow() {
         this.getRulesBeforeMainFlow().add(new ValidateNameWhenReadingOneResourcePageCommand());
     }
+
+    @Override
+    public void loadBusinessRulesAfterMainFlow() {
+        this.getRulesAfterMainFlow().add(new GenericAcceptAttributes(new String[]{"read", "write"}, rejects, new String[]{"read", "write", "groups", "users"}));
+    }
+    
+    
 
 }

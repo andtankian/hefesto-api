@@ -4,7 +4,7 @@ import br.com.hefesto.resources.impl.group.view.DeleteGroupViewHelper;
 import br.com.hefesto.resources.impl.group.view.NewGroupViewHelper;
 import br.com.hefesto.resources.impl.group.view.ReadAllGroupsViewHelper;
 import br.com.hefesto.resources.impl.group.view.ReadOneGroupViewHelper;
-import br.com.hefesto.resources.impl.group.view.ReadGroupViewHelper;
+import br.com.hefesto.resources.impl.group.view.ReadGroupsViewHelper;
 import br.com.hefesto.resources.impl.group.view.UpdateGroupViewHelper;
 import br.com.wsbasestructure.control.Facade;
 import br.com.wsbasestructure.domain.abstracts.AbstractResource;
@@ -31,7 +31,7 @@ public class ResourceGroups extends AbstractResource {
     @GET
     public String getGroups() {
         return new Facade(
-                new FlowContainer(new ReadGroupViewHelper(), (Session) httpRequest.getAttribute("session"), cr, httpRequest)
+                new FlowContainer(new ReadGroupsViewHelper(), (Session) httpRequest.getAttribute("session"), cr, httpRequest)
         ).process();
     }
     

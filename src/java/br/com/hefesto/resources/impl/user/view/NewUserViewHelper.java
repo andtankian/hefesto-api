@@ -84,7 +84,7 @@ public class NewUserViewHelper extends AbstractViewHelper {
         u.setFullName(fullName);
         u.setLogin(login);
         u.setPassword(password);
-        u.setPermissions(permissions);
+        u.setGroups(permissions);
         
         gh.getEntities().add(u);
         

@@ -20,7 +20,7 @@ public class User extends Entity{
     private String password;
     private String fullName;
     private Department department;
-    private Set permissions;
+    private Set groups;
     
     @Column
     public String getLogin() {
@@ -71,12 +71,12 @@ public class User extends Entity{
     }
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "users", targetEntity = Groups.class)
-    public Set getPermissions() {
-        return permissions;
+    public Set getGroups() {
+        return groups;
     }
 
-    public void setPermissions(Set permissions) {
-        this.permissions = permissions;
+    public void setGroups(Set groups) {
+        this.groups = groups;
     }
 
     public String getEmail() {

@@ -23,7 +23,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Andrew Ribeiro
  */
-public class ReadGroupViewHelper extends AbstractViewHelper{
+public class ReadGroupsViewHelper extends AbstractViewHelper{
     
     private String[] accepts;
     private List rejects;
@@ -83,7 +83,7 @@ public class ReadGroupViewHelper extends AbstractViewHelper{
         Gson g = new GsonBuilder().addSerializationExclusionStrategy(new GenericExclusionStrategy() {
             @Override
             public boolean shouldSkipField(FieldAttributes fa) {
-                return rejects.contains(fa.getName()) || fa.getName().equals("permissions");
+                return rejects.contains(fa.getName()) || fa.getName().equals("groups");
             }
         }).create();
         

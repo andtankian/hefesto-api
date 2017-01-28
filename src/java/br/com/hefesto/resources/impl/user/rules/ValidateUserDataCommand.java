@@ -45,7 +45,7 @@ public class ValidateUserDataCommand implements ICommand {
             m.setError("empty password");
             flowContainer.getFc().setMustContinue(false);
             valid = false;
-        } else if (u.getPermissions() == null) {
+        } else if (u.getGroups() == null) {
             m.setError("empty permissions");
             flowContainer.getFc().setMustContinue(false);
             valid = false;
@@ -71,8 +71,8 @@ public class ValidateUserDataCommand implements ICommand {
         }
 
         /*Verifying if permissions exists and all the list has a valid ID do get in the database*/
-        Set permissions = u.getPermissions();
-        u.setPermissions(new HashSet<>());
+        Set permissions = u.getGroups();
+        u.setGroups(new HashSet<>());
         if (permissions == null || permissions.isEmpty()) {
             m.setError("permissions empty");
             flowContainer.getFc().setMustContinue(false);
@@ -93,7 +93,7 @@ public class ValidateUserDataCommand implements ICommand {
                             flowContainer.getResult().setMessage(m);
                             return holder;
                         } else {
-                            u.getPermissions().add(p);
+                            u.getGroups().add(p);
                         }
                     } catch (Exception e) {
                         m.setError(new StringBuilder("unknown fatal error ").append(e.getMessage()).toString());

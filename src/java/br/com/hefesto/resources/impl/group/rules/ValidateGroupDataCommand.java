@@ -36,6 +36,7 @@ public class ValidateGroupDataCommand implements ICommand {
             flowContainer.getFc().setMustContinue(false);
             m.setError("name empty");
             flowContainer.getResult().setStatus(Result.ERROR);
+            flowContainer.getResult().setMessage(m);
             return holder;
         }
 
@@ -43,6 +44,7 @@ public class ValidateGroupDataCommand implements ICommand {
             flowContainer.getFc().setMustContinue(false);
             m.setError("description empty");
             flowContainer.getResult().setStatus(Result.ERROR);
+            flowContainer.getResult().setMessage(m);
             return holder;
         }
 

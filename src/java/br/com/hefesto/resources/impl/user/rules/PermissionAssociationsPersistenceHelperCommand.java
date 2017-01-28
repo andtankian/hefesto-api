@@ -21,7 +21,7 @@ public class PermissionAssociationsPersistenceHelperCommand implements ICommand 
     public IHolder exe(IHolder holder, FlowContainer flowContainer) {
         User u = (User) holder.getEntities().get(0);
         Message m = new Message();
-        Set permissions = u.getPermissions();
+        Set permissions = u.getGroups();
         if (permissions == null || permissions.isEmpty()) {
             m.setError("permissions empty");
             flowContainer.getResult().setMessage(m);
@@ -30,7 +30,7 @@ public class PermissionAssociationsPersistenceHelperCommand implements ICommand 
             Session s = flowContainer.getSession();
             Transaction t = s.beginTransaction();
 
-            for (Object permission : u.getPermissions()) {
+            for (Object permission : u.getGroups()) {
                 ((Groups)permission).getUsers().add(u);
             }
             t.commit();

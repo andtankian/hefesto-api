@@ -1,7 +1,7 @@
 package br.com.hefesto.resources.impl.resourcepage;
 
 import br.com.hefesto.resources.impl.resourcepage.view.NewResourcePageViewHelper;
-import br.com.hefesto.resources.impl.resourcepage.view.ReadOneResourcePageViewHelper;
+import br.com.hefesto.resources.impl.resourcepage.view.ReadOneByNameResourcePageViewHelper;
 import br.com.hefesto.resources.impl.resourcepage.view.UpdateResourcePageViewHelper;
 import br.com.wsbasestructure.control.Facade;
 import br.com.wsbasestructure.domain.abstracts.AbstractResource;
@@ -26,7 +26,7 @@ public class ResourceResourcePage extends AbstractResource {
     @GET
     @Path("{name}")
     public String getResourcePage() {
-        return new Facade(new FlowContainer(new ReadOneResourcePageViewHelper(), 
+        return new Facade(new FlowContainer(new ReadOneByNameResourcePageViewHelper(), 
                 (Session)httpRequest.getAttribute("session"), 
                 cr, httpRequest))
                 .process();
