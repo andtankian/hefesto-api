@@ -3,6 +3,7 @@ package br.com.hefesto.resources.impl.group.view;
 import br.com.hefesto.domain.impl.Groups;
 import br.com.hefesto.resources.impl.group.rules.AcceptGroupAttributes;
 import br.com.hefesto.resources.impl.group.rules.ValidateAndMergeGroupCommand;
+import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
@@ -62,6 +63,7 @@ public class UpdateGroupViewHelper extends AbstractViewHelper {
     @Override
     public void loadBusinessRulesAfterMainFlow() {
         this.getRulesAfterMainFlow().add(new AcceptGroupAttributes(new String[]{"none"}, this.rejects));
+        this.getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"groups"}));
     }
 
 }
