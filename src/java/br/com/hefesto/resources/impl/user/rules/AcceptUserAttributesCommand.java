@@ -29,7 +29,7 @@ public class AcceptUserAttributesCommand extends AbstractAcceptAttributesCommand
         List<String> toAccept = Arrays.asList(this.accepts);
         List<String> allAttributes = new ArrayList<>();
         allAttributes.add("department");
-        allAttributes.add("permissions");
+        allAttributes.add("groups");
         List<String> missingList = new ArrayList<>(allAttributes);
 
         missingList.removeAll(toAccept);

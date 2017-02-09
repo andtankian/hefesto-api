@@ -1,6 +1,7 @@
 package br.com.wsbasestructure.app.listener;
 
 import br.com.wsbasestructure.dao.abstracts.Connection;
+import br.com.wsbasestructure.endpoints.sessions.generic.ConcreteWebSocketSessionHandler;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -24,6 +25,7 @@ public class AppContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         sce.getServletContext().setAttribute("hefesto", new Connection()); //set the new connection into a appcontext attribute.
+        sce.getServletContext().setAttribute("contentep", new ConcreteWebSocketSessionHandler());
     }
 
     /**

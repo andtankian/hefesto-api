@@ -27,7 +27,8 @@ public class AcceptGroupAttributes extends AbstractAcceptAttributesCommand {
         List<String> toAccept = Arrays.asList(this.accepts);
         List<String> allAttributes = new ArrayList<>();
         allAttributes.add("users");
-        allAttributes.add("resourcers");
+        allAttributes.add("resources");
+        allAttributes.add("groups");
         List<String> missingList = new ArrayList<>(allAttributes);
 
         missingList.removeAll(toAccept);

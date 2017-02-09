@@ -1,8 +1,6 @@
 package br.com.wsbasestructure.dto;
 
 import br.com.wsbasestructure.dto.interfaces.IHolder;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *

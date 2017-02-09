@@ -3,6 +3,7 @@ package br.com.hefesto.resources.impl.group.view;
 import br.com.hefesto.domain.impl.Groups;
 import br.com.hefesto.resources.impl.group.rules.AcceptGroupAttributes;
 import br.com.hefesto.resources.impl.group.rules.ValidateGroupDataCommand;
+import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
@@ -10,7 +11,6 @@ import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MultivaluedHashMap;
@@ -72,6 +72,7 @@ public class NewGroupViewHelper extends AbstractViewHelper {
     @Override
     public void loadBusinessRulesAfterMainFlow() {
         this.getRulesAfterMainFlow().add(new AcceptGroupAttributes(new String[]{"none"}, this.rejects));
+        this.getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"groups"}));
     }
 
 }

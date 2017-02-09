@@ -2,6 +2,7 @@ package br.com.hefesto.resources.impl.resourcepage.view;
 
 import br.com.hefesto.domain.impl.ResourcePage;
 import br.com.hefesto.resources.impl.resourcepage.rules.ValidateAndMergeResourcePagesCommand;
+import br.com.hefesto.resources.impl.rules.GenericAcceptAttributes;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
@@ -62,6 +63,7 @@ public class UpdateResourcePageViewHelper extends AbstractViewHelper {
         gh.getEntities().add(r);
 
         this.loadBusinessRulesBeforeMainFlow();
+        this.loadBusinessRulesAfterMainFlow();
 
         return gh;
     }   
@@ -70,6 +72,13 @@ public class UpdateResourcePageViewHelper extends AbstractViewHelper {
     public void loadBusinessRulesBeforeMainFlow() {
         this.getRulesBeforeMainFlow().add(new ValidateAndMergeResourcePagesCommand());
     }
+
+    @Override
+    public void loadBusinessRulesAfterMainFlow() {
+        this.getRulesAfterMainFlow().add(new GenericAcceptAttributes(new String[]{"none"}, rejects, new String[]{"read", "wirte", "users", "groups"}));
+    }
+    
+    
     
     
 
