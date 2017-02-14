@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -19,7 +20,7 @@ public class ResourcePage extends Entity {
     private Set write;
     private String name;
 
-   @OneToMany(cascade = CascadeType.ALL,
+   @ManyToMany(cascade = CascadeType.ALL,
            fetch = FetchType.EAGER,
            targetEntity = Groups.class)
    @JoinTable(name = "resourcepage_read_permissions")
@@ -31,7 +32,7 @@ public class ResourcePage extends Entity {
         this.read = read;
     }
 
-    @OneToMany(cascade = CascadeType.ALL,
+    @ManyToMany(cascade = CascadeType.ALL,
            fetch = FetchType.EAGER,
            targetEntity = Groups.class)
     @JoinTable(name = "resourcepage_write_permissions")

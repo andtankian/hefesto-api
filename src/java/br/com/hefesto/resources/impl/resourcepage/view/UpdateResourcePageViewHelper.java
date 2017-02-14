@@ -75,7 +75,7 @@ public class UpdateResourcePageViewHelper extends AbstractViewHelper {
 
     @Override
     public void loadBusinessRulesAfterMainFlow() {
-        this.getRulesAfterMainFlow().add(new GenericAcceptAttributes(new String[]{"none"}, rejects, new String[]{"read", "wirte", "users", "groups"}));
+        this.getRulesAfterMainFlow().add(new GenericAcceptAttributes(new String[]{"none"}, rejects, new String[]{"read", "write", "users", "groups"}));
     }
     
     

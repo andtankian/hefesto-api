@@ -42,13 +42,12 @@ public class NewDepartmentViewHelper extends AbstractViewHelper{
 
     @Override
     public void loadBusinessRulesBeforeMainFlow() {
-        super.loadBusinessRulesBeforeMainFlow();
         getRulesBeforeMainFlow().add(new ValidateDepartmentDataCommand());
     }
 
     @Override
     public void loadBusinessRulesAfterMainFlow() {
-        
+        this.getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"none"}));
     }
     
     

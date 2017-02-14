@@ -1,6 +1,7 @@
 package br.com.hefesto.resources.impl.deparment.view;
 
 import br.com.hefesto.domain.impl.Department;
+import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
@@ -40,6 +41,7 @@ public class UpdateDepartmentViewHelper extends AbstractViewHelper{
         gh.getEntities().add(d);
         
         loadBusinessRulesBeforeMainFlow();
+        loadBusinessRulesAfterMainFlow();
         
         return gh;
         
@@ -49,6 +51,13 @@ public class UpdateDepartmentViewHelper extends AbstractViewHelper{
     public void loadBusinessRulesBeforeMainFlow() {
         getRulesBeforeMainFlow().add(new ValidateAndMergeEntityCommand());
     }
+
+    @Override
+    public void loadBusinessRulesAfterMainFlow() {
+        this.getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"none"}));
+    }
+    
+    
     
     
     

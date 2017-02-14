@@ -16,7 +16,6 @@ public class SaveBiDirection {
     public static void main(String[] args) {
         Connection c = new Connection();
         Session session = c.openSession();
-        
         Department d = new Department();
         d.setDateReg(new Timestamp(Calendar.getInstance().getTimeInMillis()));
         d.setName("Administração");

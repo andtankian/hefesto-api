@@ -8,6 +8,7 @@ import br.com.wsbasestructure.dto.interfaces.IHolder;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -43,6 +44,8 @@ public class DepartmentDAO extends GenericCRUDDAO {
                     Restrictions.sqlRestriction("lower(id) like '%" + String.valueOf(d.getId()) + "%'"),
                     Restrictions.sqlRestriction("lower(dateReg) like '%" + String.valueOf(sm.getSearch()) + "%'")
             ));
+            crSearch.add(Restrictions.isNull("status"));
+            crSearch.addOrder(Order.desc("dateReg"));
 
             holder.setEntities(crSearch.list());
 
@@ -62,6 +65,7 @@ public class DepartmentDAO extends GenericCRUDDAO {
             }
             c.setMaxResults(sm.getLimit().intValue());
             c.setFirstResult(sm.getOffset().intValue());
+            c.addOrder(Order.desc("dateReg"));
             holder.setEntities(c.list());
 
             c.setMaxResults(0);

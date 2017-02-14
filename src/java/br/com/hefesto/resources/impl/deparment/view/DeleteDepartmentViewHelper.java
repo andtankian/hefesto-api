@@ -1,6 +1,7 @@
 package br.com.hefesto.resources.impl.deparment.view;
 
 import br.com.hefesto.domain.impl.Department;
+import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.impl.ValidateAndMergeEntityCommand;
@@ -20,6 +21,7 @@ public class DeleteDepartmentViewHelper extends AbstractViewHelper{
         Department d = new Department();
         
         loadBusinessRulesBeforeMainFlow();
+        loadBusinessRulesAfterMainFlow();
         
         return GeneratorGenericHolderToDeleteUtil.generateGenericHolderToDelete(d, fc);
         
@@ -29,6 +31,11 @@ public class DeleteDepartmentViewHelper extends AbstractViewHelper{
     public void loadBusinessRulesBeforeMainFlow() {
         
         this.getRulesBeforeMainFlow().add(new ValidateAndMergeEntityCommand());
+    }
+    
+     @Override
+    public void loadBusinessRulesAfterMainFlow() {
+        this.getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"none"}));
     }
     
     
