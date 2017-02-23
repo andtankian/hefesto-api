@@ -2,7 +2,8 @@ package br.com.hefesto.resources.impl.user.view;
 
 import br.com.hefesto.domain.impl.Department;
 import br.com.hefesto.domain.impl.User;
-import br.com.hefesto.resources.impl.user.rules.AcceptUserAttributesCommand;
+import br.com.hefesto.resources.impl.rules.GenericAcceptAttributes;
+import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
 import br.com.hefesto.resources.impl.user.rules.EncryptUserPasswordCommand;
 import br.com.hefesto.resources.impl.user.rules.PermissionAssociationsPersistenceHelperCommand;
 import br.com.hefesto.resources.impl.user.rules.ValidateUserDataCommand;
@@ -35,6 +36,7 @@ public class NewUserViewHelper extends AbstractViewHelper {
         String login;
         String password;
         String email;
+        String type;
         String department;
         Set permissions;
         try {
@@ -48,7 +50,7 @@ public class NewUserViewHelper extends AbstractViewHelper {
             login = null;
         }
         try {
-            password = (String) mvhm.get("password").get(0);
+            password = (String) mvhm.get("password1").get(0);
         } catch (NullPointerException n) {
             password = null;
         }
@@ -62,6 +64,12 @@ public class NewUserViewHelper extends AbstractViewHelper {
         } catch (NullPointerException n) {
             department = null;
         }
+        
+        try {
+            type = (String)mvhm.get("type").get(0);
+        }catch(NullPointerException n){
+            type = null;
+        }
         Long idDep;
         try {
             idDep = Long.parseLong(department);
@@ -70,8 +78,8 @@ public class NewUserViewHelper extends AbstractViewHelper {
         }
         
         try {
-            permissions = new HashSet<>(mvhm.get("permissions"));
-        } catch(NumberFormatException n){
+            permissions = new HashSet<>(mvhm.get("groups"));
+        } catch(NullPointerException n){
             permissions = null;
         }
         
@@ -85,6 +93,7 @@ public class NewUserViewHelper extends AbstractViewHelper {
         u.setLogin(login);
         u.setPassword(password);
         u.setGroups(permissions);
+        u.setType(type);
         
         gh.getEntities().add(u);
         
@@ -103,9 +112,13 @@ public class NewUserViewHelper extends AbstractViewHelper {
 
     @Override
     public void loadBusinessRulesAfterMainFlow() {
-        this.getRulesAfterMainFlow().add(new AcceptUserAttributesCommand(new String[]{"none"}, rejects));
         this.getRulesAfterMainFlow().add(new PermissionAssociationsPersistenceHelperCommand());
+        getRulesAfterMainFlow().add(new GenericAcceptAttributes(new String[]{"none"}, rejects, 
+        new String[]{"department", "groups", "users"}));
+        getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"groups", "department", "users"}));
     }
+    
+    
     
     
     

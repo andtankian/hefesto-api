@@ -7,22 +7,27 @@ import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author Andrew Ribeiro
  */
 @javax.persistence.Entity
-public class User extends Entity{
-    
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"login"}, name = "duplicate_login")
+    ,@UniqueConstraint(columnNames = {"email"}, name = "duplicate_email")})
+public class User extends Entity {
+
     private String login;
     private String email;
     private String password;
     private String fullName;
+    private String type;
     private Department department;
     private Set groups;
-    
-    @Column
+
     public String getLogin() {
         return login;
     }
@@ -39,7 +44,7 @@ public class User extends Entity{
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     @Column
     public String getFullName() {
         return fullName;
@@ -63,11 +68,13 @@ public class User extends Entity{
     @Override
     public void merge(Entity e) {
         super.merge(e);
-        User u = (User)e;
+        User u = (User) e;
         this.department = u.department != null ? u.department : this.department;
         this.fullName = u.fullName != null ? u.fullName : this.fullName;
         this.login = u.login != null ? u.login : this.login;
         this.password = u.password != null ? u.password : this.password;
+        this.type = u.type != null ? u.type : this.type;
+        this.email = u.email != null ? u.email : this.email;
     }
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "users", targetEntity = Groups.class)
@@ -86,6 +93,13 @@ public class User extends Entity{
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

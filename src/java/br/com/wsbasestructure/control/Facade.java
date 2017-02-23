@@ -4,7 +4,6 @@ import br.com.wsbasestructure.dao.impl.CRUDCenter;
 import br.com.wsbasestructure.dao.interfaces.IPersistenceCenter;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Message;
-import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.exceptions.DefaultStructureException;
 import br.com.wsbasestructure.rules.interfaces.ICommand;

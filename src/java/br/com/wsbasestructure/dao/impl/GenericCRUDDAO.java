@@ -40,7 +40,7 @@ public abstract class GenericCRUDDAO extends AbstractDAO implements ICRUD {
             message.setText("inserted");
             result.setStatus(Result.SUCCESS);
         } catch (Exception e) {
-            message.setError(e.getMessage());
+            message.setError(e.getCause().getMessage());
             result.setStatus(Result.ERROR);
             fc.setMustContinue(false);
         } finally {
@@ -59,7 +59,7 @@ public abstract class GenericCRUDDAO extends AbstractDAO implements ICRUD {
             message.setText("updated");
             result.setStatus(Result.SUCCESS);
         } catch (Exception e) {
-            message.setError(e.getMessage());
+            message.setError(e.getCause().getMessage());
             result.setStatus(Result.ERROR);
             fc.setMustContinue(false);
         } finally {
