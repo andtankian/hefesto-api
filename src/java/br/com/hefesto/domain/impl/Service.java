@@ -61,7 +61,15 @@ public class Service extends Entity{
         Service s = (Service)e;
         this.description = s.description != null ? s.description : this.description;
         this.name = s.name != null ? s.name : this.name;
-        this.sla = s.sla != null ? s.sla : this.sla;
+        if(s.sla.getDays() != null){
+            this.sla.setDays(s.sla.getDays());
+        }
+        if(s.sla.getMinutes() != null){
+            this.sla.setMinutes(s.sla.getMinutes());
+        }
+        if(s.sla.getHours() != null){
+            this.sla.setHours(s.sla.getHours());
+        }
         this.type = s.type != null ? s.type : this.type;
     }
     
