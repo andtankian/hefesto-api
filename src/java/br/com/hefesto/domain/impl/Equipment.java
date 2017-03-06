@@ -32,7 +32,7 @@ public class Equipment extends Entity{
         this.description = description;
     }
 
-    @Column
+    @Column(unique = true)
     public String getPatrimonial() {
         return patrimonial;
     }

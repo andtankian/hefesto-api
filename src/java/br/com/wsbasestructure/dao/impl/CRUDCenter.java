@@ -2,10 +2,12 @@ package br.com.wsbasestructure.dao.impl;
 
 import br.com.hefesto.resources.impl.deparment.dao.DepartmentDAO;
 import br.com.hefesto.domain.impl.Department;
+import br.com.hefesto.domain.impl.Equipment;
 import br.com.hefesto.domain.impl.Groups;
 import br.com.hefesto.domain.impl.ResourcePage;
 import br.com.hefesto.domain.impl.Service;
 import br.com.hefesto.domain.impl.User;
+import br.com.hefesto.resources.impl.equipments.dao.EquipmentDAO;
 import br.com.hefesto.resources.impl.group.dao.GroupDAO;
 import br.com.hefesto.resources.impl.resourcepage.dao.ResourceResourcePageDAO;
 import br.com.hefesto.resources.impl.service.dao.ServiceDAO;
@@ -35,6 +37,8 @@ public class CRUDCenter extends AbstractPersistenceCenter{
            return new ResourceResourcePageDAO(session, holder);
        } else if(e instanceof Service){
            return new ServiceDAO(session, holder);
+       } else if(e instanceof Equipment){
+           return new EquipmentDAO(session, holder);
        }
        
        return null;

@@ -5,7 +5,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -22,7 +21,7 @@ public class Interaction extends Entity{
     private String type;
     private Ticket ticket;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = User.class)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = User.class)
     public User getUser() {
         return user;
     }
@@ -40,7 +39,7 @@ public class Interaction extends Entity{
         this.type = type;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Ticket.class)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public Ticket getTicket() {
         return ticket;
     }

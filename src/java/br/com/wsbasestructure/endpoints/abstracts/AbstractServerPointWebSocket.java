@@ -3,12 +3,10 @@ package br.com.wsbasestructure.endpoints.abstracts;
 
 import br.com.wsbasestructure.endpoints.interfaces.IEndPointWebSocket;
 import br.com.wsbasestructure.endpoints.sessions.interfaces.WebSocketSessionHandler;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
+import javax.websocket.OnError;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 
@@ -33,6 +31,13 @@ public abstract class AbstractServerPointWebSocket implements IEndPointWebSocket
     @OnClose
     public void onClose(Session session) {
         handler.remove(session);
+    }
+    
+    @OnError
+    public void onError(Session session, Throwable t) {
+        /* Remove this connection from the queue */
+        handler.remove(session);
+        System.out.println(t.getCause().getMessage());
     }
 
 }

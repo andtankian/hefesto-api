@@ -1,7 +1,7 @@
 package br.com.hefesto.resources.impl.deparment.view;
 
 import br.com.hefesto.domain.impl.Department;
-import br.com.hefesto.resources.impl.department.rules.impl.ValidateDepartmentDataCommand;
+import br.com.hefesto.resources.impl.department.rules.ValidateDepartmentDataCommand;
 import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.impl.GenericHolder;

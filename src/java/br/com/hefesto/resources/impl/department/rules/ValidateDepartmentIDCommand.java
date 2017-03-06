@@ -1,4 +1,4 @@
-package br.com.hefesto.resources.impl.department.rules.impl;
+package br.com.hefesto.resources.impl.department.rules;
 
 import br.com.hefesto.domain.impl.Department;
 import br.com.wsbasestructure.dto.FlowContainer;

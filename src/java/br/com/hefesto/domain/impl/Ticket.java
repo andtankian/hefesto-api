@@ -1,10 +1,11 @@
 package br.com.hefesto.domain.impl;
 
 import br.com.wsbasestructure.domain.abstracts.Entity;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -26,8 +27,8 @@ public class Ticket extends Entity {
     public final static String P2 = "P2";
     public final static String P1 = "P1";
     
-    private List<Interaction> interactions;
-    private List<RequestedProduct> requestedProducts;
+    private Set interactions;
+    private Set requestedProducts;
 
     private Service service;
     private Equipment equipment;
@@ -37,21 +38,21 @@ public class Ticket extends Entity {
     private String resolution;
     private User responsible;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ticket")
-    public List<Interaction> getInteractions() {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Interaction.class, mappedBy = "ticket")
+    public Set getInteractions() {
         return interactions;
     }
 
-    public void setInteractions(List<Interaction> interactions) {
+    public void setInteractions(Set interactions) {
         this.interactions = interactions;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "ticket")
-    public List<RequestedProduct> getRequestedProducts() {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = RequestedProduct.class, mappedBy = "ticket")
+    public Set getRequestedProducts() {
         return requestedProducts;
     }
 
-    public void setRequestedProducts(List<RequestedProduct> requestedProducts) {
+    public void setRequestedProducts(Set requestedProducts) {
         this.requestedProducts = requestedProducts;
     }
 
@@ -82,7 +83,7 @@ public class Ticket extends Entity {
         this.problem = problem;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     public User getResponsible() {
         return responsible;
     }
@@ -121,6 +122,7 @@ public class Ticket extends Entity {
         this.resolution = t.resolution != null ? t.resolution : this.resolution;
         this.responsible = t.responsible != null ? t.responsible : this.responsible;
         this.service = t.service != null ? t.service : this.service;
+        this.title = t.title != null ? t.title : this.title;
     }
 
     @Column
