@@ -3,10 +3,8 @@ package br.com.hefesto.resources.impl.equipments.view;
 import br.com.hefesto.domain.impl.Equipment;
 import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
-import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.impl.ValidateAndMergeEntityCommand;
-import br.com.wsbasestructure.rules.impl.ValidateIDEntityCommand;
 import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
 import br.com.wsbasestructure.view.impl.GeneratorGenericHolderToDeleteUtil;
 

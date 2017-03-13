@@ -1,5 +1,6 @@
 package br.com.hefesto.resources.impl.user;
 
+import br.com.hefesto.resources.impl.user.view.LoginUserViewHelper;
 import br.com.hefesto.resources.impl.user.view.NewUserViewHelper;
 import br.com.hefesto.resources.impl.user.view.ReadAllUsersViewHelper;
 import br.com.hefesto.resources.impl.user.view.ReadUserViewHelper;
@@ -49,6 +50,16 @@ public class ResourceUser extends AbstractResource {
     @Path("{id}")
     public String getUser(){
         return new Facade(new FlowContainer(new ReadUserViewHelper(),
+                (Session) httpRequest.getAttribute("session"),
+                cr,
+                httpRequest))
+                .process();
+    }
+    
+    @POST
+    @Path("/login")
+    public String loginUser(){
+        return new Facade(new FlowContainer(new LoginUserViewHelper(),
                 (Session) httpRequest.getAttribute("session"),
                 cr,
                 httpRequest))

@@ -1,7 +1,6 @@
 package br.com.wsbasestructure.endpoints.sessions.generic;
 
 import br.com.wsbasestructure.dto.FlowContainer;
-import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.endpoints.sessions.interfaces.WebSocketSessionHandler;
 import br.com.wsbasestructure.view.impl.GenericExclusionStrategy;
 import com.google.gson.FieldAttributes;

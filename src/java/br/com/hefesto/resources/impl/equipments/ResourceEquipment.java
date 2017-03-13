@@ -1,6 +1,7 @@
 package br.com.hefesto.resources.impl.equipments;
 
 import br.com.hefesto.resources.impl.equipments.view.DeleteEquipmentViewHelper;
+import br.com.hefesto.resources.impl.equipments.view.NewBulkEquipmentsViewHelper;
 import br.com.hefesto.resources.impl.equipments.view.NewEquipmentViewHelper;
 import br.com.hefesto.resources.impl.equipments.view.ReadAllEquipmentsViewHelper;
 import br.com.hefesto.resources.impl.equipments.view.ReadEquipmentsViewHelper;
@@ -55,6 +56,15 @@ public class ResourceEquipment extends AbstractResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String newEquipment() {
         return new Facade(new FlowContainer(new NewEquipmentViewHelper(),
+                (Session) httpRequest.getAttribute("session"), cr, httpRequest))
+                .process();
+    }
+    
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Path("/bulk")
+    public String newBulkEquipments(){
+        return new Facade(new FlowContainer(new NewBulkEquipmentsViewHelper(),
                 (Session) httpRequest.getAttribute("session"), cr, httpRequest))
                 .process();
     }

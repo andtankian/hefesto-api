@@ -54,6 +54,7 @@ Contributor(s):
     <property name="hibernate.c3p0.timeout">1800</property>
     <property name="hibernate.c3p0.max_statements">50</property>
     <property name="hibernate.c3p0.idle_test_period">10</property>
+    <property name="hibernate.jdbc.batch_size">20</property>
     <mapping class="br.com.hefesto.domain.impl.Department"/>
     <mapping class="br.com.hefesto.domain.impl.User"/>
     <mapping class="br.com.hefesto.domain.impl.Product"/>

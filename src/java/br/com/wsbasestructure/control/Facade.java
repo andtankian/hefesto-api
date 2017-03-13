@@ -1,5 +1,6 @@
 package br.com.wsbasestructure.control;
 
+import br.com.wsbasestructure.dao.impl.BulkCenter;
 import br.com.wsbasestructure.dao.impl.CRUDCenter;
 import br.com.wsbasestructure.dao.interfaces.IPersistenceCenter;
 import br.com.wsbasestructure.dto.FlowContainer;
@@ -87,6 +88,8 @@ public class Facade {
     private void runMainFlow(Session session, IHolder holder, String method, String typeRequest) throws Exception {
         if (typeRequest.equalsIgnoreCase("crud")) {
             persistenceCenter = new CRUDCenter();
+        } else if(typeRequest.equalsIgnoreCase("bulk")){
+            persistenceCenter = new BulkCenter();
         }
 
         //Now, it needs to execute the action as requested and the persistence center will execute according to the action

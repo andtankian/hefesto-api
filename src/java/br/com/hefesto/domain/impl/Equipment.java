@@ -23,7 +23,7 @@ public class Equipment extends Entity{
         this.name = name;
     }
 
-    @Column
+    @Column(length = 3500)
     public String getDescription() {
         return description;
     }

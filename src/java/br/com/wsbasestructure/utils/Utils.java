@@ -1,4 +1,3 @@
-
 package br.com.wsbasestructure.utils;
 
 import org.hibernate.Hibernate;
@@ -21,6 +20,15 @@ public class Utils {
                     .getImplementation();
         }
         return entity;
+    }
+
+    public static String convertStreamToString(java.io.InputStream is) {
+        if (is == null) {
+            return "";
+        } else {
+            java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+            return s.hasNext() ? s.next() : "";
+        }
     }
 
 }

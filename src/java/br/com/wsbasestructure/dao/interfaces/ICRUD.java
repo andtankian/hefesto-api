@@ -1,7 +1,6 @@
 package br.com.wsbasestructure.dao.interfaces;
 
 import br.com.wsbasestructure.dto.Result;
-import br.com.wsbasestructure.dto.interfaces.IHolder;
 
 /**
  *
