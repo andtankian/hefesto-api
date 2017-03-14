@@ -30,19 +30,18 @@ public class ValidateLoginUserPasswordCommand implements ICommand{
         if(u == null){
             m.setError("user doesn't exist");
             isValid = false;
-        } else if(BCrypt.checkpw(userTrying.getPassword(), u.getPassword())){
+        } else if(!BCrypt.checkpw(userTrying.getPassword(), u.getPassword())){
             m.setError("invalid password");
             isValid = false;
-        } else {
-            u.setPassword(null);
         }
         
         if(!isValid){
-            flowContainer.getResult().setHolder(holder);
             flowContainer.getResult().setMessage(m);
             flowContainer.getResult().setStatus(Result.ERROR);
+            flowContainer.getFc().setMustContinue(false);
         }
         
+        flowContainer.getResult().setHolder(holder);
         return holder;
     }
     

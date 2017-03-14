@@ -4,7 +4,6 @@ import br.com.hefesto.domain.impl.User;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.interfaces.AbstractAcceptAttributesCommand;
-import br.com.wsbasestructure.rules.interfaces.ICommand;
 import br.com.wsbasestructure.utils.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;

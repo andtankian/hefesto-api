@@ -1,6 +1,11 @@
 package br.com.hefesto.resources.impl.user.view;
 
 import br.com.hefesto.domain.impl.User;
+import br.com.hefesto.resources.impl.rules.GenericAcceptAttributes;
+import br.com.hefesto.resources.impl.user.rules.AcceptUserAttributesCommand;
+import br.com.hefesto.resources.impl.user.rules.ExceptionToLoginUserCommand;
+import br.com.hefesto.resources.impl.user.rules.RemoveUserFromPersistenceContextCommand;
+import br.com.hefesto.resources.impl.user.rules.SetLoggedUserToSessionCommand;
 import br.com.hefesto.resources.impl.user.rules.ValidateLoginUserCommand;
 import br.com.hefesto.resources.impl.user.rules.ValidateLoginUserPasswordCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
@@ -49,8 +54,6 @@ public class LoginUserViewHelper extends AbstractViewHelper{
         gh.getEntities().add(user);
         
         loadBusinessRulesBeforeMainFlow();
-        loadBusinessRulesAfterMainFlow();
-        
         
         return gh;
     }
@@ -58,15 +61,10 @@ public class LoginUserViewHelper extends AbstractViewHelper{
     @Override
     public void loadBusinessRulesBeforeMainFlow() {
         getRulesBeforeMainFlow().add(new ValidateLoginUserCommand());
+        getRulesBeforeMainFlow().add(new ExceptionToLoginUserCommand());
+        getRulesBeforeMainFlow().add(new ValidateLoginUserPasswordCommand(userTrying));
+        getRulesBeforeMainFlow().add(new RemoveUserFromPersistenceContextCommand());
+        getRulesBeforeMainFlow().add(new AcceptUserAttributesCommand(new String[]{"department", "groups"}, rejects));
+        getRulesBeforeMainFlow().add(new SetLoggedUserToSessionCommand());
     }
-
-    @Override
-    public void loadBusinessRulesAfterMainFlow() {
-        getRulesAfterMainFlow().add(new ValidateLoginUserPasswordCommand(userTrying));
-    }
-    
-    
-    
-    
-    
 }
