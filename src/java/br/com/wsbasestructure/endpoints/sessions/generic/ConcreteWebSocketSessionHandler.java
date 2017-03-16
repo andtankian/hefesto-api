@@ -26,6 +26,7 @@ public class ConcreteWebSocketSessionHandler implements WebSocketSessionHandler{
 
     @Override
     public synchronized void add(Session session) {
+        session.setMaxIdleTimeout(-1);
         this.sessions.add(session);
     }
 
