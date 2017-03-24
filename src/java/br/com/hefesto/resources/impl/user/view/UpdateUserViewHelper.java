@@ -4,16 +4,14 @@ import br.com.hefesto.domain.impl.Department;
 import br.com.hefesto.domain.impl.User;
 import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
 import br.com.hefesto.resources.impl.user.rules.AcceptUserAttributesCommand;
+import br.com.hefesto.resources.impl.user.rules.GroupsAssociationWhenUpdatingCommand;
+import br.com.hefesto.resources.impl.user.rules.PermissionAssociationsPersistenceHelperCommand;
 import br.com.hefesto.resources.impl.user.rules.ValidateAndMergeUserCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
-import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.impl.ValidateIDEntityCommand;
 import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
-import br.com.wsbasestructure.view.impl.GenericExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.GsonBuilder;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.core.Form;
@@ -26,6 +24,8 @@ import javax.ws.rs.core.UriInfo;
  * @author Andrew Ribeiro
  */
 public class UpdateUserViewHelper extends AbstractViewHelper {
+    
+    Set shouldKeep;
 
     @Override
     public IHolder getView(FlowContainer fc) {
@@ -95,6 +95,7 @@ public class UpdateUserViewHelper extends AbstractViewHelper {
         
         try {
             groups = new HashSet<>(mvhm.get("groups"));
+            shouldKeep = groups;
         } catch(NullPointerException n){
             groups = null;
         }
@@ -131,6 +132,7 @@ public class UpdateUserViewHelper extends AbstractViewHelper {
 
     @Override
     public void loadBusinessRulesAfterMainFlow() {
+        getRulesAfterMainFlow().add(new GroupsAssociationWhenUpdatingCommand(shouldKeep));
         getRulesAfterMainFlow().add(new AcceptUserAttributesCommand(new String[]{"none"}, rejects));
         getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"users"}));
     }

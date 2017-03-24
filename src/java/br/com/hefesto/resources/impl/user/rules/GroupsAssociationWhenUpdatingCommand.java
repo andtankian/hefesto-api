@@ -1,6 +1,5 @@
 package br.com.hefesto.resources.impl.user.rules;
 
-import br.com.hefesto.domain.impl.Department;
 import br.com.hefesto.domain.impl.Groups;
 import br.com.hefesto.domain.impl.User;
 import br.com.wsbasestructure.dto.FlowContainer;
@@ -10,40 +9,34 @@ import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.interfaces.ICommand;
 import java.util.HashSet;
 import java.util.Set;
-import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
  * @author Andrew Ribeiro
  */
-public class ValidateAndMergeUserCommand implements ICommand {
+public class GroupsAssociationWhenUpdatingCommand implements ICommand {
+
+    Set shouldKeep;
+
+    public GroupsAssociationWhenUpdatingCommand(Set shouldKeep) {
+
+        this.shouldKeep = shouldKeep;
+    }
 
     @Override
     public IHolder exe(IHolder holder, FlowContainer flowContainer) {
         User u = (User) holder.getEntities().get(0);
         Message m = new Message();
-        Session s = (Session) flowContainer.getSession();
-        Department d = u.getDepartment();
-
-        if (d != null && d.getId() != null) {
-            try {
-                u.setDepartment((Department) s.load(Department.class, d.getId()));
-            } catch (ObjectNotFoundException o) {
-                m.setError("department id " + d.getId() + " doesn't exist");
-                flowContainer.getResult().setMessage(m);
-                flowContainer.getResult().setStatus(Result.ERROR);
-                flowContainer.getResult().setHolder(holder);
-                flowContainer.getFc().setMustContinue(false);
-                return holder;
-            }
-        }
-
-        Set groups = u.getGroups();
-
-       /* if (groups != null) {
-            u.setGroups(new HashSet<>());
-            for (Object group : groups) {
+        Session s = flowContainer.getSession();
+        Transaction t = null;
+        Set permissions = u.getGroups();
+        Set skClone;
+        if (shouldKeep != null) {
+            t = s.getTransaction().isActive() ? s.getTransaction() : s.beginTransaction();
+            skClone = new HashSet<>();
+            for (Object group : shouldKeep) {
                 String g = (String) group;
                 Long longG = (long) -1;
                 try {
@@ -57,7 +50,8 @@ public class ValidateAndMergeUserCommand implements ICommand {
                         flowContainer.getFc().setMustContinue(false);
                         return holder;
                     }
-                    u.getGroups().add(gp);
+                    skClone.add(gp);
+                    gp.getUsers().add(u);
                 } catch (NumberFormatException n) {
                     m.setError("group id " + longG + " invalid");
                     flowContainer.getResult().setMessage(m);
@@ -67,21 +61,23 @@ public class ValidateAndMergeUserCommand implements ICommand {
                     return holder;
                 }
             }
-        }*/
+            Set missing = new HashSet<>(permissions);
+            missing.removeAll(skClone);
 
-        User loaded = (User) s.get(User.class, u.getId());
-        if (loaded == null) {
-            m.setError("user id " + u.getId() + " doesn't exist");
-            flowContainer.getResult().setMessage(m);
-            flowContainer.getResult().setStatus(Result.ERROR);
-            flowContainer.getResult().setHolder(holder);
-            flowContainer.getFc().setMustContinue(false);
-            return holder;
-        } else {
-            loaded.merge(u);
-            holder.getEntities().set(0, loaded);
+            /*
+            Firstly, let's extract up the users from original Collection.
+             */
+            for (Object object : missing) {
+                Groups g = (Groups) object;
+                for (Object object1 : g.getUsers()) {
+                    User us = (User) object1;
+                    if(us.getId() == u.getId()){
+                        g.getUsers().remove(us);
+                    }
+                }
+            }
+            t.commit();
         }
-
         return holder;
     }
 

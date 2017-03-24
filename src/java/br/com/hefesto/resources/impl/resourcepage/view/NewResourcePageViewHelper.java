@@ -29,7 +29,7 @@ public class NewResourcePageViewHelper extends AbstractViewHelper {
 
         try {
             name = (String) mvhm.get("name").get(0);
-        } catch (NumberFormatException e) {
+        } catch (NullPointerException e) {
             name = null;
         }
         r.setName(name);
