@@ -41,6 +41,7 @@ public class EquipmentDAO extends GenericCRUDDAO{
             crSearch.add(Restrictions.disjunction(
                     Restrictions.ilike("name", esearch.getName(), MatchMode.ANYWHERE),
                     Restrictions.ilike("description", esearch.getDescription(), MatchMode.ANYWHERE),
+                    Restrictions.ilike("patrimonial", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.sqlRestriction("lower(id) like '%" + String.valueOf(esearch.getId()) + "%'"),
                     Restrictions.sqlRestriction("lower(dateReg) like '%" + String.valueOf(sm.getSearch()) + "%'")
             )).add(Restrictions.isNull("status"));

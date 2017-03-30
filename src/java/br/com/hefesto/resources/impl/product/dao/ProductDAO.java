@@ -31,12 +31,16 @@ public class ProductDAO extends GenericCRUDDAO {
         if (sm != null && sm.getEntity() != null && sm.getEntity().getId() != null) {
             readOne();
         } else if(sm != null && sm.getSearch() != null){
+            try {
+                sm.getEntity().setId(Long.parseLong(sm.getSearch()));
+            }catch(NumberFormatException nfe){
+            }
             c.addOrder(Order.desc("dateReg"));
             c.add(Restrictions.disjunction(
                     Restrictions.ilike("name", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.ilike("description", sm.getSearch(), MatchMode.ANYWHERE),
-                    Restrictions.ilike("link", sm.getSearch()),
-                    Restrictions.ilike("type", sm.getSearch()),
+                    Restrictions.ilike("link", sm.getSearch(), MatchMode.ANYWHERE),
+                    Restrictions.ilike("type", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.sqlRestriction("lower(id) like '%" + String.valueOf(p.getId()) + "%'"),
                     Restrictions.sqlRestriction("lower(dateReg) like '%" + String.valueOf(sm.getSearch()) + "%'")
             )).add(Restrictions.isNull("status"));

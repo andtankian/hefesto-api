@@ -63,7 +63,7 @@ public class UserDAO extends GenericCRUDDAO {
                     Restrictions.ilike("login", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.sqlRestriction("lower(id) like '%" + String.valueOf(u.getId()) + "%'"),
                     Restrictions.sqlRestriction("lower(dateReg) like '%" + String.valueOf(sm.getSearch()) + "%'")
-            ));
+            )).add(Restrictions.isNull("status"));
             
             crSearch.addOrder(Order.desc("dateReg"));
 
