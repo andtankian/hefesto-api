@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -27,7 +28,8 @@ public class User extends Entity {
     private String type;
     private Department department;
     private Set groups;
-
+    private UserVisual userVisual;
+    
     public String getLogin() {
         return login;
     }
@@ -100,6 +102,15 @@ public class User extends Entity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    public UserVisual getUserVisual() {
+        return userVisual;
+    }
+
+    public void setUserVisual(UserVisual userVisual) {
+        this.userVisual = userVisual;
     }
 
 }
