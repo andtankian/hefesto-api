@@ -53,6 +53,7 @@ public class ResourceProduct extends AbstractResource{
                 cr, httpRequest))
                 .process();
     }
+    
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String newProduct(){

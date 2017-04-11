@@ -77,6 +77,7 @@ public class User extends Entity {
         this.password = u.password != null ? u.password : this.password;
         this.type = u.type != null ? u.type : this.type;
         this.email = u.email != null ? u.email : this.email;
+        this.userVisual = u.userVisual != null ? u.userVisual : this.userVisual;
     }
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "users", targetEntity = Groups.class)

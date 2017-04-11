@@ -1,14 +1,12 @@
 package br.com.hefesto.resources.impl.user.rules;
 
 import br.com.hefesto.domain.impl.Department;
-import br.com.hefesto.domain.impl.Groups;
 import br.com.hefesto.domain.impl.User;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Message;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.interfaces.ICommand;
-import java.util.HashSet;
 import java.util.Set;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;

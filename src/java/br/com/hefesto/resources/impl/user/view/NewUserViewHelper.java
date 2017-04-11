@@ -2,6 +2,7 @@ package br.com.hefesto.resources.impl.user.view;
 
 import br.com.hefesto.domain.impl.Department;
 import br.com.hefesto.domain.impl.User;
+import br.com.hefesto.domain.impl.UserVisual;
 import br.com.hefesto.resources.impl.rules.GenericAcceptAttributes;
 import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
 import br.com.hefesto.resources.impl.user.rules.EncryptUserPasswordCommand;
@@ -30,6 +31,7 @@ public class NewUserViewHelper extends AbstractViewHelper {
 
         GenericHolder gh = new GenericHolder();
         User u = new User();
+        UserVisual uv = new UserVisual();
         Form f = (Form) fc.getCr().readEntity(Form.class);
         MultivaluedHashMap mvhm = (MultivaluedHashMap) f.asMap();
         String fullName;
@@ -94,6 +96,11 @@ public class NewUserViewHelper extends AbstractViewHelper {
         u.setPassword(password);
         u.setGroups(permissions);
         u.setType(type);
+        
+        uv.setDateReg(u.getDateReg());
+        uv.setLandscape("images/images/no_ls.jpg");
+        uv.setProfile("images/images/no_user.jpg");
+        u.setUserVisual(uv);
         
         gh.getEntities().add(u);
         
