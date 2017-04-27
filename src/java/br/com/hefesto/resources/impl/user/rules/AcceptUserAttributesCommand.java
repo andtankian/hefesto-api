@@ -35,6 +35,7 @@ public class AcceptUserAttributesCommand extends AbstractAcceptAttributesCommand
         allAttributes.add("department");
         allAttributes.add("groups");
         allAttributes.add("users");
+        allAttributes.add("userVisual");
         List<String> missingList = new ArrayList<>(allAttributes);
 
         missingList.removeAll(toAccept);

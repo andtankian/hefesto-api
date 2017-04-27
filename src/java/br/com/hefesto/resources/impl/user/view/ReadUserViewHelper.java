@@ -60,7 +60,7 @@ public class ReadUserViewHelper extends AbstractViewHelper {
 
     @Override
     public void loadBusinessRulesAfterMainFlow() {
-        getRulesAfterMainFlow().add(new AcceptUserAttributesCommand(new String[]{"department", "groups"}, rejects));
+        getRulesAfterMainFlow().add(new AcceptUserAttributesCommand(new String[]{"department", "groups", "userVisual"}, rejects));
     }
     
     

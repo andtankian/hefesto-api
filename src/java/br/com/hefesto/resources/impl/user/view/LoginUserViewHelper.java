@@ -62,7 +62,7 @@ public class LoginUserViewHelper extends AbstractViewHelper{
         getRulesBeforeMainFlow().add(new ValidateLoginUserCommand());
         getRulesBeforeMainFlow().add(new ExceptionToLoginUserCommand());
         getRulesBeforeMainFlow().add(new ValidateLoginUserPasswordCommand(userTrying));
-        getRulesBeforeMainFlow().add(new AcceptUserAttributesCommand(new String[]{"department", "groups"}, rejects));
+        getRulesBeforeMainFlow().add(new AcceptUserAttributesCommand(new String[]{"department", "groups", "userVisual"}, rejects));
         getRulesBeforeMainFlow().add(new RemoveUserFromPersistenceContextCommand());
         getRulesBeforeMainFlow().add(new StopFlowCommand());
     }

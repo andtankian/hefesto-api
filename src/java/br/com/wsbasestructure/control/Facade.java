@@ -90,6 +90,8 @@ public class Facade {
             persistenceCenter = new CRUDCenter();
         } else if(typeRequest.equalsIgnoreCase("bulk")){
             persistenceCenter = new BulkCenter();
+        } else if(typeRequest.equalsIgnoreCase("profile")){
+            
         }
 
         //Now, it needs to execute the action as requested and the persistence center will execute according to the action

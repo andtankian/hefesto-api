@@ -43,6 +43,7 @@ public class ValidateAndSaveLSAndProfilePicCommand implements ICommand {
             flowContainer.getFc().setMustContinue(false);
             return holder;
         }
+        long actualmillis = Calendar.getInstance().getTimeInMillis();
 
         /*
         Let's verify if user exists
@@ -71,7 +72,7 @@ public class ValidateAndSaveLSAndProfilePicCommand implements ICommand {
             File image = new File(".." + File.separator
                     + ".." + File.separator
                     + "images" + File.separator
-                    + Calendar.getInstance().getTimeInMillis() + ".jpg");
+                    + actualmillis + ".jpg");
             try {
                 image.createNewFile(); //it always creates a new file
                 ImageWriter jpgWriter = ImageIO.getImageWritersByFormatName("jpg").next();
@@ -84,14 +85,14 @@ public class ValidateAndSaveLSAndProfilePicCommand implements ICommand {
                 IIOImage outputImage = new IIOImage(b, null, null);
                 jpgWriter.write(null, outputImage, jpgWriteParam);
                 jpgWriter.reset();
-                int[] thumbs = {400, 80, 230};
+                int[] thumbs = {400, 80, 230, 500};
 
                 for (int i = 0; i < thumbs.length; i++) {
                     image = new File(".." + File.separator
                             + ".." + File.separator
                             + "images" + File.separator
                             + thumbs[i] + "x" + thumbs[i]
-                            + Calendar.getInstance().getTimeInMillis() + ".jpg");
+                            + actualmillis + ".jpg");
                     image.createNewFile();
                     jpgWriter.setOutput(new FileImageOutputStream(image));
                     outputImage = new IIOImage(Scalr.resize(b, thumbs[i]), null, null);
@@ -111,9 +112,9 @@ public class ValidateAndSaveLSAndProfilePicCommand implements ICommand {
                 }
             }
 
-            uv.setDateReg(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+            uv.setDateReg(new Timestamp(actualmillis));
             uv.setLandscape("");
-            uv.setProfile("/wsbasestructure/images/images/" + Calendar.getInstance().getTimeInMillis() + ".jpg");
+            uv.setProfile("/wsbasestructure/images/images/" + actualmillis + ".jpg");
             user.setUserVisual(uv);
             loaded.merge(user);
             holder.getEntities().set(0, loaded);

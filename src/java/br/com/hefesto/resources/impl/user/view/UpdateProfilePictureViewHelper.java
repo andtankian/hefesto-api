@@ -1,6 +1,7 @@
 package br.com.hefesto.resources.impl.user.view;
 
 import br.com.hefesto.domain.impl.User;
+import br.com.hefesto.resources.impl.user.rules.AcceptUserAttributesCommand;
 import br.com.hefesto.resources.impl.user.rules.ValidateAndSaveLSAndProfilePicCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.impl.GenericImageHolder;
@@ -9,12 +10,9 @@ import br.com.wsbasestructure.rules.impl.ValidateIDEntityCommand;
 import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MultivaluedHashMap;
-import org.glassfish.jersey.media.multipart.FormDataMultiPart;
-import org.glassfish.jersey.media.multipart.MultiPart;
 
 /**
  *
@@ -77,6 +75,13 @@ public class UpdateProfilePictureViewHelper extends AbstractViewHelper {
         getRulesBeforeMainFlow().add(new ValidateIDEntityCommand());
         getRulesBeforeMainFlow().add(new ValidateAndSaveLSAndProfilePicCommand());
     }
+
+    @Override
+    public void loadBusinessRulesAfterMainFlow() {
+        getRulesAfterMainFlow().add(new AcceptUserAttributesCommand(new String[]{"groups", "department", "userVisual"}, rejects));
+    }
+    
+    
 
     
 }

@@ -27,6 +27,7 @@ public class RemoveUserFromPersistenceContextCommand implements ICommand {
         outOfContext.setPassword(null);
         outOfContext.setStatus(user.getStatus());
         outOfContext.setType(user.getType());
+        outOfContext.setUserVisual(user.getUserVisual());
         
         holder.getEntities().set(0, outOfContext);
         

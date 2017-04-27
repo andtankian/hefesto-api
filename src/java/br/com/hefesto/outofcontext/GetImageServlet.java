@@ -38,7 +38,7 @@ public class GetImageServlet extends HttpServlet {
         if (path != null) {
             String[] splitted = path.split("/");
             if (splitted != null && splitted.length > 0 && !splitted.equals("/")) {
-                String type = req.getParameter("type") != null ? req.getParameter("type") : "400x400";
+                String type = req.getParameter("type") != null ? req.getParameter("type") : "500x500";
                 ext = splitted[splitted.length - 1].substring(
                         splitted[splitted.length - 1].length() - 4,
                         splitted[splitted.length - 1].length());
