@@ -12,6 +12,7 @@ import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.impl.ValidateIDEntityCommand;
 import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.core.Form;
@@ -26,6 +27,7 @@ import javax.ws.rs.core.UriInfo;
 public class UpdateUserViewHelper extends AbstractViewHelper {
     
     Set shouldKeep;
+    private String[] accepts;
 
     @Override
     public IHolder getView(FlowContainer fc) {
@@ -34,6 +36,7 @@ public class UpdateUserViewHelper extends AbstractViewHelper {
         GenericHolder gh = new GenericHolder();
         UriInfo ui = fc.getCr().getUriInfo();
         MultivaluedMap<String, String> mvm = ui.getPathParameters();
+        MultivaluedMap<String, String> ac = ui.getQueryParameters();
         Form f = fc.getCr().readEntity(Form.class);
         MultivaluedHashMap mvhm = (MultivaluedHashMap) f.asMap();
         String id;
@@ -44,6 +47,14 @@ public class UpdateUserViewHelper extends AbstractViewHelper {
         String password;
         Set groups;
         String type;
+        
+        Object[] oa;
+        try {
+            oa = ac.get("accepts").toArray();
+            this.accepts = Arrays.copyOf(oa, oa.length, String[].class);
+        }catch(Exception e){
+            accepts = new String[]{"none"};
+        }
         
         try {
             id = mvm.get("id").get(0);
@@ -133,7 +144,7 @@ public class UpdateUserViewHelper extends AbstractViewHelper {
     @Override
     public void loadBusinessRulesAfterMainFlow() {
         getRulesAfterMainFlow().add(new GroupsAssociationWhenUpdatingCommand(shouldKeep));
-        getRulesAfterMainFlow().add(new AcceptUserAttributesCommand(new String[]{"none"}, rejects));
+        getRulesAfterMainFlow().add(new AcceptUserAttributesCommand(accepts, rejects));
         getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"users"}));
     }
 
