@@ -6,6 +6,7 @@ import br.com.hefesto.resources.impl.resourcepage.ResourceResourcePage;
 import br.com.hefesto.resources.impl.group.ResourceGroups;
 import br.com.hefesto.resources.impl.product.ResourceProduct;
 import br.com.hefesto.resources.impl.service.ResourceService;
+import br.com.hefesto.resources.impl.tickets.ResourceTickets;
 import br.com.hefesto.resources.impl.user.ResourceUser;
 import br.com.wsbasestructure.filter.CORSFilter;
 import javax.ws.rs.ApplicationPath;
@@ -29,6 +30,7 @@ public class EntryPoint extends ResourceConfig {
                 ResourceService.class,
                 ResourceEquipment.class,
                 ResourceProduct.class,
+                ResourceTickets.class,
                 MultiPartFeature.class, CORSFilter.class);
     }
     

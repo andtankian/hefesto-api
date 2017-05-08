@@ -27,6 +27,9 @@ public class Ticket extends Entity {
     public final static String P2 = "P2";
     public final static String P1 = "P1";
     
+    public final static String MAINTANCE = "Manutenção";
+    public final static String PURCHASE = "Compra";
+    
     private Set interactions;
     private Set requestedProducts;
 
@@ -37,6 +40,7 @@ public class Ticket extends Entity {
     private String priority;
     private String resolution;
     private User responsible;
+    private String type;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Interaction.class, mappedBy = "ticket")
     public Set getInteractions() {
@@ -123,6 +127,7 @@ public class Ticket extends Entity {
         this.responsible = t.responsible != null ? t.responsible : this.responsible;
         this.service = t.service != null ? t.service : this.service;
         this.title = t.title != null ? t.title : this.title;
+        this.type = t.type != null ? t.type : this.type;
     }
 
     @Column
@@ -132,6 +137,14 @@ public class Ticket extends Entity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     
     

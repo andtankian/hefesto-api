@@ -7,12 +7,14 @@ import br.com.hefesto.domain.impl.Groups;
 import br.com.hefesto.domain.impl.Product;
 import br.com.hefesto.domain.impl.ResourcePage;
 import br.com.hefesto.domain.impl.Service;
+import br.com.hefesto.domain.impl.Ticket;
 import br.com.hefesto.domain.impl.User;
 import br.com.hefesto.resources.impl.equipments.dao.EquipmentDAO;
 import br.com.hefesto.resources.impl.group.dao.GroupDAO;
 import br.com.hefesto.resources.impl.product.dao.ProductDAO;
 import br.com.hefesto.resources.impl.resourcepage.dao.ResourceResourcePageDAO;
 import br.com.hefesto.resources.impl.service.dao.ServiceDAO;
+import br.com.hefesto.resources.impl.tickets.dao.TicketsPurchaseDAO;
 import br.com.hefesto.resources.impl.user.dao.UserDAO;
 import br.com.wsbasestructure.dao.abstracts.AbstractPersistenceCenter;
 import br.com.wsbasestructure.dao.interfaces.IDAO;
@@ -43,6 +45,12 @@ public class CRUDCenter extends AbstractPersistenceCenter {
             return new EquipmentDAO(session, holder);
         } else if (e instanceof Product) {
             return new ProductDAO(session, holder);
+        } else if (e instanceof Ticket) {
+            if (((Ticket) e).getType().equals(Ticket.PURCHASE)) {
+                return new TicketsPurchaseDAO(session, holder);
+            } else {
+                return null;
+            }
         }
 
         return null;
