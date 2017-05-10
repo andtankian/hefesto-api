@@ -22,10 +22,10 @@ public class AcceptUserAttributesCommand extends AbstractAcceptAttributesCommand
     @Override
     public IHolder exe(IHolder holder, FlowContainer flowContainer) {
         List p = holder.getEntities();
-        User u = (User) holder.getEntities().get(0);
         if (p == null || p.isEmpty()) {
             return holder;
         }
+        User u = (User) holder.getEntities().get(0);
         
         List<String> toAccept = Arrays.asList(this.accepts);
         if(toAccept.contains("department")){

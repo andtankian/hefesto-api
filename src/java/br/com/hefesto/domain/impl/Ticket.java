@@ -42,7 +42,7 @@ public class Ticket extends Entity {
     private User responsible;
     private String type;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Interaction.class, mappedBy = "ticket")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Interaction.class)
     public Set getInteractions() {
         return interactions;
     }

@@ -39,7 +39,7 @@ public class Interaction extends Entity{
         this.type = type;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Ticket.class)
     public Ticket getTicket() {
         return ticket;
     }

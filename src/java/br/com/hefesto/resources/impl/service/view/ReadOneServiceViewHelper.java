@@ -1,6 +1,5 @@
 package br.com.hefesto.resources.impl.service.view;
 
-import br.com.hefesto.domain.impl.SLA;
 import br.com.hefesto.domain.impl.Service;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.SearchModel;

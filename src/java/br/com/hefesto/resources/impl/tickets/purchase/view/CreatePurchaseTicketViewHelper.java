@@ -1,4 +1,4 @@
-package br.com.hefesto.resources.impl.tickets.view;
+package br.com.hefesto.resources.impl.tickets.purchase.view;
 
 import br.com.hefesto.domain.impl.Equipment;
 import br.com.hefesto.domain.impl.Interaction;
@@ -6,8 +6,9 @@ import br.com.hefesto.domain.impl.Product;
 import br.com.hefesto.domain.impl.RequestedProduct;
 import br.com.hefesto.domain.impl.Ticket;
 import br.com.hefesto.domain.impl.User;
+import br.com.hefesto.resources.impl.rules.GenericAcceptAttributes;
 import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
-import br.com.hefesto.resources.impl.tickets.rules.ValidatePurchaseTicketDataCommand;
+import br.com.hefesto.resources.impl.tickets.purchase.rules.ValidatePurchaseTicketDataCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
@@ -32,8 +33,8 @@ public class CreatePurchaseTicketViewHelper extends AbstractViewHelper{
 
     @Override
     public void loadBusinessRulesAfterMainFlow() {
-        
-        getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"ticket"}));
+        getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"ticket", "groups", "password"}));
+        getRulesAfterMainFlow().add(new GenericAcceptAttributes(new String[]{"none"}, rejects, new String[]{"ticket", "groups", "password"}));
         
     }
 
@@ -83,13 +84,13 @@ public class CreatePurchaseTicketViewHelper extends AbstractViewHelper{
         Long longUId;
         
         try {
-            uId = (String) mvhm.get("uId").get(0);
+            uId = (String) mvhm.get("responsible").get(0);
         }catch(NullPointerException npe){
             uId = null;
         }
         
         try {
-            longUId = Long.parseLong(eqId);
+            longUId = Long.parseLong(uId);
         }catch(NumberFormatException nfe){
             longUId = null;
         }

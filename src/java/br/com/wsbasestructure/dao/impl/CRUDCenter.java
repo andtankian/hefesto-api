@@ -14,7 +14,7 @@ import br.com.hefesto.resources.impl.group.dao.GroupDAO;
 import br.com.hefesto.resources.impl.product.dao.ProductDAO;
 import br.com.hefesto.resources.impl.resourcepage.dao.ResourceResourcePageDAO;
 import br.com.hefesto.resources.impl.service.dao.ServiceDAO;
-import br.com.hefesto.resources.impl.tickets.dao.TicketsPurchaseDAO;
+import br.com.hefesto.resources.impl.tickets.purchase.dao.TicketsPurchaseDAO;
 import br.com.hefesto.resources.impl.user.dao.UserDAO;
 import br.com.wsbasestructure.dao.abstracts.AbstractPersistenceCenter;
 import br.com.wsbasestructure.dao.interfaces.IDAO;
