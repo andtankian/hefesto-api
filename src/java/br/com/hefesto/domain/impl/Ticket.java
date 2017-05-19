@@ -27,7 +27,7 @@ public class Ticket extends Entity {
     public final static String P2 = "P2";
     public final static String P1 = "P1";
     
-    public final static String MAINTANCE = "Manutenção";
+    public final static String MAINTENANCE = "Manutenção";
     public final static String PURCHASE = "Compra";
     
     private Set interactions;
@@ -40,9 +40,10 @@ public class Ticket extends Entity {
     private String priority;
     private String resolution;
     private User responsible;
+    private User owner;
     private String type;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Interaction.class)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Interaction.class, mappedBy = "ticket")
     public Set getInteractions() {
         return interactions;
     }
@@ -87,7 +88,7 @@ public class Ticket extends Entity {
         this.problem = problem;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class, fetch = FetchType.LAZY)
     public User getResponsible() {
         return responsible;
     }
@@ -125,6 +126,7 @@ public class Ticket extends Entity {
         this.requestedProducts = t.requestedProducts != null ? t.requestedProducts : this.requestedProducts;
         this.resolution = t.resolution != null ? t.resolution : this.resolution;
         this.responsible = t.responsible != null ? t.responsible : this.responsible;
+        this.owner = t.owner != null ? t.owner : this.owner;
         this.service = t.service != null ? t.service : this.service;
         this.title = t.title != null ? t.title : this.title;
         this.type = t.type != null ? t.type : this.type;
@@ -145,6 +147,15 @@ public class Ticket extends Entity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = User.class)
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
     
     

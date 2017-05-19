@@ -17,6 +17,9 @@ public class RequestedProduct extends Entity{
     public final static String REQUESTED_PRODUCT = "Requisição de produto";
     public final static String REQUESTED_COMPONENT = "Requisição de componente";
     
+    public final static String STATUS_PIPE = "Fila de reserva";
+    public final static String STATUS_WAITING_PURCHASE = "Aguardando compra";
+    
    private Product product;
    private Long amount;
    private Double price;

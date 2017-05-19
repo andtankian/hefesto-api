@@ -14,6 +14,7 @@ import br.com.hefesto.resources.impl.group.dao.GroupDAO;
 import br.com.hefesto.resources.impl.product.dao.ProductDAO;
 import br.com.hefesto.resources.impl.resourcepage.dao.ResourceResourcePageDAO;
 import br.com.hefesto.resources.impl.service.dao.ServiceDAO;
+import br.com.hefesto.resources.impl.tickets.maintenance.dao.TicketMaintenanceDAO;
 import br.com.hefesto.resources.impl.tickets.purchase.dao.TicketsPurchaseDAO;
 import br.com.hefesto.resources.impl.user.dao.UserDAO;
 import br.com.wsbasestructure.dao.abstracts.AbstractPersistenceCenter;
@@ -49,7 +50,7 @@ public class CRUDCenter extends AbstractPersistenceCenter {
             if (((Ticket) e).getType().equals(Ticket.PURCHASE)) {
                 return new TicketsPurchaseDAO(session, holder);
             } else {
-                return null;
+                return new TicketMaintenanceDAO(session, holder);
             }
         }
 

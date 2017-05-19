@@ -15,7 +15,6 @@ public class NotifyContentCommand extends AbstractRejectAttributesCommand{
     public NotifyContentCommand(String[] rejects) {
         super(rejects);
     }
-
     @Override
     public IHolder exe(IHolder holder, FlowContainer flowContainer) {
         HttpServletRequest r = flowContainer.getHttprequest();
