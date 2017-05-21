@@ -1,12 +1,13 @@
-package br.com.hefesto.resources.impl.tickets.purchase.view;
+package br.com.hefesto.resources.impl.tickets.maintenance.view;
 
 import br.com.hefesto.domain.impl.Ticket;
-import br.com.hefesto.resources.impl.rules.ValidateSearchEntitiesCommand;
+import br.com.hefesto.resources.impl.tickets.maintenance.rules.AcceptTicketMaintenanceAttributesCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.SearchModel;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
+import br.com.wsbasestructure.rules.impl.ValidateIDEntityCommand;
 import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
 import br.com.wsbasestructure.view.impl.GenericExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -19,43 +20,54 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Andrew Ribeiro
  */
-public class ReadTicketsPurchaseViewHelper extends AbstractViewHelper{
-
-    @Override
-    public void loadBusinessRulesAfterMainFlow() {
-        super.loadBusinessRulesAfterMainFlow();
-    }
-
-    @Override
-    public void loadBusinessRulesBeforeMainFlow() {
-        getRulesBeforeMainFlow().add(new ValidateSearchEntitiesCommand());
-    }
-
+public class ReadTicketMaintenanceViewHelper extends AbstractViewHelper {
+    
     @Override
     public IHolder getView(FlowContainer fc) {
         super.getView(fc);
         
         Ticket t = new Ticket();
-        t.setType(Ticket.PURCHASE);
         GenericHolder gh = new GenericHolder();
-        SearchModel sm = gh.getSm();
+        t.setType(Ticket.MAINTENANCE);
         UriInfo uri = fc.getCr().getUriInfo();
+        MultivaluedMap<String, String> mvm = uri.getPathParameters();
+        SearchModel sm = gh.getSm();
         sm.getBasics(uri);
-        MultivaluedMap<String, String> mvm = uri.getQueryParameters();
         
+        String tId;
         try {
-            sm.setSearch(mvm.get("search").get(0));
-        } catch(NullPointerException npe){
-            sm.setSearch(null);
+           tId = mvm.get("id").get(0);
+        }catch(NullPointerException npe) {
+            tId = null;
         }
         
-        sm.setEntity(t);
+        try {
+            t.setId(Long.parseLong(tId));
+        }catch(NumberFormatException nfe){
+            t.setId(null);
+        }
+        
         gh.getEntities().add(t);
+        sm.setEntity(t);
+        
+        loadBusinessRulesBeforeMainFlow();
+        loadBusinessRulesAfterMainFlow();
         
         return gh;
     }
+
+    @Override
+    public void loadBusinessRulesBeforeMainFlow() {
+        getRulesBeforeMainFlow().add(new ValidateIDEntityCommand());
+    }
+
+    @Override
+    public void loadBusinessRulesAfterMainFlow() {
+        getRulesAfterMainFlow().add(new AcceptTicketMaintenanceAttributesCommand(new String[]{"service", "equipment", "responsible", "owner"}, rejects));
+    }
     
     
+
     @Override
     public String setView(Result result) {
         GsonBuilder gb = new GsonBuilder();
@@ -70,4 +82,7 @@ public class ReadTicketsPurchaseViewHelper extends AbstractViewHelper{
 
         return g.toJson(result);
     }
+    
+    
+    
 }

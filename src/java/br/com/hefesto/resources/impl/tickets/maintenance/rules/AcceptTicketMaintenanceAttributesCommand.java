@@ -21,6 +21,9 @@ public class AcceptTicketMaintenanceAttributesCommand extends AbstractAcceptAttr
 
     @Override
     public IHolder exe(IHolder holder, FlowContainer flowContainer) {
+        if(holder.getEntities() == null || holder.getEntities().isEmpty()){
+            return holder;
+        }
         Ticket t = (Ticket)holder.getEntities().get(0);
         List<String> toAccept = Arrays.asList(this.accepts);
         if(toAccept.contains("service")){

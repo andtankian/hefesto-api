@@ -1,7 +1,8 @@
-package br.com.hefesto.resources.impl.tickets.purchase.view;
+package br.com.hefesto.resources.impl.tickets.maintenance.view;
 
 import br.com.hefesto.domain.impl.Ticket;
 import br.com.hefesto.resources.impl.rules.ValidateSearchEntitiesCommand;
+import br.com.hefesto.resources.impl.tickets.maintenance.rules.AcceptTicketMaintenanceAttributesCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.SearchModel;
@@ -19,43 +20,47 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Andrew Ribeiro
  */
-public class ReadTicketsPurchaseViewHelper extends AbstractViewHelper{
+public class ReadTicketsMaintenanceViewHelper extends AbstractViewHelper {
 
     @Override
-    public void loadBusinessRulesAfterMainFlow() {
-        super.loadBusinessRulesAfterMainFlow();
+    public IHolder getView(FlowContainer fc) {
+        super.getView(fc);
+
+        Ticket t = new Ticket();
+        t.setType(Ticket.MAINTENANCE);
+        GenericHolder gh = new GenericHolder();
+        SearchModel sm = gh.getSm();
+        UriInfo uri = fc.getCr().getUriInfo();
+        MultivaluedMap<String, String> mvm = uri.getQueryParameters();
+        sm.getBasics(uri);
+        try {
+            sm.setSearch(mvm.get("search").get(0));
+        } catch (NullPointerException npe) {
+            sm.setSearch(null);
+        }
+
+        sm.setEntity(t);
+        gh.getEntities().add(t);
+        loadBusinessRulesBeforeMainFlow();
+        loadBusinessRulesAfterMainFlow();
+        
+        return gh;
     }
 
     @Override
     public void loadBusinessRulesBeforeMainFlow() {
         getRulesBeforeMainFlow().add(new ValidateSearchEntitiesCommand());
     }
+    
+    
 
     @Override
-    public IHolder getView(FlowContainer fc) {
-        super.getView(fc);
-        
-        Ticket t = new Ticket();
-        t.setType(Ticket.PURCHASE);
-        GenericHolder gh = new GenericHolder();
-        SearchModel sm = gh.getSm();
-        UriInfo uri = fc.getCr().getUriInfo();
-        sm.getBasics(uri);
-        MultivaluedMap<String, String> mvm = uri.getQueryParameters();
-        
-        try {
-            sm.setSearch(mvm.get("search").get(0));
-        } catch(NullPointerException npe){
-            sm.setSearch(null);
-        }
-        
-        sm.setEntity(t);
-        gh.getEntities().add(t);
-        
-        return gh;
+    public void loadBusinessRulesAfterMainFlow() {
+        getRulesAfterMainFlow().add(new AcceptTicketMaintenanceAttributesCommand(new String[]{"equipment", "service", "owner", "responsible"}, rejects));
     }
     
     
+
     @Override
     public String setView(Result result) {
         GsonBuilder gb = new GsonBuilder();
@@ -70,4 +75,6 @@ public class ReadTicketsPurchaseViewHelper extends AbstractViewHelper{
 
         return g.toJson(result);
     }
+
+    
 }

@@ -1,7 +1,6 @@
 package br.com.hefesto.resources.impl.tickets.purchase.view;
 
 import br.com.hefesto.domain.impl.Ticket;
-import br.com.hefesto.resources.impl.rules.GenericAcceptAttributes;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.SearchModel;

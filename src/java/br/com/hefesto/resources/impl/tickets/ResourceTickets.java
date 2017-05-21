@@ -1,6 +1,9 @@
 package br.com.hefesto.resources.impl.tickets;
 
 import br.com.hefesto.resources.impl.tickets.maintenance.view.CreateTicketMaintenanceViewHelper;
+import br.com.hefesto.resources.impl.tickets.maintenance.view.ReadAllTicketsMaintenancesViewHelper;
+import br.com.hefesto.resources.impl.tickets.maintenance.view.ReadTicketMaintenanceViewHelper;
+import br.com.hefesto.resources.impl.tickets.maintenance.view.ReadTicketsMaintenanceViewHelper;
 import br.com.hefesto.resources.impl.tickets.purchase.view.CreatePurchaseTicketViewHelper;
 import br.com.hefesto.resources.impl.tickets.purchase.view.ReadAllTicketPurchaseViewHelper;
 import br.com.hefesto.resources.impl.tickets.purchase.view.ReadTicketPurchaseViewHelper;
@@ -58,10 +61,31 @@ public class ResourceTickets extends AbstractResource{
     
     /*MAINTENANCE*/
     @POST
-    @Path("/maintenances")
+    @Path("maintenances")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String createMaintenanceTicket(){
         return new Facade(new FlowContainer(new CreateTicketMaintenanceViewHelper(), 
+                (Session)httpRequest.getAttribute("session"), cr, httpRequest)).process();
+    }
+    
+    @GET
+    @Path("maintenances/{id}")
+    public String readMaintenanceTicket(){
+        return new Facade(new FlowContainer(new ReadTicketMaintenanceViewHelper(), 
+                (Session)httpRequest.getAttribute("session"), cr, httpRequest)).process();
+    }
+    
+    @GET
+    @Path("maintenances/all")
+    public String readAllMaintenanceTickets(){
+        return new Facade(new FlowContainer(new ReadAllTicketsMaintenancesViewHelper(), 
+                (Session)httpRequest.getAttribute("session"), cr, httpRequest)).process();
+    }
+    
+    @GET
+    @Path("maintenances")
+    public String readMaintenancesTickets(){
+        return new Facade(new FlowContainer(new ReadTicketsMaintenanceViewHelper(), 
                 (Session)httpRequest.getAttribute("session"), cr, httpRequest)).process();
     }
 }
