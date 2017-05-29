@@ -55,7 +55,7 @@ public class ValidateTicketMaintenanceDataCommand implements ICommand {
 
         /*Validating ticket owner*/
         if (isValid) {
-            if (owner == null || owner.getId() == null || owner.getId() == 0) {
+                    if (owner == null || owner.getId() == null || owner.getId() == 0) {
                 isValid = false;
                 m.setError("invalid owner");
             } else {
@@ -150,10 +150,7 @@ public class ValidateTicketMaintenanceDataCommand implements ICommand {
 
         /*Validation ticket service*/
         if (isValid) {
-            if (s == null || s.getId() == null || s.getId() <= 0) {
-                m.setError("invalid service");
-                isValid = false;
-            } else {
+            if (s != null && s.getId() != null && s.getId() > 0){
                 Service loadedService = (Service) session.get(Service.class, s.getId());
                 if (loadedService == null) {
                     m.setError("service doesn't exist");

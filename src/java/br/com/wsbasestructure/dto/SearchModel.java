@@ -34,7 +34,7 @@ public class SearchModel {
         
         try {
             Long number = Long.parseLong(soffset);
-            this.offset = number == 0 ? number : number - 1;
+            this.offset = number;
         }catch(NumberFormatException n){
             this.offset = (long)0;
         }

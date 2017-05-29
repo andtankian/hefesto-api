@@ -11,6 +11,7 @@ import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 
 /**
  *
@@ -26,19 +27,23 @@ public class TicketMaintenanceDAO extends GenericCRUDDAO {
     public Result read() {
         Ticket t = (Ticket) holder.getEntities().get(0);
         SearchModel sm = holder.getSm();
-        Criteria c = session.createCriteria(Ticket.class, "t");
+        Criteria c = session.createCriteria(Ticket.class);
         c.add(Restrictions.eq("type", Ticket.MAINTENANCE));
-        c.addOrder(Order.desc("t.dateReg"));
+        c.addOrder(Order.desc("dateReg"));
         if (sm != null && sm.getEntity() != null && sm.getEntity().getId() != null && sm.getEntity().getId() > 0) {
             readOne();
         } else if (sm != null && sm.getEntity() != null && sm.getSearch() != null && !sm.getSearch().isEmpty()) {
-            c.createAlias("t.responsible", "resp");
-            c.createAlias("t.owner", "owner");
-            c.createAlias("t.equipment", "equip");
-            c.createAlias("t.service", "service");
+            c.createAlias("responsible", "resp", JoinType.LEFT_OUTER_JOIN);
+            c.createAlias("owner", "owner");
+            c.createAlias("equipment", "equip");
+            c.createAlias("service", "service", JoinType.LEFT_OUTER_JOIN);
             c.setMaxResults(sm.getLimit().intValue());
             c.setFirstResult(sm.getOffset().intValue());
             c.add(Restrictions.disjunction(
+                    Restrictions.ilike("title", sm.getSearch(), MatchMode.ANYWHERE),
+                    Restrictions.ilike("problem", sm.getSearch(), MatchMode.ANYWHERE),
+                    Restrictions.ilike("resolution", sm.getSearch(), MatchMode.ANYWHERE),
+                    Restrictions.ilike("status", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.ilike("resp.fullName", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.ilike("resp.login", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.ilike("owner.fullName", sm.getSearch(), MatchMode.ANYWHERE),

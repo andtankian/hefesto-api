@@ -83,7 +83,12 @@ public class CreateTicketMaintenanceViewHelper extends AbstractViewHelper {
             u.setId(null);
         }
 
-        t.setPriority(Ticket.P5);
+        try {
+            t.setPriority((String) mvhm.get("priority").get(0));
+            if(t.getPriority().isEmpty()) throw new NullPointerException();
+        }catch(NullPointerException npe){
+            t.setPriority(Ticket.P5);
+        }
 
         try {
             t.setProblem((String) mvhm.get("problem").get(0));
@@ -156,7 +161,7 @@ public class CreateTicketMaintenanceViewHelper extends AbstractViewHelper {
 
                 t.getRequestedProducts().add(rp);
             }
-        } else if (products == null || amounts == null || products.isEmpty() || amounts.isEmpty() || products.size() != amounts.size()) {
+        } else if (products == null || amounts == null || (products.isEmpty() && !amounts.isEmpty()) || (amounts.isEmpty() && !products.isEmpty()) || products.size() != amounts.size()) {
             t.setRequestedProducts(null);
         }
         /*Responsible of the ticket*/
@@ -179,6 +184,7 @@ public class CreateTicketMaintenanceViewHelper extends AbstractViewHelper {
 
         try {
             t.setResolution((String) mvhm.get("resolution").get(0));
+            if(t.getResolution().isEmpty()) throw new NullPointerException();
         } catch (NullPointerException npe) {
             t.setResolution(null);
         }
@@ -200,7 +206,12 @@ public class CreateTicketMaintenanceViewHelper extends AbstractViewHelper {
             s.setId(null);
         }
 
-        t.setStatus(Ticket.PENDING);
+        try {
+            t.setStatus((String) mvhm.get("status").get(0));
+            if(t.getStatus().isEmpty()) throw new NullPointerException();
+        }catch(NullPointerException npe){
+            t.setStatus(Ticket.PENDING);
+        }
 
         try {
             t.setTitle((String) mvhm.get("title").get(0));
