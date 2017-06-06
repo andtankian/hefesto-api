@@ -5,7 +5,6 @@ import br.com.hefesto.domain.impl.User;
 import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
 import br.com.hefesto.resources.impl.user.rules.AcceptUserAttributesCommand;
 import br.com.hefesto.resources.impl.user.rules.GroupsAssociationWhenUpdatingCommand;
-import br.com.hefesto.resources.impl.user.rules.PermissionAssociationsPersistenceHelperCommand;
 import br.com.hefesto.resources.impl.user.rules.ValidateAndMergeUserCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.impl.GenericHolder;

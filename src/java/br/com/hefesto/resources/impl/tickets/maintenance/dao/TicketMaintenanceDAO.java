@@ -44,6 +44,7 @@ public class TicketMaintenanceDAO extends GenericCRUDDAO {
                     Restrictions.ilike("problem", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.ilike("resolution", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.ilike("status", sm.getSearch(), MatchMode.ANYWHERE),
+                    Restrictions.ilike("priority", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.ilike("resp.fullName", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.ilike("resp.login", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.ilike("owner.fullName", sm.getSearch(), MatchMode.ANYWHERE),
@@ -63,6 +64,7 @@ public class TicketMaintenanceDAO extends GenericCRUDDAO {
             c.setMaxResults(sm.getLimit().intValue());
             c.setFirstResult(sm.getOffset().intValue());
             c.add(Restrictions.ne("status", "deleted"));
+            c.add(Restrictions.ne("status", "Recusado"));
             holder.setEntities(c.list());
             c.setMaxResults(0);
             c.setFirstResult(0);

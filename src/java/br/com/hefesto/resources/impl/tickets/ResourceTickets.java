@@ -4,6 +4,7 @@ import br.com.hefesto.resources.impl.tickets.maintenance.view.CreateTicketMainte
 import br.com.hefesto.resources.impl.tickets.maintenance.view.ReadAllTicketsMaintenancesViewHelper;
 import br.com.hefesto.resources.impl.tickets.maintenance.view.ReadTicketMaintenanceViewHelper;
 import br.com.hefesto.resources.impl.tickets.maintenance.view.ReadTicketsMaintenanceViewHelper;
+import br.com.hefesto.resources.impl.tickets.maintenance.view.UpdateTicketMaintenanceViewHelper;
 import br.com.hefesto.resources.impl.tickets.purchase.view.CreatePurchaseTicketViewHelper;
 import br.com.hefesto.resources.impl.tickets.purchase.view.ReadAllTicketPurchaseViewHelper;
 import br.com.hefesto.resources.impl.tickets.purchase.view.ReadTicketPurchaseViewHelper;
@@ -15,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import org.hibernate.Session;
@@ -87,5 +89,13 @@ public class ResourceTickets extends AbstractResource{
     public String readMaintenancesTickets(){
         return new Facade(new FlowContainer(new ReadTicketsMaintenanceViewHelper(), 
                 (Session)httpRequest.getAttribute("session"), cr, httpRequest)).process();
+    }
+    
+    @PUT
+    @Path("maintenances/{id}")
+    public String updateMaintenanceTicket(){
+        return new Facade(new FlowContainer(new UpdateTicketMaintenanceViewHelper(),
+                (Session)httpRequest.getAttribute("session"), cr, httpRequest))
+                .process();
     }
 }

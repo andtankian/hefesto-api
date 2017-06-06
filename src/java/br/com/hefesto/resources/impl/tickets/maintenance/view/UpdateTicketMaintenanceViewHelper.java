@@ -9,110 +9,117 @@ import br.com.hefesto.domain.impl.Ticket;
 import br.com.hefesto.domain.impl.User;
 import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
 import br.com.hefesto.resources.impl.tickets.maintenance.rules.AcceptTicketMaintenanceAttributesCommand;
-import br.com.hefesto.resources.impl.tickets.maintenance.rules.ValidateTicketMaintenanceDataCommand;
+import br.com.hefesto.resources.impl.tickets.maintenance.rules.ValidateAndMergeTicketMaintenanceCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
+import br.com.wsbasestructure.rules.impl.ValidateIDEntityCommand;
 import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
 import br.com.wsbasestructure.view.impl.GenericExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.UriInfo;
 
 /**
  *
  * @author Andrew Ribeiro
  */
-public class CreateTicketMaintenanceViewHelper extends AbstractViewHelper {
-
+public class UpdateTicketMaintenanceViewHelper extends AbstractViewHelper {
+    
     @Override
     public IHolder getView(FlowContainer fc) {
         super.getView(fc);
-
-        GenericHolder gh = new GenericHolder();
+        
         Ticket t = new Ticket();
+        t.setType(Ticket.MAINTENANCE);
+        GenericHolder gh = new GenericHolder();
+        UriInfo uri = fc.getCr().getUriInfo();
+        MultivaluedMap<String, String> mvm = uri.getPathParameters();
         Form f = fc.getCr().readEntity(Form.class);
         MultivaluedHashMap mvhm = (MultivaluedHashMap) f.asMap();
 
-        t.setDateReg(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-
-        /*Ticket Equipment*/
-        Equipment e = new Equipment();
-        t.setEquipment(e);
-        String eqId;
+        /*TICKET*/
+        String ticket;
         try {
-            eqId = (String) mvhm.get("equipment").get(0);
+            ticket = (String) mvm.get("id").get(0);
         } catch (NullPointerException npe) {
-            eqId = null;
+            ticket = null;
+        }
+        
+        try {
+            t.setId(Long.parseLong(ticket));
+        } catch (NumberFormatException nfe) {
+            t.setId(null);
         }
 
+        /*EQUIPMENT*/
+        Equipment e = new Equipment();
+        String equipment;
         try {
-            e.setId(Long.parseLong(eqId));
+            equipment = (String) mvhm.get("equipment").get(0);
+        } catch (NullPointerException npe) {
+            equipment = null;
+        }
+        
+        try {
+            e.setId(Long.parseLong(equipment));
         } catch (NumberFormatException nfe) {
             e.setId(null);
         }
+        
+        t.setEquipment(e);
 
-        /*Ticket interactions*/
+        /*INTERACTIONS*/
         t.setInteractions(new HashSet());
-        Interaction in = new Interaction();
-        t.getInteractions().add(in);
-
-        in.setDateReg(t.getDateReg());
-        in.setTicket(t);
-        in.setType(Interaction.OPENING);
-        User u = new User();
-        in.setUser(u);
-        String usId;
+        Interaction i = new Interaction();
+        i.setTicket(t);
         try {
-            usId = (String) mvhm.get("interaction-user").get(0);
+            i.setType((String) mvhm.get("interaction-type").get(0));
         } catch (NullPointerException npe) {
-            usId = null;
+            i.setType(Interaction.UPDATING_TICKET);
         }
-
+        /*INTERACTION USER*/
+        User u = new User();
+        String interactionUser;
         try {
-            u.setId(Long.parseLong(usId));
-        } catch (NumberFormatException nfe) {
+            interactionUser = (String) mvhm.get("interaction-user").get(0);
+        }catch(NullPointerException npe){
+            interactionUser = null;
+        }
+        
+        try {
+            u.setId(Long.parseLong(interactionUser));
+        }catch(NumberFormatException nfe){
             u.setId(null);
         }
-
+        
+        i.setUser(u);
+        
+        t.getInteractions().add(i);
+        
+        
+        /*PRIORITY*/
         try {
             t.setPriority((String) mvhm.get("priority").get(0));
-            if(t.getPriority().isEmpty()) throw new NullPointerException();
         }catch(NullPointerException npe){
-            t.setPriority(Ticket.P5);
+            t.setPriority(null);
         }
-
+        
+        /*PROBLEM*/
         try {
             t.setProblem((String) mvhm.get("problem").get(0));
-        } catch (NullPointerException npe) {
+        }catch(NullPointerException npe){
             t.setProblem(null);
         }
-
-        /*TICKET ONWER*/
-        User owner = new User();
-        t.setOwner(owner);
-        String ownerId;
-
-        try {
-            ownerId = (String) mvhm.get("owner").get(0);
-        } catch (NullPointerException npe) {
-            ownerId = null;
-        }
-
-        try {
-            owner.setId(Long.parseLong(ownerId));
-        } catch (NumberFormatException nfe) {
-            owner.setId(null);
-        }
-
+        
         /*REQUESTED PRODUCTS*/
         t.setRequestedProducts(new HashSet());
         List products;
@@ -125,11 +132,11 @@ public class CreateTicketMaintenanceViewHelper extends AbstractViewHelper {
         amounts = amounts != null && !amounts.isEmpty() ? amounts : new ArrayList();
 
         if (!products.isEmpty() && !amounts.isEmpty() && products.size() == amounts.size()) {
-            for (int i = 0; i < products.size(); i++) {
+            for (int j = 0; j < products.size(); j++) {
                 String pId;
                 String amount;
                 try {
-                    pId = (String) products.get(i);
+                    pId = (String) products.get(j);
                 } catch (NullPointerException npe) {
                     pId = null;
                 }
@@ -141,7 +148,7 @@ public class CreateTicketMaintenanceViewHelper extends AbstractViewHelper {
                 }
 
                 try {
-                    amount = (String) amounts.get(i);
+                    amount = (String) amounts.get(j);
                 } catch (NumberFormatException nfe) {
                     amount = null;
                 }
@@ -164,89 +171,88 @@ public class CreateTicketMaintenanceViewHelper extends AbstractViewHelper {
         } else if (products == null || amounts == null || (products.isEmpty() && !amounts.isEmpty()) || (amounts.isEmpty() && !products.isEmpty()) || products.size() != amounts.size()) {
             t.setRequestedProducts(null);
         }
-        /*Responsible of the ticket*/
-        User resp = new User();
-        t.setResponsible(resp);
-        String respId;
-
-        try {
-            respId = (String) mvhm.get("responsible").get(0);
-        } catch (NullPointerException npe) {
-            respId = null;
-        }
-
-        try {
-            resp.setId(Long.parseLong(respId));
-        } catch (NumberFormatException nfe) {
-            resp.setId(null);
-            t.setResponsible(null);
-        }
-
+        
+        /*RESOLUTION*/
         try {
             t.setResolution((String) mvhm.get("resolution").get(0));
-            if(t.getResolution().isEmpty()) throw new NullPointerException();
-        } catch (NullPointerException npe) {
+        }catch(NullPointerException npe){
             t.setResolution(null);
         }
-
-        /*Ticket service*/
-        Service s = new Service();
-        t.setService(s);
-        String serId;
-
+        
+        /*RESPONSIBLE*/
+        
+        User r = new User();
+        String responsible;
+        
         try {
-            serId = (String) mvhm.get("service").get(0);
-        } catch (NullPointerException npe) {
-            serId = null;
-        }
-
-        try {
-            s.setId(Long.parseLong(serId));
-        } catch (NumberFormatException nfe) {
-            s.setId(null);
-        }
-
-        try {
-            t.setStatus((String) mvhm.get("status").get(0));
-            if(t.getStatus().isEmpty()) throw new NullPointerException();
+            responsible = (String) mvhm.get("responsible").get(0);
         }catch(NullPointerException npe){
-            t.setStatus(Ticket.PENDING);
+            responsible = null;
         }
         
-        /*IF IS OPENING AND CLOSING AT SAME TIME*/
-        if(t.getStatus().equals("Fechado")){
-            Interaction i2 = new Interaction();
-            i2.setDateReg(t.getDateReg());
-            i2.setTicket(t);
-            i2.setType(Interaction.RESOLVING_COMPLETELY);
-            i2.setUser(in.getUser());
-            t.getInteractions().add(i2);
-        }
-
         try {
-            t.setTitle((String) mvhm.get("title").get(0));
-        } catch (NullPointerException npe) {
-            t.setTitle(null);
+            r.setId(Long.parseLong(responsible));
+        }catch(NumberFormatException nfe){
+            r.setId(null);
         }
-
-        t.setType(Ticket.MAINTENANCE);
+        
+        t.setResponsible(r);
+        
+        /*SERVICE*/
+        Service s = new Service();
+        String service;
+        try {
+            service = (String) mvhm.get("service").get(0);
+        }catch(NullPointerException npe){
+            service = null;
+        }
+        
+        try {
+            s.setId(Long.parseLong(service));
+        }catch(NumberFormatException nfe){
+            s.setId(null);
+        }
+        
+        t.setService(s);
+        
+        /*STATUS*/
+        try {
+            t.setStatus((String) mvhm.get("status").get(0));
+        }catch(NullPointerException npe){
+            t.setStatus(null);
+        }
+        
+        /*TITLE*/
+        try {
+            t.setResolution((String) mvhm.get("title").get(0));
+        }catch(NullPointerException npe){
+            t.setResolution(null);
+        }
+        
         gh.getEntities().add(t);
-
+        
         loadBusinessRulesBeforeMainFlow();
         loadBusinessRulesAfterMainFlow();
+        
         return gh;
     }
 
     @Override
-    public void loadBusinessRulesAfterMainFlow() {
-        getRulesAfterMainFlow().add(new AcceptTicketMaintenanceAttributesCommand(new String[]{"none"}, rejects));
-        getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"ticket", "groups"}));
-    }
+    public void loadBusinessRulesBeforeMainFlow() {
+        getRulesBeforeMainFlow().add(new ValidateIDEntityCommand());
+        getRulesBeforeMainFlow().add(new ValidateAndMergeTicketMaintenanceCommand());
+    }   
+   
 
     @Override
-    public void loadBusinessRulesBeforeMainFlow() {
-        getRulesBeforeMainFlow().add(new ValidateTicketMaintenanceDataCommand());
+    public void loadBusinessRulesAfterMainFlow() {        
+        getRulesAfterMainFlow().add(new AcceptTicketMaintenanceAttributesCommand(new String[]{"none"}, rejects));
+        getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"ticket", "groups"}));        
     }
+    
+    
+    
+    
 
     @Override
     public String setView(Result result) {
@@ -264,5 +270,5 @@ public class CreateTicketMaintenanceViewHelper extends AbstractViewHelper {
     }
     
     
-
+    
 }

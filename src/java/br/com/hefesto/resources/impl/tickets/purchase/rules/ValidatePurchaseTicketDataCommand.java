@@ -11,7 +11,6 @@ import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.interfaces.ICommand;
 import java.util.Set;
-import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

@@ -16,6 +16,9 @@ public class Interaction extends Entity{
     public final static String OPENING = "Abertura de ticket";
     public final static String UPDATING_PRIORITY = "Prioridade atualizada";
     public final static String RESOLVING_COMPLETELY = "Fechamento de ticket";
+    public final static String UPDATING_TICKET = "Atualização de ticket";
+    public final static String REFUSING_TICKET = "Recusação de ticket";
+    public final static String ACCEPTING_TICKET = "Aceitação de ticket";
     
     private User user;
     private String type;

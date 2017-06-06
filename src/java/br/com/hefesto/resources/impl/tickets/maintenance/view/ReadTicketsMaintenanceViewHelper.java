@@ -68,7 +68,7 @@ public class ReadTicketsMaintenanceViewHelper extends AbstractViewHelper {
         gb.addSerializationExclusionStrategy(new GenericExclusionStrategy() {
             @Override
             public boolean shouldSkipField(FieldAttributes fa) {
-                return rejects.contains(fa.getName()) || fa.getName().equals("ticket") || fa.getName().equals("groups");
+                return rejects.contains(fa.getName()) || fa.getName().equals("ticket") || fa.getName().equals("groups") || fa.getName().equals("interactions") || fa.getName().equals("requestedProducts");
             }
         });
         Gson g = gb.create();
