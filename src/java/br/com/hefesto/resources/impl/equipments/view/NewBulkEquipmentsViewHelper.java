@@ -57,7 +57,7 @@ public class NewBulkEquipmentsViewHelper extends AbstractViewHelper {
             e.setDateReg(new Timestamp(Calendar.getInstance().getTimeInMillis()));
             e.setDescription(string.substring(string.indexOf("Fabricante do sistema:"), string.indexOf("Pasta do Windows:") - 1));
             e.setDescription(e.getDescription() + string.substring(string.indexOf("Memória física total:"), string.indexOf("Memória física disponível:") -1));
-            e.setDescription(e.getDescription() + string.substring(string.indexOf("Placa(s) de Rede:"), string.indexOf("Requisitos do Hyper-V:") - 1));
+            e.setDescription(e.getDescription() + string.substring(string.indexOf("Placa(s) de Rede:")));
             e.setName(string.substring(string.indexOf("Nome do host:") + "Nome do host:".length(), string.indexOf("Nome do sistema operacional:")-1));
             e.setPatrimonial(string.substring(string.indexOf("Patrimonio:") + "Patrimonio: ".length(), string.indexOf("Nome do host:")-1));
             
