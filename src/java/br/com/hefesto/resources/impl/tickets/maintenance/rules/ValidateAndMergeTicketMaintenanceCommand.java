@@ -2,6 +2,8 @@ package br.com.hefesto.resources.impl.tickets.maintenance.rules;
 
 import br.com.hefesto.domain.impl.Equipment;
 import br.com.hefesto.domain.impl.Interaction;
+import br.com.hefesto.domain.impl.Product;
+import br.com.hefesto.domain.impl.RequestedProduct;
 import br.com.hefesto.domain.impl.Service;
 import br.com.hefesto.domain.impl.Ticket;
 import br.com.hefesto.domain.impl.User;
@@ -10,6 +12,8 @@ import br.com.wsbasestructure.dto.Message;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.interfaces.ICommand;
+import java.util.Set;
+import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 
 /**
@@ -21,6 +25,7 @@ public class ValidateAndMergeTicketMaintenanceCommand implements ICommand {
     @Override
     public IHolder exe(IHolder holder, FlowContainer flowContainer) {
         Ticket t = (Ticket) holder.getEntities().get(0);
+        Set rps = t.getRequestedProducts();
         Message m = new Message();
         Session session = flowContainer.getSession();
         boolean isValid = true;
@@ -100,6 +105,53 @@ public class ValidateAndMergeTicketMaintenanceCommand implements ICommand {
             }
         }
         
+        /*Validating each product of requested product*/
+        if (isValid) {
+            if (rps != null && !rps.isEmpty()) {
+                for (Object rp : rps) {
+                    RequestedProduct current = (RequestedProduct) rp;
+                    Product p = new Product();
+                    p.setId(current.getProduct().getId());
+                    if (p.getId() == null || p.getId() <= 0) {
+                        m.setError("invalid product");
+                        isValid = false;
+                        break;
+                    } else {
+                        Product loadedProduct;
+                        try {
+                            loadedProduct = (Product) session.get(Product.class, p.getId());
+                        } catch (ObjectNotFoundException one) {
+                            loadedProduct = null;
+                        }
+                        if (loadedProduct == null) {
+                            m.setError(new StringBuilder("product ").append(p.getId()).append(" doesn't exist").toString());
+                            isValid = false;
+                            break;
+                        } else {
+                            current.setProduct(loadedProduct);
+                            current.setTicket(loaded);
+                        }
+                    }
+
+                    if (current.getAmount() == null || current.getAmount() == 0) {
+                        m.setError("invalid amount");
+                        isValid = false;
+                        break;
+                    }
+                }
+            } else if (rps == null) {
+                m.setError("inconsistency in requested products");
+                isValid = false;
+            }
+        }
+        
+        /*INACTIVATING ORPHAN REQUESTED PRODUCTS*/
+        
+        for (Object requestedProduct : loaded.getRequestedProducts()) {
+            RequestedProduct current = (RequestedProduct)requestedProduct;
+            current.setTicket(null);
+        }
+        
         /*INTERACTIONS*/
         for (Object interaction : t.getInteractions()) {
             Interaction in = (Interaction)interaction;
@@ -123,6 +175,8 @@ public class ValidateAndMergeTicketMaintenanceCommand implements ICommand {
         }
         
         t.setInteractions(null);
+        
+        
         
         if(!isValid){
             flowContainer.getResult().setMessage(m);

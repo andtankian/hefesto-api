@@ -10,6 +10,7 @@ import br.com.wsbasestructure.rules.interfaces.ICommand;
 import java.util.Set;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -66,6 +67,10 @@ public class ValidateAndMergeUserCommand implements ICommand {
                 }
             }
         }*/
+       
+       if(u.getPassword() != null && !u.getPassword().isEmpty()){
+           u.setPassword(BCrypt.hashpw(u.getPassword(), BCrypt.gensalt()));
+       }
 
         User loaded = (User) s.get(User.class, u.getId());
         if (loaded == null) {

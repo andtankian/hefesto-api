@@ -6,6 +6,7 @@ import br.com.hefesto.resources.impl.user.rules.ExceptionToLoginUserCommand;
 import br.com.hefesto.resources.impl.user.rules.RemoveUserFromPersistenceContextCommand;
 import br.com.hefesto.resources.impl.user.rules.ValidateLoginUserCommand;
 import br.com.hefesto.resources.impl.user.rules.ValidateLoginUserPasswordCommand;
+import br.com.hefesto.resources.impl.user.rules.ValidateLoginUserStatusCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
@@ -61,6 +62,7 @@ public class LoginUserViewHelper extends AbstractViewHelper{
     public void loadBusinessRulesBeforeMainFlow() {
         getRulesBeforeMainFlow().add(new ValidateLoginUserCommand());
         getRulesBeforeMainFlow().add(new ExceptionToLoginUserCommand());
+        getRulesBeforeMainFlow().add(new ValidateLoginUserStatusCommand());
         getRulesBeforeMainFlow().add(new ValidateLoginUserPasswordCommand(userTrying));
         getRulesBeforeMainFlow().add(new AcceptUserAttributesCommand(new String[]{"department", "groups", "userVisual"}, rejects));
         getRulesBeforeMainFlow().add(new RemoveUserFromPersistenceContextCommand());

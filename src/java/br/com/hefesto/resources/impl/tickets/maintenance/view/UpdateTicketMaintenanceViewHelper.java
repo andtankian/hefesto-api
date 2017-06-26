@@ -224,9 +224,9 @@ public class UpdateTicketMaintenanceViewHelper extends AbstractViewHelper {
         
         /*TITLE*/
         try {
-            t.setResolution((String) mvhm.get("title").get(0));
+            t.setTitle((String) mvhm.get("title").get(0));
         }catch(NullPointerException npe){
-            t.setResolution(null);
+            t.setTitle(null);
         }
         
         gh.getEntities().add(t);

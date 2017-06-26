@@ -61,6 +61,12 @@ public class ValidateAndSaveLSAndProfilePicCommand implements ICommand {
             InputStream is = gih.getIs();
 
             File folder = new File(".." + File.separator + ".." + File.separator + "images" + File.separator);
+            
+            try {
+                System.out.println(folder.getCanonicalPath());
+            } catch (IOException ex) {
+                Logger.getLogger(ValidateAndSaveLSAndProfilePicCommand.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             if (!folder.exists()) {
                 //Checks if folder doesn't exist
