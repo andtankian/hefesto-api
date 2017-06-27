@@ -33,6 +33,7 @@ public class ValidateServiceDataCommand implements ICommand{
             isValid = false;
         } else if(s.getType() == null || s.getType().isEmpty()){
             m.setError("empty type");
+            isValid = false;
         }
         
         if(!isValid){

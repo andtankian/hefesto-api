@@ -41,8 +41,7 @@ public class ValidateTicketMaintenanceDataCommand implements ICommand {
         Set interactions = t.getInteractions();
 
         if (e == null || e.getId() == null || e.getId() == 0) {
-            isValid = false;
-            m.setError("invalid equipment");
+            /*EQUIPMENT ISN'T REQUIRED ANYMORE*/
         } else {
             Equipment loadedEq = (Equipment) session.get(Equipment.class, e.getId());
             if (loadedEq == null) {
