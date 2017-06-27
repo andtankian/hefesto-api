@@ -64,13 +64,13 @@ public class ValidateAndMergeTicketMaintenanceCommand implements ICommand {
             } else if (t.getProblem() != null && t.getProblem().isEmpty()) {
                 isValid = false;
                 m.setError("empty problem");
-            } else if (t.getResolution() != null && t.getResolution().isEmpty()) {
-                isValid = false;
-                m.setError("empty resolution");
             } else if (t.getStatus() != null && t.getStatus().isEmpty()) {
                 isValid = false;
                 m.setError("empty status");
-            } else if (t.getTitle() != null && t.getTitle().isEmpty()) {
+            }else if (t.getResolution() != null && t.getResolution().isEmpty() && t.getStatus().equals("Fechado")) {
+                isValid = false;
+                m.setError("empty resolution");
+            }  else if (t.getTitle() != null && t.getTitle().isEmpty()) {
                 isValid = false;
                 m.setError("empty priority");
             } else if (t.getType() != null && t.getType().isEmpty()) {
