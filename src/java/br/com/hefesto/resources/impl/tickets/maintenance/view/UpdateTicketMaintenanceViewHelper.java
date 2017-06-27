@@ -21,6 +21,7 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import javax.ws.rs.core.Form;
@@ -34,6 +35,8 @@ import javax.ws.rs.core.UriInfo;
  */
 public class UpdateTicketMaintenanceViewHelper extends AbstractViewHelper {
     
+    private String[] accepts;
+    
     @Override
     public IHolder getView(FlowContainer fc) {
         super.getView(fc);
@@ -45,6 +48,7 @@ public class UpdateTicketMaintenanceViewHelper extends AbstractViewHelper {
         MultivaluedMap<String, String> mvm = uri.getPathParameters();
         Form f = fc.getCr().readEntity(Form.class);
         MultivaluedHashMap mvhm = (MultivaluedHashMap) f.asMap();
+        MultivaluedMap<String, String> queries = uri.getQueryParameters();
 
         /*TICKET*/
         String ticket;
@@ -58,6 +62,14 @@ public class UpdateTicketMaintenanceViewHelper extends AbstractViewHelper {
             t.setId(Long.parseLong(ticket));
         } catch (NumberFormatException nfe) {
             t.setId(null);
+        }
+        
+        /*ACCEPT QUERY PARAMETER*/
+         try {
+            Object[] oarray = queries.get("accepts").toArray();
+            accepts = Arrays.copyOf(oarray, oarray.length, String[].class);
+        } catch (Exception e){
+            accepts = new String[]{"none"};
         }
 
         /*EQUIPMENT*/
@@ -246,7 +258,7 @@ public class UpdateTicketMaintenanceViewHelper extends AbstractViewHelper {
 
     @Override
     public void loadBusinessRulesAfterMainFlow() {        
-        getRulesAfterMainFlow().add(new AcceptTicketMaintenanceAttributesCommand(new String[]{"none"}, rejects));
+        getRulesAfterMainFlow().add(new AcceptTicketMaintenanceAttributesCommand(accepts, rejects));
         getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"ticket", "groups"}));        
     }
     

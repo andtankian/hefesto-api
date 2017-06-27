@@ -79,7 +79,7 @@ public class Ticket extends Entity {
         this.equipment = equipment;
     }
 
-    @Column
+    @Column(length = 100000)
     public String getProblem() {
         return problem;
     }
@@ -106,7 +106,7 @@ public class Ticket extends Entity {
         this.priority = priority;
     }
 
-    @Column
+    @Column(length = 100000)
     public String getResolution() {
         return resolution;
     }
