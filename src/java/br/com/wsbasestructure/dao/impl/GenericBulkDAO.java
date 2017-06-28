@@ -8,6 +8,7 @@ import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
 /**
@@ -43,17 +44,21 @@ public abstract class GenericBulkDAO extends AbstractDAO implements ICRUD {
                 Equipment e = (Equipment) list.get(i);
                 try {
                     session.save(e);
+                    session.flush();
+                } catch (ConstraintViolationException cve) {
+                    String[] pieces = cve.getCause().getMessage().split("'");
+                    String pat = pieces[1];
+                    session.evict(e);
+                    Equipment loaded = (Equipment) session.createCriteria(Equipment.class).add(Restrictions.eq("patrimonial", pat)).uniqueResult();
+                    loaded.merge(e);
+                    session.update(loaded);
+                    
                 } catch (Exception ex) {
                     message.setError("Unknown error: " + ex.getCause().getMessage());
                     fc.setMustContinue(false);
                     result.setStatus(Result.ERROR);
                     result.setMessage(message);
                     result.setHolder(holder);
-                }
-                if ((i + 1) % 20 == 0) {
-                    // flush a batch of inserts and release memory
-                    session.flush();
-                    session.clear();
                 }
             }
             try {
