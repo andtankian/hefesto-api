@@ -18,7 +18,7 @@ public class Product extends Entity {
     private String link;
     private String type;
 
-    @Column
+    @Column(length = 1000)
     public String getName() {
         return name;
     }
@@ -27,7 +27,7 @@ public class Product extends Entity {
         this.name = name;
     }
 
-    @Column
+    @Column(length = 100000)
     public String getDescription() {
         return description;
     }
@@ -36,7 +36,7 @@ public class Product extends Entity {
         this.description = description;
     }
 
-    @Column
+    @Column(length = 100000)
     public String getLink() {
         return link;
     }

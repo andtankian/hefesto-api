@@ -14,7 +14,7 @@ public class Equipment extends Entity{
     private String description;
     private String patrimonial;
 
-    @Column
+    @Column(length = 1000)
     public String getName() {
         return name;
     }

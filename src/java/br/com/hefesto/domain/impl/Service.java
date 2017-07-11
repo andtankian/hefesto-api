@@ -19,7 +19,7 @@ public class Service extends Entity{
     private String description;
     private SLA sla;
 
-    @Column
+    @Column(length = 1000)
     public String getName() {
         return name;
     }
@@ -28,7 +28,7 @@ public class Service extends Entity{
         this.name = name;
     }
 
-    @Column
+    @Column(length = 100000)
     public String getDescription() {
         return description;
     }
