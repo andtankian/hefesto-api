@@ -36,9 +36,10 @@ public class Ticket extends Entity {
     private Service service;
     private Equipment equipment;
     private String title;
-    private String problem;
+    private String description;
     private String priority;
     private String resolution;
+    private String typeOfClosing;
     private User responsible;
     private User owner;
     private String type;
@@ -79,15 +80,6 @@ public class Ticket extends Entity {
         this.equipment = equipment;
     }
 
-    @Column(length = 100000)
-    public String getProblem() {
-        return problem;
-    }
-
-    public void setProblem(String problem) {
-        this.problem = problem;
-    }
-
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class, fetch = FetchType.LAZY)
     public User getResponsible() {
         return responsible;
@@ -122,7 +114,6 @@ public class Ticket extends Entity {
         this.equipment = t.equipment != null ? t.equipment : this.equipment;
         this.interactions = t.interactions != null ? t.interactions : this.interactions;
         this.priority = t.priority != null ? t.priority : this.priority;
-        this.problem = t.problem != null ? t.problem : this.problem;
         this.requestedProducts = t.requestedProducts != null ? t.requestedProducts : this.requestedProducts;
         this.resolution = t.resolution != null ? t.resolution : this.resolution;
         this.responsible = t.responsible != null ? t.responsible : this.responsible;
@@ -141,6 +132,7 @@ public class Ticket extends Entity {
         this.title = title;
     }
 
+    @Column(length = 300)
     public String getType() {
         return type;
     }
@@ -156,6 +148,24 @@ public class Ticket extends Entity {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    @Column(length = 100000)
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Column
+    public String getTypeOfClosing() {
+        return typeOfClosing;
+    }
+
+    public void setTypeOfClosing(String typeOfClosing) {
+        this.typeOfClosing = typeOfClosing;
     }
     
     

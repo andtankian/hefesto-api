@@ -22,6 +22,7 @@ public class Interaction extends Entity{
     
     private User user;
     private String type;
+    private String update;
     private Ticket ticket;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = User.class)
@@ -55,9 +56,18 @@ public class Interaction extends Entity{
     public void merge(Entity e) {
         super.merge(e);
         Interaction i = (Interaction)e;
-        this.ticket = i.ticket != null ? i.ticket : this.ticket;
         this.type = i.type != null ? i.type : this.type;
         this.user = i.user != null ? i.user : this.user;
+        this.update = i.update != null ? i.update : this.update;
+    }
+
+    @Column(length = 10000)
+    public String getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(String update) {
+        this.update = update;
     }
     
     
