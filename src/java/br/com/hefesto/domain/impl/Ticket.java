@@ -39,6 +39,7 @@ public class Ticket extends Entity {
     private String description;
     private String priority;
     private String resolution;
+    private String diagnosis;
     private String typeOfClosing;
     private User responsible;
     private User owner;
@@ -166,6 +167,15 @@ public class Ticket extends Entity {
 
     public void setTypeOfClosing(String typeOfClosing) {
         this.typeOfClosing = typeOfClosing;
+    }
+
+    @Column(length = 100000)
+    public String getDiagnosis() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
     }
     
     
