@@ -1,6 +1,7 @@
 package br.com.hefesto.domain.impl;
 
 import br.com.wsbasestructure.domain.abstracts.Entity;
+import java.text.SimpleDateFormat;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
@@ -19,6 +20,7 @@ public class Interaction extends Entity{
     public final static String UPDATING_TICKET = "Atualização de ticket";
     public final static String REFUSING_TICKET = "Recusação de ticket";
     public final static String ACCEPTING_TICKET = "Aceitação de ticket";
+    public final static String OPENING_CLOSING_TICKET = "Abertura e Fechamento simultâneo";
     
     private User user;
     private String type;
@@ -69,6 +71,16 @@ public class Interaction extends Entity{
     public void setUpdate(String update) {
         this.update = update;
     }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("Usuário ").append(user.getFullName()).append(" interagiu no dia ")
+                .append(new SimpleDateFormat("dd/MM/YYYY 'às' HH:mm:ss").format(dateReg))
+                .append(" com a seguinte atualização: \"")
+                .append(update).toString();
+    }
+    
+    
     
     
 }
