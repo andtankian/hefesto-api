@@ -7,10 +7,16 @@ import br.com.hefesto.domain.impl.RequestedProduct;
 import br.com.hefesto.domain.impl.Service;
 import br.com.hefesto.domain.impl.Ticket;
 import br.com.hefesto.domain.impl.User;
+import br.com.hefesto.resources.impl.tickets.maintenance.rules.ValidateMaintenanceTicketDataForRegisterCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
+import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
+import br.com.wsbasestructure.view.impl.GenericExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -56,6 +62,7 @@ public class NewMaintenanceTicketViewHelper extends AbstractViewHelper {
         try {
             equipment = new Equipment();
             equipment.setId(Long.parseLong((String) mvhm.get("equipment").get(0)));
+            t.setEquipment(equipment);
         } catch (NullPointerException | NumberFormatException nge) {
             t.setEquipment(null);
         }
@@ -67,9 +74,9 @@ public class NewMaintenanceTicketViewHelper extends AbstractViewHelper {
         interaction.setType(Interaction.OPENING);
         /*INTERACTION CURRENT UPDATE*/
         try {
-            interaction.setUpdate((String) mvhm.get("interaction-update").get(0));
+            interaction.setStringUpdate((String) mvhm.get("interaction-update").get(0));
         } catch (NullPointerException npe) {
-            interaction.setUpdate(null);
+            interaction.setStringUpdate(null);
         }
         /*INTERACTION USER*/
         User interactionUser;
@@ -88,6 +95,7 @@ public class NewMaintenanceTicketViewHelper extends AbstractViewHelper {
         try {
             User owner = new User();
             owner.setId(Long.parseLong((String) mvhm.get("owner").get(0)));
+            t.setOwner(owner);
         } catch (NullPointerException | NumberFormatException nge) {
             t.setOwner(null);
         }
@@ -104,7 +112,9 @@ public class NewMaintenanceTicketViewHelper extends AbstractViewHelper {
         List products, amounts;
         products = mvhm.get("products");
         amounts = mvhm.get("amounts");
-        if ((products == null && amounts != null) || (products != null && amounts == null)
+        if ((products == null && amounts != null) 
+                || (products != null && amounts == null)
+                || (products == null && amounts == null)
                 || (products.size() != amounts.size())) {
             t.setRequestedProducts(null);
         } else {
@@ -134,7 +144,7 @@ public class NewMaintenanceTicketViewHelper extends AbstractViewHelper {
  /*STATUS*/
         try {
             t.setStatus((String) mvhm.get("status").get(0));
-        } catch (NumberFormatException nfe) {
+        } catch (NullPointerException npe) {
             t.setStatus(null);
         }
 
@@ -174,13 +184,32 @@ public class NewMaintenanceTicketViewHelper extends AbstractViewHelper {
         loadBusinessRulesBeforeMainFlow();
         loadBusinessRulesAfterMainFlow();
         
+        gh.getEntities().add(t);
+        
         return gh;
     }
 
     @Override
     public void loadBusinessRulesBeforeMainFlow() {
-        getRulesBeforeMainFlow().add(null);
+        getRulesBeforeMainFlow().add(new ValidateMaintenanceTicketDataForRegisterCommand());
     }
+
+    @Override
+    public String setView(Result result) {
+        GsonBuilder gb = new GsonBuilder();
+
+        gb.addSerializationExclusionStrategy(new GenericExclusionStrategy() {
+            @Override
+            public boolean shouldSkipField(FieldAttributes fa) {
+                return rejects.contains(fa.getName()) || fa.getName().equals("ticket");
+            }
+        });
+        Gson g = gb.create();
+
+        return g.toJson(result);
+    }
+    
+    
     
     
 }

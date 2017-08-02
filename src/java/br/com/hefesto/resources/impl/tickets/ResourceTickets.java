@@ -63,7 +63,7 @@ public class ResourceTickets extends AbstractResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String createMaintenanceTicket() {
         return new Facade(new FlowContainer(new NewMaintenanceTicketViewHelper(),
-                (Session) httpRequest, cr, httpRequest))
+                (Session) httpRequest.getAttribute("session"), cr, httpRequest))
                 .process();
     }
 }
