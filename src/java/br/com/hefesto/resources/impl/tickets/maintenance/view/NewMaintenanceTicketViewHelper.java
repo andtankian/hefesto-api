@@ -7,6 +7,8 @@ import br.com.hefesto.domain.impl.RequestedProduct;
 import br.com.hefesto.domain.impl.Service;
 import br.com.hefesto.domain.impl.Ticket;
 import br.com.hefesto.domain.impl.User;
+import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
+import br.com.hefesto.resources.impl.tickets.maintenance.rules.AcceptTicketMaintenanceAttributesCommand;
 import br.com.hefesto.resources.impl.tickets.maintenance.rules.ValidateMaintenanceTicketDataForRegisterCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Result;
@@ -180,6 +182,11 @@ public class NewMaintenanceTicketViewHelper extends AbstractViewHelper {
         }
         
         t.setType(Ticket.MAINTENANCE);
+        try {
+            t.setTypeOfClosing((String)mvhm.get("type-of-closing").get(0));
+        }catch(NullPointerException npe){
+            t.setTypeOfClosing(null);
+        }
         
         loadBusinessRulesBeforeMainFlow();
         loadBusinessRulesAfterMainFlow();
@@ -195,13 +202,21 @@ public class NewMaintenanceTicketViewHelper extends AbstractViewHelper {
     }
 
     @Override
+    public void loadBusinessRulesAfterMainFlow() {
+        getRulesAfterMainFlow().add(new AcceptTicketMaintenanceAttributesCommand(new String[] {"responsible"}, rejects));
+        getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"ticket", "groups"}));
+    }
+    
+    
+
+    @Override
     public String setView(Result result) {
         GsonBuilder gb = new GsonBuilder();
 
         gb.addSerializationExclusionStrategy(new GenericExclusionStrategy() {
             @Override
             public boolean shouldSkipField(FieldAttributes fa) {
-                return rejects.contains(fa.getName()) || fa.getName().equals("ticket");
+                return rejects.contains(fa.getName()) || fa.getName().equals("ticket") || fa.getName().equals("groups");
             }
         });
         Gson g = gb.create();

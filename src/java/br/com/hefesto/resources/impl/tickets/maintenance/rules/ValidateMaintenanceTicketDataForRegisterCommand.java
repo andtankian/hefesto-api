@@ -46,10 +46,7 @@ public class ValidateMaintenanceTicketDataForRegisterCommand implements ICommand
         /*EQUIPMENTS*/
         if (isValid) {
 
-            if (t.getEquipment() == null) {
-                isValid = false;
-                m.setError("invalid equipment");
-            } else {
+            if(t.getEquipment() != null) {
                 Equipment loadedEquipment = (Equipment) s.get(Equipment.class, t.getEquipment().getId());
                 if (loadedEquipment == null) {
                     isValid = false;

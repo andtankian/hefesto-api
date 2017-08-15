@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 
 /**
  *
@@ -46,6 +47,7 @@ public class Ticket extends Entity {
     private String type;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Interaction.class, mappedBy = "ticket")
+    @OrderBy("dateReg")
     public Set getInteractions() {
         return interactions;
     }

@@ -1,6 +1,7 @@
 package br.com.hefesto.resources.impl.tickets;
 
 import br.com.hefesto.resources.impl.tickets.maintenance.view.NewMaintenanceTicketViewHelper;
+import br.com.hefesto.resources.impl.tickets.maintenance.view.ReadMaintenanceTicketsViewHelper;
 import br.com.hefesto.resources.impl.tickets.purchase.view.CreatePurchaseTicketViewHelper;
 import br.com.hefesto.resources.impl.tickets.purchase.view.ReadAllTicketPurchaseViewHelper;
 import br.com.hefesto.resources.impl.tickets.purchase.view.ReadTicketPurchaseViewHelper;
@@ -63,6 +64,14 @@ public class ResourceTickets extends AbstractResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String createMaintenanceTicket() {
         return new Facade(new FlowContainer(new NewMaintenanceTicketViewHelper(),
+                (Session) httpRequest.getAttribute("session"), cr, httpRequest))
+                .process();
+    }
+    
+    @GET
+    @Path("maintenances")
+    public String readMaintenanceTickets() {
+        return new Facade(new FlowContainer(new ReadMaintenanceTicketsViewHelper(),
                 (Session) httpRequest.getAttribute("session"), cr, httpRequest))
                 .process();
     }
