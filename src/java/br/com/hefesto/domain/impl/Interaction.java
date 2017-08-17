@@ -25,6 +25,7 @@ public class Interaction extends Entity{
     private User user;
     private String type;
     private String stringUpdate;
+    private String ticketChanges;
     private Ticket ticket;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = User.class)
@@ -61,6 +62,7 @@ public class Interaction extends Entity{
         this.type = i.type != null ? i.type : this.type;
         this.user = i.user != null ? i.user : this.user;
         this.stringUpdate = i.stringUpdate != null ? i.stringUpdate : this.stringUpdate;
+        this.ticketChanges = i.ticketChanges != null ? i.ticketChanges : this.ticketChanges;
     }
 
     @Column(length = 10000)
@@ -77,7 +79,17 @@ public class Interaction extends Entity{
         return new StringBuilder("Usuário ").append(user.getFullName()).append(" interagiu no dia ")
                 .append(new SimpleDateFormat("dd/MM/YYYY 'às' HH:mm:ss").format(dateReg))
                 .append(" com a seguinte atualização: \"")
-                .append(stringUpdate).toString();
+                .append(stringUpdate)
+                .append("\" \nMudanças na estrutura do ticket: ")
+                .append(ticketChanges).toString();
+    }
+
+    public String getTicketChanges() {
+        return ticketChanges;
+    }
+
+    public void setTicketChanges(String ticketChanges) {
+        this.ticketChanges = ticketChanges;
     }
     
     

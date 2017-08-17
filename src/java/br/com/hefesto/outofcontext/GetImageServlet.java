@@ -62,7 +62,6 @@ public class GetImageServlet extends HttpServlet {
         if (isValid) {
             isValid = true;
             f = new File(new StringBuilder("..").append(File.separator).append("..").append(path).toString());
-            f.getAbsolutePath();
             if (f.exists()) {
                 if (ext != null) {
                     ext = ext.equals(".jpg") ? "jpeg" : ext.split("\\.")[1];
