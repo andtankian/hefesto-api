@@ -35,13 +35,13 @@ public class TicketMaintenanceDAO extends GenericCRUDDAO {
         } else if (sm != null && sm.getEntity() != null && sm.getSearch() != null && !sm.getSearch().isEmpty()) {
             c.createAlias("responsible", "resp", JoinType.LEFT_OUTER_JOIN);
             c.createAlias("owner", "owner");
-            c.createAlias("equipment", "equip");
+            c.createAlias("equipment", "equip", JoinType.LEFT_OUTER_JOIN);
             c.createAlias("service", "service", JoinType.LEFT_OUTER_JOIN);
             c.setMaxResults(sm.getLimit().intValue());
             c.setFirstResult(sm.getOffset().intValue());
             c.add(Restrictions.disjunction(
                     Restrictions.ilike("title", sm.getSearch(), MatchMode.ANYWHERE),
-                    Restrictions.ilike("problem", sm.getSearch(), MatchMode.ANYWHERE),
+                    Restrictions.ilike("description", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.ilike("resolution", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.ilike("status", sm.getSearch(), MatchMode.ANYWHERE),
                     Restrictions.ilike("priority", sm.getSearch(), MatchMode.ANYWHERE),
