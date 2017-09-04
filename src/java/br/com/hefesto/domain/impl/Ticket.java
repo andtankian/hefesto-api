@@ -16,21 +16,21 @@ import javax.persistence.OrderBy;
  */
 @javax.persistence.Entity
 public class Ticket extends Entity {
-    
+
     public final static String OPENED = "Aberto";
     public final static String PENDING = "Pendente";
     public final static String DEAD_LINE = "Dead Line";
     public final static String CLOSED = "Fechado";
-    
+
     public final static String P5 = "P5";
     public final static String P4 = "P4";
     public final static String P3 = "P3";
     public final static String P2 = "P2";
     public final static String P1 = "P1";
-    
+
     public final static String MAINTENANCE = "Manutenção";
     public final static String PURCHASE = "Compra";
-    
+
     private Set interactions;
     private Set requestedProducts;
 
@@ -47,7 +47,7 @@ public class Ticket extends Entity {
     private String type;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Interaction.class, mappedBy = "ticket")
-    @OrderBy("dateReg")
+    @OrderBy("dateReg DESC")
     public Set getInteractions() {
         return interactions;
     }
@@ -113,8 +113,14 @@ public class Ticket extends Entity {
     @Override
     public void merge(Entity e) {
         super.merge(e);
-        Ticket t = (Ticket)e;
-        this.equipment = t.equipment != null ? t.equipment : this.equipment;
+        Ticket t = (Ticket) e;
+        if (t.equipment != null) {
+            if (t.equipment.getId() == -1) {
+                this.equipment = null;
+            } else {
+                this.equipment = t.equipment;
+            }
+        }
         this.interactions = t.interactions != null ? t.interactions : this.interactions;
         this.priority = t.priority != null ? t.priority : this.priority;
         this.requestedProducts = t.requestedProducts != null ? t.requestedProducts : this.requestedProducts;
@@ -124,6 +130,7 @@ public class Ticket extends Entity {
         this.service = t.service != null ? t.service : this.service;
         this.title = t.title != null ? t.title : this.title;
         this.type = t.type != null ? t.type : this.type;
+        this.description = t.description != null ? t.description : this.description;
     }
 
     @Column
@@ -179,7 +186,5 @@ public class Ticket extends Entity {
     public void setDiagnosis(String diagnosis) {
         this.diagnosis = diagnosis;
     }
-    
-    
 
 }

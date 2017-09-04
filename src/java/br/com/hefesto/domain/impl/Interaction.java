@@ -84,6 +84,7 @@ public class Interaction extends Entity{
                 .append(ticketChanges).toString();
     }
 
+    @Column(length = 100000)
     public String getTicketChanges() {
         return ticketChanges;
     }

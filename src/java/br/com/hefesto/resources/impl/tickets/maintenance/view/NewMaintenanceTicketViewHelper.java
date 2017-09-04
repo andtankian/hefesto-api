@@ -126,6 +126,7 @@ public class NewMaintenanceTicketViewHelper extends AbstractViewHelper {
                 rp = new RequestedProduct();
                 rp.setDateReg(t.getDateReg());
                 rp.setType(RequestedProduct.REQUESTED_COMPONENT);
+                rp.setTicket(t);
                 rp.setStatusPurchase(RequestedProduct.STATUS_PIPE);
                 try {
                     rp.setAmount(Long.parseLong((String) amounts.get(i)));
