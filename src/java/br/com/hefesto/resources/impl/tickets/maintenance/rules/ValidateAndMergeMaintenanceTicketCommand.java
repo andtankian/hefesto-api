@@ -151,6 +151,7 @@ public class ValidateAndMergeMaintenanceTicketCommand implements ICommand {
                 sb.delete(0, sb.length());
                 /*CHANGED EQUIPMENT*/
                 if (up.getChangedEquipment() != null && !up.getChangedEquipment().isEmpty()) {
+                    sb.append(in.getTicketChanges());
                     sb.append("\nEquipamento alterado de \"");
                     if (loadedTicket.getEquipment() != null) {
                         sb.append(loadedTicket.getEquipment().getName());
@@ -166,6 +167,7 @@ public class ValidateAndMergeMaintenanceTicketCommand implements ICommand {
                     }
 
                     sb.append("\".");
+                    in.setTicketChanges(sb.toString().replace("null", ""));
                 }
                 sb.delete(0, sb.length());
                 /*CHANGED OWNER*/
@@ -255,6 +257,30 @@ public class ValidateAndMergeMaintenanceTicketCommand implements ICommand {
                 }
             }
         }
+        
+        /*VALIDATING TO SEE IF ITS A CLOSING AFTER AN EDIT*/
+        if(isValid){
+            if(t.getTypeOfClosing() != null && !t.getTypeOfClosing().isEmpty()){
+                /*ITS A CLOSING TICKET, LETS JOIN ALL UPDATES*/
+                StringBuilder sb = new StringBuilder();
+                int tempIndex = 1;
+                for (Object interaction : loadedTicket.getInteractions()) {
+                    Interaction in = (Interaction)interaction;
+                    sb.append("[").append(tempIndex).append("]: ")
+                            .append(in.getStringUpdate()).append(" .\n");
+                    tempIndex++;
+                }
+                for (Object interaction : t.getInteractions()) {
+                    Interaction in = (Interaction)interaction;
+                    sb.append("[").append(tempIndex).append("]: ")
+                            .append(in.getStringUpdate()).append(" .\n");
+                    tempIndex++;
+                }
+                
+                t.setResolution(sb.toString());
+            }
+        }
+       
         if (isValid) {
             loadedTicket.merge(t);
             up.getEntities().set(0, loadedTicket);

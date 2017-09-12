@@ -91,9 +91,9 @@ public class NewMaintenanceTicketViewHelper extends AbstractViewHelper {
         }
         t.setInteractions(new HashSet());
         t.getInteractions().add(interaction);
-        /*--------------------------END-INTERACTION--------------------------*/
+        /*--------------------------END-INTERACTION--------------------------
 
- /*--------------------------OWNER--------------------------*/
+        --------------------------OWNER--------------------------*/
         try {
             User owner = new User();
             owner.setId(Long.parseLong((String) mvhm.get("owner").get(0)));
@@ -101,14 +101,17 @@ public class NewMaintenanceTicketViewHelper extends AbstractViewHelper {
         } catch (NullPointerException | NumberFormatException nge) {
             t.setOwner(null);
         }
-        /*--------------------------END-OWNER--------------------------*/
+        /*--------------------------END-OWNER--------------------------
 
- /*PRIORITY*/
+        PRIORITY*/
         try {
             t.setPriority((String) mvhm.get("priority").get(0));
         } catch (NullPointerException npe) {
             t.setPriority(null);
         }
+        
+        /*LAST UPDATE*/
+        t.setLastUpdate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 
         /*-------------------------REQUESTED PRODUCTS--------------------------*/
         List products, amounts;

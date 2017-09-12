@@ -1,6 +1,7 @@
 package br.com.hefesto.domain.impl;
 
 import br.com.wsbasestructure.domain.abstracts.Entity;
+import java.sql.Timestamp;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,6 +46,7 @@ public class Ticket extends Entity {
     private User responsible;
     private User owner;
     private String type;
+    private Timestamp lastUpdate;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = Interaction.class, mappedBy = "ticket")
     @OrderBy("dateReg DESC")
@@ -131,6 +133,8 @@ public class Ticket extends Entity {
         this.title = t.title != null ? t.title : this.title;
         this.type = t.type != null ? t.type : this.type;
         this.description = t.description != null ? t.description : this.description;
+        this.lastUpdate = t.lastUpdate != null ? t.lastUpdate : this.lastUpdate;
+        this.typeOfClosing = t.typeOfClosing != null ? t.typeOfClosing : this.typeOfClosing;
     }
 
     @Column
@@ -185,6 +189,14 @@ public class Ticket extends Entity {
 
     public void setDiagnosis(String diagnosis) {
         this.diagnosis = diagnosis;
+    }
+
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
 }

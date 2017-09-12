@@ -29,6 +29,7 @@ public class TicketMaintenanceDAO extends GenericCRUDDAO {
         SearchModel sm = holder.getSm();
         Criteria c = session.createCriteria(Ticket.class);
         c.add(Restrictions.eq("type", Ticket.MAINTENANCE));
+        c.addOrder(Order.desc("lastUpdate"));
         c.addOrder(Order.desc("dateReg"));
         if (sm != null && sm.getEntity() != null && sm.getEntity().getId() != null && sm.getEntity().getId() > 0) {
             readOne();

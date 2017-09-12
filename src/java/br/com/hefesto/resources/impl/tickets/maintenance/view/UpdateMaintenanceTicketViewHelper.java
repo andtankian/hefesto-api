@@ -93,6 +93,9 @@ public class UpdateMaintenanceTicketViewHelper extends AbstractViewHelper {
         } catch (NullPointerException | NumberFormatException nfe) {
             interaction.setUser(null);
         }
+        
+        /*LAST UPDATE*/
+        t.setLastUpdate(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 
         /*ADD INTERACTION TO TICKET*/
         t.getInteractions().add(interaction);
