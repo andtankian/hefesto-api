@@ -13,6 +13,7 @@ import br.com.wsbasestructure.dto.Message;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.interfaces.ICommand;
+import java.util.HashSet;
 import org.hibernate.Session;
 
 /**
@@ -264,12 +265,6 @@ public class ValidateAndMergeMaintenanceTicketCommand implements ICommand {
                 /*ITS A CLOSING TICKET, LETS JOIN ALL UPDATES*/
                 StringBuilder sb = new StringBuilder();
                 int tempIndex = 1;
-                for (Object interaction : loadedTicket.getInteractions()) {
-                    Interaction in = (Interaction)interaction;
-                    sb.append("[").append(tempIndex).append("]: ")
-                            .append(in.getStringUpdate()).append(" .\n");
-                    tempIndex++;
-                }
                 for (Object interaction : t.getInteractions()) {
                     Interaction in = (Interaction)interaction;
                     sb.append("[").append(tempIndex).append("]: ")
@@ -277,7 +272,14 @@ public class ValidateAndMergeMaintenanceTicketCommand implements ICommand {
                     tempIndex++;
                 }
                 
+                for (Object interaction : loadedTicket.getInteractions()) {
+                    Interaction in = (Interaction)interaction;
+                    sb.append("[").append(tempIndex).append("]: ")
+                            .append(in.getStringUpdate()).append(" .\n");
+                    tempIndex++;
+                }
                 t.setResolution(sb.toString());
+                
             }
         }
        

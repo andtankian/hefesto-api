@@ -1,6 +1,7 @@
 package br.com.hefesto.domain.impl;
 
 import br.com.wsbasestructure.domain.abstracts.Entity;
+import java.sql.Timestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
@@ -24,6 +25,7 @@ public class RequestedProduct extends Entity{
    private Long amount;
    private Double price;
    private String statusPurchase;
+   private Timestamp datePurchase;
    private String type;
    private Ticket ticket;
 
@@ -93,6 +95,16 @@ public class RequestedProduct extends Entity{
         this.statusPurchase = rp.statusPurchase != null ? rp.statusPurchase : this.statusPurchase;
         this.ticket = rp.ticket != null ? rp.ticket : this.ticket;
         this.type = rp.type != null ? rp.type : this.type;
+        this.datePurchase = rp.datePurchase != null ? rp.datePurchase : this.datePurchase;
+    }
+
+    @Column()
+    public Timestamp getDatePurchase() {
+        return datePurchase;
+    }
+
+    public void setDatePurchase(Timestamp datePurchase) {
+        this.datePurchase = datePurchase;
     }
     
     
