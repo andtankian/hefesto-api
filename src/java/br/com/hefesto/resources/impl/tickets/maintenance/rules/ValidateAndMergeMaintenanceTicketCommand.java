@@ -13,7 +13,6 @@ import br.com.wsbasestructure.dto.Message;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.rules.interfaces.ICommand;
-import java.util.HashSet;
 import org.hibernate.Session;
 
 /**
@@ -58,23 +57,23 @@ public class ValidateAndMergeMaintenanceTicketCommand implements ICommand {
                 }
             }
         }
-        
+
         /*RELATED TO RESPONSIBLES*/
-        if(isValid){
-            if(t.getResponsible() != null){
-                t.setResponsible((User)s.get(User.class, t.getResponsible().getId()));
-                if(t.getResponsible() == null){
+        if (isValid) {
+            if (t.getResponsible() != null) {
+                t.setResponsible((User) s.get(User.class, t.getResponsible().getId()));
+                if (t.getResponsible() == null) {
                     isValid = false;
                     m.setError("responsible doesn't exist");
                 }
             }
         }
-        
+
         /*RELATED TO SERVICE*/
-        if(isValid){
-            if(t.getService() != null){
-                t.setService((Service)s.get(Service.class, t.getService().getId()));
-                if(t.getService() == null){
+        if (isValid) {
+            if (t.getService() != null) {
+                t.setService((Service) s.get(Service.class, t.getService().getId()));
+                if (t.getService() == null) {
                     isValid = false;
                     m.setError("service doesn't exist");
                 }
@@ -242,47 +241,51 @@ public class ValidateAndMergeMaintenanceTicketCommand implements ICommand {
 
                     in.setTicketChanges(sb.toString().replace("null", ""));
                 }
-                
+
                 sb.delete(0, sb.length());
-                
+
                 /*CHANGED TITLE*/
-                if(up.getChangedTitle() != null && !up.getChangedTitle().isEmpty()){
+                if (up.getChangedTitle() != null && !up.getChangedTitle().isEmpty()) {
                     sb.append(in.getTicketChanges());
-                    
+
                     sb.append("\nTítulo alterado de \"")
                             .append(loadedTicket.getTitle())
                             .append("\" para \"")
                             .append(t.getTitle()).append("\".");
-                    
+
                     in.setTicketChanges(sb.toString().replace("null", "").trim());
                 }
             }
         }
-        
+
         /*VALIDATING TO SEE IF ITS A CLOSING AFTER AN EDIT*/
-        if(isValid){
-            if(t.getTypeOfClosing() != null && !t.getTypeOfClosing().isEmpty()){
+        if (isValid) {
+            if (t.getTypeOfClosing() != null && !t.getTypeOfClosing().isEmpty()) {
                 /*ITS A CLOSING TICKET, LETS JOIN ALL UPDATES*/
                 StringBuilder sb = new StringBuilder();
                 int tempIndex = 1;
                 for (Object interaction : t.getInteractions()) {
-                    Interaction in = (Interaction)interaction;
-                    sb.append("[").append(tempIndex).append("]: ")
-                            .append(in.getStringUpdate()).append(" .\n");
-                    tempIndex++;
+                    Interaction in = (Interaction) interaction;
+                    if (in.getStringUpdate() != null && !in.getStringUpdate().isEmpty()) {
+                        sb.append("[").append(tempIndex).append("]: ")
+                                .append(in.getStringUpdate()).append(" .\n");
+                        tempIndex++;
+                    }
                 }
-                
+
                 for (Object interaction : loadedTicket.getInteractions()) {
-                    Interaction in = (Interaction)interaction;
-                    sb.append("[").append(tempIndex).append("]: ")
-                            .append(in.getStringUpdate()).append(" .\n");
-                    tempIndex++;
+                    Interaction in = (Interaction) interaction;
+                    if (in.getStringUpdate() != null && !in.getStringUpdate().isEmpty()) {
+                        sb.append("[").append(tempIndex).append("]: ")
+                                .append(in.getStringUpdate()).append(" .\n");
+                        tempIndex++;
+                    }
                 }
                 t.setResolution(sb.toString());
-                
+
             }
         }
-       
+
         if (isValid) {
             loadedTicket.merge(t);
             up.getEntities().set(0, loadedTicket);

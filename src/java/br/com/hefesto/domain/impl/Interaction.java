@@ -21,6 +21,7 @@ public class Interaction extends Entity{
     public final static String REFUSING_TICKET = "Recusação de ticket";
     public final static String ACCEPTING_TICKET = "Aceitação de ticket";
     public final static String OPENING_CLOSING_TICKET = "Abertura e Fechamento simultâneo";
+    public final static String REOPENING_TICKET = "Reabertura de ticket";
     
     private User user;
     private String type;
