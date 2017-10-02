@@ -113,6 +113,8 @@ public class ValidateAndMergeMaintenanceTicketCommand implements ICommand {
                                 m.setError("requested product failed recovering object");
                             } else {
                                 loadedRp.merge(rp);
+                                t.getRequestedProducts().remove(rp);
+                                t.getRequestedProducts().add(loadedRp);
                             }
                         }
                     }
@@ -282,7 +284,6 @@ public class ValidateAndMergeMaintenanceTicketCommand implements ICommand {
                     }
                 }
                 t.setResolution(sb.toString());
-
             }
         }
 
