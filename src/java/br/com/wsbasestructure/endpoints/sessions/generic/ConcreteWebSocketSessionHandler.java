@@ -1,6 +1,7 @@
 package br.com.wsbasestructure.endpoints.sessions.generic;
 
 import br.com.wsbasestructure.dto.FlowContainer;
+import br.com.wsbasestructure.dto.NotificationSystemContainer;
 import br.com.wsbasestructure.endpoints.sessions.interfaces.WebSocketSessionHandler;
 import br.com.wsbasestructure.view.impl.GenericExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -51,6 +52,23 @@ public class ConcreteWebSocketSessionHandler implements WebSocketSessionHandler{
         JsonObject g = (JsonObject) gson.toJsonTree(fc.getResult());
         g.addProperty("header", fc.getResult().getHolder().getEntities().get(0).getClass().getName());
         g.addProperty("action", fc.getCr().getMethod());
+        String message = g.toString();
+        for (Object session : sessions) {
+            Session s = (Session)session;
+            s.getAsyncRemote().sendText(message);
+        }
+    }
+    
+    public synchronized void notify(NotificationSystemContainer nsc) {
+        Gson gson = new GsonBuilder().addSerializationExclusionStrategy(new GenericExclusionStrategy() {
+            @Override
+            public boolean shouldSkipField(FieldAttributes fa) {
+                return fa.getName().equals("groups") || fa.getName().equals("ticket") || fa.getName().equals("user");
+            }
+        }).create();
+        JsonObject g = (JsonObject) gson.toJsonTree(nsc);
+        g.addProperty("header", nsc.getClass().getName());
+        g.addProperty("action", "notify");
         String message = g.toString();
         for (Object session : sessions) {
             Session s = (Session)session;

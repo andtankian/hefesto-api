@@ -6,19 +6,23 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
  * @author Andrew Ribeiro
  */
 @javax.persistence.Entity
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"name"}, name = "duplicate_name")})
 public class Groups extends Entity{
     
     private String name;
     private String description;
     private Set users;
 
-    @Column
+    @Column(length = 255)
     public String getName() {
         return name;
     }
@@ -27,7 +31,7 @@ public class Groups extends Entity{
         this.name = name;
     }
 
-    @Column
+    @Column(length = 100000)
     public String getDescription() {
         return description;
     }

@@ -43,7 +43,7 @@ public abstract class AbstractHolder implements IHolder {
     @Override
     public void setTotalEntities(Long totalEntities) {
         this.totalEntities = totalEntities;
-    }
+    }   
        
 
 }

@@ -38,7 +38,7 @@ public class User extends Entity {
         this.login = login;
     }
 
-    @Column
+    @Column(length = 500)
     public String getPassword() {
         return password;
     }

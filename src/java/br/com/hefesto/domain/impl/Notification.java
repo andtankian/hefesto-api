@@ -14,6 +14,13 @@ import javax.persistence.ManyToOne;
 public class Notification extends Entity{
     
     public final static String NOTIFICATION = "Notificação";
+
+    public Notification() {
+        
+        seen = false;
+    }
+    
+    
     
     private String title;
     private String description;
