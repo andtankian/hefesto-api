@@ -4,6 +4,7 @@ import br.com.hefesto.resources.impl.deparment.ResourceDepartment;
 import br.com.hefesto.resources.impl.equipments.ResourceEquipment;
 import br.com.hefesto.resources.impl.resourcepage.ResourceResourcePage;
 import br.com.hefesto.resources.impl.group.ResourceGroups;
+import br.com.hefesto.resources.impl.notification.ResourceNotification;
 import br.com.hefesto.resources.impl.product.ResourceProduct;
 import br.com.hefesto.resources.impl.service.ResourceService;
 import br.com.hefesto.resources.impl.tickets.ResourceTickets;
@@ -31,6 +32,7 @@ public class EntryPoint extends ResourceConfig {
                 ResourceEquipment.class,
                 ResourceProduct.class,
                 ResourceTickets.class,
+                ResourceNotification.class,
                 MultiPartFeature.class, CORSFilter.class);
     }
     

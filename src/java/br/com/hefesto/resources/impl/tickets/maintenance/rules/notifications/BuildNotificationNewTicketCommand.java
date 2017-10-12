@@ -81,8 +81,6 @@ public class BuildNotificationNewTicketCommand implements ICommand {
         
         nsc.getNotificationSystems().add(ns);
         
-        /*FROM HERE TO BELOW WE WILL WORK WITH RESPONSIBLE NOTIFICATION*/
-        
         /*BUILD THE STRING AND SEND VIA WEBSOCKET*/
         WebSocketSessionHandler ws = (WebSocketSessionHandler) flowContainer.getHttprequest().getServletContext().getAttribute("contentep");
         ws.notify(nsc);

@@ -4,6 +4,7 @@ import br.com.hefesto.resources.impl.deparment.dao.DepartmentDAO;
 import br.com.hefesto.domain.impl.Department;
 import br.com.hefesto.domain.impl.Equipment;
 import br.com.hefesto.domain.impl.Groups;
+import br.com.hefesto.domain.impl.Notification;
 import br.com.hefesto.domain.impl.Product;
 import br.com.hefesto.domain.impl.ResourcePage;
 import br.com.hefesto.domain.impl.Service;
@@ -11,6 +12,7 @@ import br.com.hefesto.domain.impl.Ticket;
 import br.com.hefesto.domain.impl.User;
 import br.com.hefesto.resources.impl.equipments.dao.EquipmentDAO;
 import br.com.hefesto.resources.impl.group.dao.GroupDAO;
+import br.com.hefesto.resources.impl.notification.dao.NotificationDAO;
 import br.com.hefesto.resources.impl.product.dao.ProductDAO;
 import br.com.hefesto.resources.impl.resourcepage.dao.ResourceResourcePageDAO;
 import br.com.hefesto.resources.impl.service.dao.ServiceDAO;
@@ -52,6 +54,8 @@ public class CRUDCenter extends AbstractPersistenceCenter {
             } else {
                 return new TicketMaintenanceDAO(session, holder);
             }
+        } else if(e instanceof Notification){
+            return new NotificationDAO(session, holder);
         }
 
         return null;
