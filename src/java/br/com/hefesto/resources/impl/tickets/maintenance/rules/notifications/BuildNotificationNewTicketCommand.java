@@ -64,7 +64,7 @@ public class BuildNotificationNewTicketCommand implements ICommand {
 
         if (users != null && !users.isEmpty()) {
             for (int i = 0; i < users.size(); i++) {
-                User u = (User) users.get(0);
+                User u = (User) users.get(i);
                 Notification no = new Notification();
                 no.merge(n);
                 no.setUser(u);

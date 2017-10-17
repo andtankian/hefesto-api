@@ -107,8 +107,5 @@ public class Notification extends Entity{
     public void setLink(String link) {
         this.link = link;
     }
-    
-    
-    
-    
+   
 }
