@@ -26,8 +26,10 @@ public class Notification extends Entity{
     private String description;
     private String type;
     private String picture;
+    private String link;
     private User user;
     private boolean seen;
+    
 
     @Column(length = 500)
     public String getTitle() {
@@ -82,6 +84,30 @@ public class Notification extends Entity{
     public void setSeen(boolean seen) {
         this.seen = seen;
     }
+
+    @Override
+    public void merge(Entity e) {
+        super.merge(e);
+        Notification n = (Notification)e;
+        this.dateReg = n.dateReg != null ? n.dateReg : this.dateReg;
+        this.description = n.description != null ? n.description : this.description;
+        this.picture = n.picture != null ? n.picture : this.picture;
+        this.seen = n.seen;
+        this.title = n.title != null ? n.title : this.title;
+        this.type = n.type != null ? n.type : this.type;
+        this.user = n.user != null ? n.user : this.user;
+        this.link = n.link != null ? n.link : this.link;
+    }
+
+    @Column(length = 5000)
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+    
     
     
     

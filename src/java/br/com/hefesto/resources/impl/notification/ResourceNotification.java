@@ -1,5 +1,6 @@
 package br.com.hefesto.resources.impl.notification;
 
+import br.com.hefesto.resources.impl.notification.view.ReadNotificationsCounterViewHelper;
 import br.com.hefesto.resources.impl.notification.view.ReadNotificationsViewHelper;
 import br.com.wsbasestructure.control.Facade;
 import br.com.wsbasestructure.domain.abstracts.AbstractResource;
@@ -22,6 +23,14 @@ public class ResourceNotification extends AbstractResource{
     @Path("user/{id}")
     public String getNotifications(){
         return new Facade(new FlowContainer(new ReadNotificationsViewHelper(),
+                (Session)httpRequest.getAttribute("session"), cr, httpRequest))
+                .process();
+    }
+    
+    @GET
+    @Path("user/{id}/counter")
+    public String getNotificationsCounter(){
+        return new Facade(new FlowContainer(new ReadNotificationsCounterViewHelper(),
                 (Session)httpRequest.getAttribute("session"), cr, httpRequest))
                 .process();
     }

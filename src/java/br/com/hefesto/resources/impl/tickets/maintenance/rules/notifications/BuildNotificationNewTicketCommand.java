@@ -26,9 +26,8 @@ public class BuildNotificationNewTicketCommand implements ICommand {
     @Override
     public IHolder exe(IHolder holder, FlowContainer flowContainer) {
         NotificationSystemContainer nsc = new NotificationSystemContainer();
-        
+
         NotificationSystem ns = new NotificationSystem();
-        
 
         Session s = flowContainer.getSession();
         Transaction tr = s.getTransaction().isActive() ? s.getTransaction() : s.beginTransaction();
@@ -46,8 +45,14 @@ public class BuildNotificationNewTicketCommand implements ICommand {
 
         no_desc.append(t.getOwner().getFullName()).append(": ");
         no_desc.append(t.getTitle());
-        
-          /*Let's add the main notification to the system*/
+
+        n.setDescription(no_desc.toString());
+        n.setPicture(t.getOwner().getUserVisual().getProfile());
+        n.setTitle(new StringBuilder(t.getOwner().getFullName()).append(" abriu novo ticket").toString());
+        n.setType(Notification.NOTIFICATION);
+        n.setLink("/hefesto/dash/tickets/manutencoes/" + t.getId());
+
+        /*Let's add the main notification to the system*/
         ns.setNotification(n);
 
         /*Let's get all the users that is in the group Administrator*/
@@ -56,17 +61,12 @@ public class BuildNotificationNewTicketCommand implements ICommand {
                         Restrictions.eq("g.name", "Administradores")
                 )
         ).list();
-        
-        
+
         if (users != null && !users.isEmpty()) {
             for (int i = 0; i < users.size(); i++) {
                 User u = (User) users.get(0);
                 Notification no = new Notification();
-                no.setDateReg(n.getDateReg());
-                no.setDescription(no_desc.toString());
-                no.setPicture(t.getOwner().getUserVisual().getProfile());
-                no.setTitle(new StringBuilder(t.getOwner().getFullName()).append(" abriu novo ticket").toString());
-                no.setType(Notification.NOTIFICATION);
+                no.merge(n);
                 no.setUser(u);
                 s.save(no);
                 if (i % 20 == 0) { //20, same as the JDBC batch size
@@ -78,13 +78,13 @@ public class BuildNotificationNewTicketCommand implements ICommand {
             }
             tr.commit();
         }
-        
+
         nsc.getNotificationSystems().add(ns);
-        
+
         /*BUILD THE STRING AND SEND VIA WEBSOCKET*/
         WebSocketSessionHandler ws = (WebSocketSessionHandler) flowContainer.getHttprequest().getServletContext().getAttribute("contentep");
         ws.notify(nsc);
-        
+
         return holder;
 
     }

@@ -1,6 +1,7 @@
 package br.com.hefesto.resources.impl.notification.dao;
 
 import br.com.hefesto.domain.impl.Notification;
+import br.com.hefesto.resources.impl.notification.dto.NotificationHolder;
 import br.com.wsbasestructure.dao.impl.GenericCRUDDAO;
 import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.SearchModel;
@@ -29,14 +30,20 @@ public class NotificationDAO extends GenericCRUDDAO {
         criteria.createAlias("user", "u");
         criteria.addOrder(Order.desc("dateReg"));
         criteria.add(Restrictions.eq("u.id", n.getUser().getId()));
-        criteria.setMaxResults(sm.getLimit().intValue());
-        criteria.setFirstResult(sm.getOffset().intValue());
-        holder.setEntities(criteria.list());
-        criteria.setMaxResults(0);
-        criteria.setFirstResult(0);
-        criteria.setProjection(Projections.rowCount());
-        holder.setTotalEntities((Long) criteria.uniqueResult());
-        
+        if (sm != null && sm.getSearch() != null && sm.getSearch().equals("**counter**")) {
+            criteria.add(Restrictions.eq("seen", false));
+            criteria.setProjection(Projections.rowCount());
+            ((NotificationHolder) holder).setCounter((Long) criteria.uniqueResult());
+        } else {
+            criteria.setMaxResults(sm.getLimit().intValue());
+            criteria.setFirstResult(sm.getOffset().intValue());
+            holder.setEntities(criteria.list());
+            criteria.setMaxResults(0);
+            criteria.setFirstResult(0);
+            criteria.setProjection(Projections.rowCount());
+            holder.setTotalEntities((Long) criteria.uniqueResult());
+        }
+
         result.setHolder(holder);
         result.setMessage(message);
         result.setStatus(Result.SUCCESS);
