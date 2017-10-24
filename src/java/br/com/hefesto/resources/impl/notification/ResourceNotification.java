@@ -2,6 +2,7 @@ package br.com.hefesto.resources.impl.notification;
 
 import br.com.hefesto.resources.impl.notification.view.ReadNotificationsCounterViewHelper;
 import br.com.hefesto.resources.impl.notification.view.ReadNotificationsViewHelper;
+import br.com.hefesto.resources.impl.notification.view.UpdateSeenStatusBulkNotificationViewHelper;
 import br.com.hefesto.resources.impl.notification.view.UpdateSeenStatusNotificationViewHelper;
 import br.com.wsbasestructure.control.Facade;
 import br.com.wsbasestructure.domain.abstracts.AbstractResource;
@@ -45,4 +46,12 @@ public class ResourceNotification extends AbstractResource{
                 .process();
     }
     
+    
+    @PUT
+    @Path("user/{id}/clearall")
+    public String updateSeenStatusBulkNotification(){
+        return new Facade(new FlowContainer(new UpdateSeenStatusBulkNotificationViewHelper(),
+                (Session)httpRequest.getAttribute("session"), cr, httpRequest))
+                .process();
+    }
 }

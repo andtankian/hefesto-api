@@ -2,7 +2,9 @@ package br.com.wsbasestructure.dao.impl;
 
 import br.com.hefesto.domain.impl.Equipment;
 import br.com.hefesto.domain.impl.Groups;
+import br.com.hefesto.domain.impl.Notification;
 import br.com.hefesto.resources.impl.equipments.dao.EquipmentBulkDAO;
+import br.com.hefesto.resources.impl.notification.dao.NotificationBulkDAO;
 import br.com.wsbasestructure.dao.abstracts.AbstractPersistenceCenter;
 import br.com.wsbasestructure.dao.interfaces.IDAO;
 import br.com.wsbasestructure.domain.abstracts.Entity;
@@ -20,6 +22,8 @@ public class BulkCenter extends AbstractPersistenceCenter {
         Entity e = (Entity)holder.getEntities().get(0);
        if(e instanceof Equipment){
            return new EquipmentBulkDAO(session, holder);
+       } else if(e instanceof Notification){
+           return new NotificationBulkDAO(session, holder);
        }
        
        return null;

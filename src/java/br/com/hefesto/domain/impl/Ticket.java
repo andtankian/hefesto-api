@@ -85,7 +85,7 @@ public class Ticket extends Entity {
         this.equipment = equipment;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = User.class, fetch = FetchType.EAGER)
     public User getResponsible() {
         return responsible;
     }
@@ -123,7 +123,7 @@ public class Ticket extends Entity {
                 this.equipment = t.equipment;
             }
         }
-        this.interactions = t.interactions != null ? t.interactions : this.interactions;
+        
         this.priority = t.priority != null ? t.priority : this.priority;
         this.requestedProducts = t.requestedProducts != null ? t.requestedProducts : this.requestedProducts;
         this.resolution = t.resolution != null ? t.resolution : this.resolution;
