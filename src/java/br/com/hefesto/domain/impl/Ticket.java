@@ -123,7 +123,7 @@ public class Ticket extends Entity {
                 this.equipment = t.equipment;
             }
         }
-        
+        this.interactions = t.interactions != null ? t.interactions : this.interactions;
         this.priority = t.priority != null ? t.priority : this.priority;
         this.requestedProducts = t.requestedProducts != null ? t.requestedProducts : this.requestedProducts;
         this.resolution = t.resolution != null ? t.resolution : this.resolution;
