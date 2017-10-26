@@ -2,6 +2,7 @@ package br.com.hefesto.resources.impl.user;
 
 import br.com.hefesto.resources.impl.user.view.UpdateProfilePictureViewHelper;
 import br.com.hefesto.resources.impl.user.view.DeleteUsersViewHelper;
+import br.com.hefesto.resources.impl.user.view.ForgotPasswordUserViewHelper;
 import br.com.hefesto.resources.impl.user.view.LoginUserViewHelper;
 import br.com.hefesto.resources.impl.user.view.NewUserViewHelper;
 import br.com.hefesto.resources.impl.user.view.ReadAllUsersViewHelper;
@@ -11,7 +12,6 @@ import br.com.hefesto.resources.impl.user.view.UpdateUserViewHelper;
 import br.com.wsbasestructure.control.Facade;
 import br.com.wsbasestructure.domain.abstracts.AbstractResource;
 import br.com.wsbasestructure.dto.FlowContainer;
-import java.io.InputStream;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Produces;
@@ -20,7 +20,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
-import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.hibernate.Session;
 
 /**
@@ -104,6 +103,15 @@ public class ResourceUser extends AbstractResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String updateProfilePic(){
         return new Facade(new FlowContainer(new UpdateProfilePictureViewHelper(),
+                (Session)httpRequest.getAttribute("session"), cr, httpRequest))
+                .process();
+    }
+    
+    @PUT
+    @Path("forgotpass")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+     public String forgotPassword(){
+        return new Facade(new FlowContainer(new ForgotPasswordUserViewHelper(),
                 (Session)httpRequest.getAttribute("session"), cr, httpRequest))
                 .process();
     }

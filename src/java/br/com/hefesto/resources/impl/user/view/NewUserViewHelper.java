@@ -2,6 +2,7 @@ package br.com.hefesto.resources.impl.user.view;
 
 import br.com.hefesto.domain.impl.Department;
 import br.com.hefesto.domain.impl.User;
+import br.com.hefesto.domain.impl.UserConfig;
 import br.com.hefesto.domain.impl.UserVisual;
 import br.com.hefesto.resources.impl.rules.GenericAcceptAttributes;
 import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
@@ -32,6 +33,7 @@ public class NewUserViewHelper extends AbstractViewHelper {
         GenericHolder gh = new GenericHolder();
         User u = new User();
         UserVisual uv = new UserVisual();
+        UserConfig uc = new UserConfig();
         Form f = (Form) fc.getCr().readEntity(Form.class);
         MultivaluedHashMap mvhm = (MultivaluedHashMap) f.asMap();
         String fullName;
@@ -98,9 +100,10 @@ public class NewUserViewHelper extends AbstractViewHelper {
         u.setType(type);
         
         uv.setDateReg(u.getDateReg());
-        uv.setLandscape("images/images/no_ls.jpg");
-        uv.setProfile("images/images/no_user.jpg");
+        uv.setLandscape("/wsbasestructure/images/images/no_ls.jpg");
+        uv.setProfile("/wsbasestructure/images/images/no_user.jpg");
         u.setUserVisual(uv);
+        u.setUserConfig(uc);
         
         gh.getEntities().add(u);
         

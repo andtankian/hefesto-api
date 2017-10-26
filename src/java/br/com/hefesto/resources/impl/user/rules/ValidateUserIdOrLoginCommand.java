@@ -19,6 +19,7 @@ public class ValidateUserIdOrLoginCommand implements ICommand{
         Message m = new Message();
         if(u.getId() == null){
             if(u.getLogin() == null){
+                m.setError("empy id and login");
                 flowContainer.getFc().setMustContinue(false);
                 flowContainer.getResult().setStatus(Result.ERROR);
                 flowContainer.getResult().setMessage(m);

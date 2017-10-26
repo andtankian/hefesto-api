@@ -29,6 +29,7 @@ public class User extends Entity {
     private Department department;
     private Set groups;
     private UserVisual userVisual;
+    private UserConfig userConfig;
     
     public String getLogin() {
         return login;
@@ -112,6 +113,15 @@ public class User extends Entity {
 
     public void setUserVisual(UserVisual userVisual) {
         this.userVisual = userVisual;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = UserConfig.class)
+    public UserConfig getUserConfig() {
+        return userConfig;
+    }
+
+    public void setUserConfig(UserConfig userConfig) {
+        this.userConfig = userConfig;
     }
 
 }
