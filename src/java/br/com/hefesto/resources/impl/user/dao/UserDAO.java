@@ -36,6 +36,16 @@ public class UserDAO extends GenericCRUDDAO {
                 result.setStatus(Result.ERROR);
                 fc.setMustContinue(false);
             }
+        } else if(sm.getEntity() != null && ((User)sm.getEntity()).getUserConfig() != null
+                && ((User)sm.getEntity()).getUserConfig().getForgotPasswordCurrentToken() != null){
+            /*RELATED TO FORGOT PASSWORD*/
+            User u = (User)sm.getEntity();
+            Criteria c = session.createCriteria(User.class)
+                    .createAlias("userConfig", "uc")
+                    .add(Restrictions.eq("uc.forgotPasswordCurrentToken", u.getUserConfig().getForgotPasswordCurrentToken()));
+            holder.setEntities(c.list());
+            message.setText("read by token");
+            result.setStatus(Result.SUCCESS);
         } else if (sm.getEntity() != null
                 && ((User) sm.getEntity()).getLogin() != null) {
             /**

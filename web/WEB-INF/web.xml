@@ -13,4 +13,8 @@
             300
         </session-timeout>
     </session-config>
+    <context-param>
+        <param-name>base-uri</param-name>
+        <param-value>https://appsetec.itaqua</param-value>
+    </context-param>
 </web-app>

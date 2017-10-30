@@ -6,8 +6,10 @@ import br.com.hefesto.resources.impl.user.view.ForgotPasswordUserViewHelper;
 import br.com.hefesto.resources.impl.user.view.LoginUserViewHelper;
 import br.com.hefesto.resources.impl.user.view.NewUserViewHelper;
 import br.com.hefesto.resources.impl.user.view.ReadAllUsersViewHelper;
+import br.com.hefesto.resources.impl.user.view.ReadUserByTokenViewHelper;
 import br.com.hefesto.resources.impl.user.view.ReadUserViewHelper;
 import br.com.hefesto.resources.impl.user.view.ReadUsersViewHelper;
+import br.com.hefesto.resources.impl.user.view.RedefinePasswordViewHelper;
 import br.com.hefesto.resources.impl.user.view.UpdateUserViewHelper;
 import br.com.wsbasestructure.control.Facade;
 import br.com.wsbasestructure.domain.abstracts.AbstractResource;
@@ -115,5 +117,21 @@ public class ResourceUser extends AbstractResource {
                 (Session)httpRequest.getAttribute("session"), cr, httpRequest))
                 .process();
     }
+     
+     @GET
+     @Path("getfromtoken/{token}")
+     public String getFromToken(){
+        return new Facade(new FlowContainer(new ReadUserByTokenViewHelper(),
+                (Session)httpRequest.getAttribute("session"), cr, httpRequest))
+                .process();
+    }
+     
+     @PUT
+     @Path("redefinepass/{id}")
+     public String redefinePass(){
+         return new Facade(new FlowContainer(new RedefinePasswordViewHelper(),
+                (Session)httpRequest.getAttribute("session"), cr, httpRequest))
+                .process();         
+     }
 
 }
