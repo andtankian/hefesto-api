@@ -1,8 +1,8 @@
 package br.com.hefesto.resources.impl.user.view;
 
 import br.com.hefesto.domain.impl.User;
-import br.com.hefesto.resources.impl.rules.GenericAcceptAttributes;
 import br.com.hefesto.resources.impl.rules.ValidateSearchEntitiesCommand;
+import br.com.hefesto.resources.impl.user.rules.AcceptUserAttributesCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.SearchModel;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
@@ -32,6 +32,7 @@ public class ReadUsersViewHelper extends AbstractViewHelper{
         Object[] oa;
         try {
             oa = mvm.get("accepts").toArray();
+            
             this.accepts = Arrays.copyOf(oa, oa.length, String[].class);
         }catch(Exception e){
             accepts = new String[]{"none"};
@@ -66,7 +67,7 @@ public class ReadUsersViewHelper extends AbstractViewHelper{
 
     @Override
     public void loadBusinessRulesAfterMainFlow() {
-        getRulesAfterMainFlow().add(new GenericAcceptAttributes(accepts, rejects, new String[]{"department", "groups", "users"}));
+        getRulesAfterMainFlow().add(new AcceptUserAttributesCommand(accepts, rejects));
     }
     
     
