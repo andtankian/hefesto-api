@@ -25,11 +25,14 @@ public class AcceptUserAttributesCommand extends AbstractAcceptAttributesCommand
         if (p == null || p.isEmpty()) {
             return holder;
         }
-        User u = (User) holder.getEntities().get(0);
         
         List<String> toAccept = Arrays.asList(this.accepts);
         if(toAccept.contains("department")){
-            u.setDepartment(Utils.initializeAndUnproxy(u.getDepartment()));
+            for (Object entity : holder.getEntities()) {
+                ((User)entity).setDepartment(Utils.initializeAndUnproxy(
+                        ((User)entity).getDepartment()
+                ));
+            }
         }
         List<String> allAttributes = new ArrayList<>();
         allAttributes.add("department");
