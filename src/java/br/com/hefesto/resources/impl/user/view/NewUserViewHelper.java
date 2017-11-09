@@ -4,20 +4,15 @@ import br.com.hefesto.domain.impl.Department;
 import br.com.hefesto.domain.impl.User;
 import br.com.hefesto.domain.impl.UserConfig;
 import br.com.hefesto.domain.impl.UserVisual;
-import br.com.hefesto.resources.impl.rules.GenericAcceptAttributes;
 import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
+import br.com.hefesto.resources.impl.user.rules.AcceptUserAttributesCommand;
 import br.com.hefesto.resources.impl.user.rules.EncryptUserPasswordCommand;
 import br.com.hefesto.resources.impl.user.rules.PermissionAssociationsPersistenceHelperCommand;
 import br.com.hefesto.resources.impl.user.rules.ValidateUserDataCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
-import br.com.wsbasestructure.dto.Result;
 import br.com.wsbasestructure.dto.impl.GenericHolder;
 import br.com.wsbasestructure.dto.interfaces.IHolder;
 import br.com.wsbasestructure.view.abstracts.AbstractViewHelper;
-import br.com.wsbasestructure.view.impl.GenericExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -128,24 +123,8 @@ public class NewUserViewHelper extends AbstractViewHelper {
     @Override
     public void loadBusinessRulesAfterMainFlow() {
         this.getRulesAfterMainFlow().add(new PermissionAssociationsPersistenceHelperCommand());
-        getRulesAfterMainFlow().add(new GenericAcceptAttributes(new String[]{"none"}, rejects, 
-        new String[]{"department", "groups", "users"}));
-        getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"groups", "department", "users"}));
-    }
-    
-    @Override
-    public String setView(Result result) {
-        GsonBuilder gb = new GsonBuilder();
-
-        gb.addSerializationExclusionStrategy(new GenericExclusionStrategy() {
-            @Override
-            public boolean shouldSkipField(FieldAttributes fa) {
-                return rejects.contains(fa.getName()) || fa.getName().equals("groups");
-            }
-        });
-        Gson g = gb.create();
-
-        return g.toJson(result);
+        this.getRulesAfterMainFlow().add(new AcceptUserAttributesCommand(new String[]{"groups", ""}, rejects));
+        this.getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"users"}));
     }
     
     

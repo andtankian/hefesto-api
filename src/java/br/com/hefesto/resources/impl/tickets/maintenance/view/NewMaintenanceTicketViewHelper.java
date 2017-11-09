@@ -9,6 +9,7 @@ import br.com.hefesto.domain.impl.Ticket;
 import br.com.hefesto.domain.impl.User;
 import br.com.hefesto.resources.impl.rules.NotifyContentCommand;
 import br.com.hefesto.resources.impl.tickets.maintenance.rules.AcceptTicketMaintenanceAttributesCommand;
+import br.com.hefesto.resources.impl.tickets.maintenance.rules.EmailfyNewTicketToOwnerCommand;
 import br.com.hefesto.resources.impl.tickets.maintenance.rules.ValidateMaintenanceTicketDataForRegisterCommand;
 import br.com.hefesto.resources.impl.tickets.maintenance.rules.notifications.BuildNotificationNewTicketCommand;
 import br.com.wsbasestructure.dto.FlowContainer;
@@ -211,6 +212,7 @@ public class NewMaintenanceTicketViewHelper extends AbstractViewHelper {
         getRulesAfterMainFlow().add(new AcceptTicketMaintenanceAttributesCommand(new String[] {"responsible"}, rejects));
         getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"ticket", "groups"}));
         getRulesAfterMainFlow().add(new BuildNotificationNewTicketCommand());
+        getRulesAfterMainFlow().add(new EmailfyNewTicketToOwnerCommand());
     }
     
     
