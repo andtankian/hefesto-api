@@ -1,5 +1,6 @@
 package br.com.hefesto.resources.impl.tickets.maintenance.dao;
 
+import br.com.hefesto.domain.impl.Interaction;
 import br.com.hefesto.domain.impl.Ticket;
 import br.com.wsbasestructure.dao.impl.GenericCRUDDAO;
 import br.com.wsbasestructure.dto.Result;
@@ -33,6 +34,21 @@ public class TicketMaintenanceDAO extends GenericCRUDDAO {
         c.addOrder(Order.desc("dateReg"));
         if (sm != null && sm.getEntity() != null && sm.getEntity().getId() != null && sm.getEntity().getId() > 0) {
             readOne();
+        } else if (sm != null && sm.getEntity() != null && sm.getEntity() instanceof Interaction) {
+            Interaction inte = null;
+            for (Object interaction : t.getInteractions()) {
+                inte = (Interaction) interaction;
+                break;
+            }
+            c.createAlias("interactions", "i");
+            c.setMaxResults(sm.getLimit().intValue());
+            c.setFirstResult(sm.getOffset().intValue());
+            c.add(Restrictions.eq("i.user.id", inte.getUser().getId()));
+            holder.setEntities(c.list());
+            c.setMaxResults(0).setFirstResult(0);
+            c.setProjection(Projections.rowCount());
+            holder.setTotalEntities((long) c.uniqueResult());
+            message.setText("read");
         } else if (sm != null && sm.getEntity() != null && sm.getSearch() != null && !sm.getSearch().isEmpty()) {
             c.createAlias("responsible", "resp", JoinType.LEFT_OUTER_JOIN);
             c.createAlias("owner", "owner");
@@ -55,11 +71,11 @@ public class TicketMaintenanceDAO extends GenericCRUDDAO {
                     Restrictions.sqlRestriction("lower({alias}.id) like '%" + sm.getSearch() + "%'"),
                     Restrictions.sqlRestriction("lower({alias}.dateReg) like '%" + sm.getSearch() + "%'")
             ));
-            
+
             holder.setEntities(c.list());
             c.setMaxResults(0).setFirstResult(0);
             c.setProjection(Projections.rowCount());
-            holder.setTotalEntities((long)c.uniqueResult());
+            holder.setTotalEntities((long) c.uniqueResult());
             message.setText("read");
         } else {
             c.setMaxResults(sm.getLimit().intValue());

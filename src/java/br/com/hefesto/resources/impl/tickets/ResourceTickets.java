@@ -3,6 +3,7 @@ package br.com.hefesto.resources.impl.tickets;
 import br.com.hefesto.resources.impl.tickets.maintenance.view.NewMaintenanceTicketViewHelper;
 import br.com.hefesto.resources.impl.tickets.maintenance.view.ReadMaintenanceTicketViewHelper;
 import br.com.hefesto.resources.impl.tickets.maintenance.view.ReadMaintenanceTicketsViewHelper;
+import br.com.hefesto.resources.impl.tickets.maintenance.view.ReadRecentsTicketsByUser;
 import br.com.hefesto.resources.impl.tickets.maintenance.view.ReopenMaintenanceTicketViewHelper;
 import br.com.hefesto.resources.impl.tickets.maintenance.view.UpdateMaintenanceTicketViewHelper;
 import br.com.hefesto.resources.impl.tickets.purchase.view.CreatePurchaseTicketViewHelper;
@@ -99,6 +100,14 @@ public class ResourceTickets extends AbstractResource {
     @Path("maintenances/{id}/reopen")
     public String reopenMaintenanceTicket(){
          return new Facade(new FlowContainer(new ReopenMaintenanceTicketViewHelper(),
+                (Session)httpRequest.getAttribute("session"), cr, httpRequest))
+                .process();
+    }
+    
+    @GET
+    @Path("maintenances/user/{id}/recents")
+    public String getRecentMaintenanceTicketsByuser(){
+         return new Facade(new FlowContainer(new ReadRecentsTicketsByUser(),
                 (Session)httpRequest.getAttribute("session"), cr, httpRequest))
                 .process();
     }
