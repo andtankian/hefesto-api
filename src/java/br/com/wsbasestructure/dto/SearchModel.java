@@ -1,6 +1,7 @@
 package br.com.wsbasestructure.dto;
 
 import br.com.wsbasestructure.domain.abstracts.Entity;
+import java.util.List;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -8,10 +9,11 @@ import javax.ws.rs.core.UriInfo;
  * @author Andrew Ribeiro
  */
 public class SearchModel {
-    
+
     private Long limit;
     private Long offset;
     private String[] sort;
+    private List filters;
     private Entity entity;
     private String search;
 
@@ -22,22 +24,24 @@ public class SearchModel {
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
-    
-    public void getBasics(UriInfo uriInfo){
+
+    public void getBasics(UriInfo uriInfo) {
         String slimit = uriInfo.getQueryParameters().get("limit") != null ? uriInfo.getQueryParameters().get("limit").get(0) : "5";
         String soffset = uriInfo.getQueryParameters().get("offset") != null ? uriInfo.getQueryParameters().get("offset").get(0) : "0";
         try {
             this.limit = Long.parseLong(slimit);
-        } catch(NumberFormatException n){
-            this.limit = (long)5;
+        } catch (NumberFormatException n) {
+            this.limit = (long) 5;
         }
-        
+
         try {
             Long number = Long.parseLong(soffset);
             this.offset = number;
-        }catch(NumberFormatException n){
-            this.offset = (long)0;
+        } catch (NumberFormatException n) {
+            this.offset = (long) 0;
         }
+
+        filters = uriInfo.getQueryParameters().get("filters");
     }
 
     public Long getLimit() {
@@ -71,5 +75,13 @@ public class SearchModel {
     public void setSearch(String search) {
         this.search = search;
     }
-    
+
+    public List getFilters() {
+        return filters;
+    }
+
+    public void setFilters(List filters) {
+        this.filters = filters;
+    }
+
 }

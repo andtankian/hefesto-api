@@ -32,6 +32,7 @@ public class TicketMaintenanceDAO extends GenericCRUDDAO {
         c.add(Restrictions.eq("type", Ticket.MAINTENANCE));
         c.addOrder(Order.desc("lastUpdate"));
         c.addOrder(Order.desc("dateReg"));
+        br.com.wsbasestructure.utils.Utils.buildCriteriaFilters(c, sm.getFilters());
         if (sm != null && sm.getEntity() != null && sm.getEntity().getId() != null && sm.getEntity().getId() > 0) {
             readOne();
         } else if (sm != null && sm.getEntity() != null && sm.getEntity() instanceof Interaction) {
