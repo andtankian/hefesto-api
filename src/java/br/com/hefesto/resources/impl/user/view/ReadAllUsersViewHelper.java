@@ -21,6 +21,7 @@ public class ReadAllUsersViewHelper extends AbstractViewHelper{
         User u = new User();
         GenericHolder gh = new GenericHolder();
         SearchModel sm = gh.getSm();
+        sm.getBasics(fc.getCr().getUriInfo());
         sm.setLimit((long)0);
         sm.setOffset((long)0);
         

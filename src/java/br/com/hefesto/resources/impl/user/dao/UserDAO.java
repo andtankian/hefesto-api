@@ -88,6 +88,7 @@ public class UserDAO extends GenericCRUDDAO {
             result.setStatus(Result.SUCCESS);
         } else {
             Criteria c = session.createCriteria(User.class);
+            br.com.wsbasestructure.utils.Utils.buildCriteriaFilters(c, sm.getFilters());
             if (sm.getEntity() != null
                     && sm.getEntity().getStatus() != null) {
                 c.add(Restrictions.eq("status", sm.getEntity().getStatus()));
