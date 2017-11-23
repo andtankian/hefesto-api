@@ -14,6 +14,7 @@ public class SearchModel {
     private Long offset;
     private String[] sort;
     private List filters;
+    private String between;
     private Entity entity;
     private String search;
 
@@ -42,6 +43,9 @@ public class SearchModel {
         }
 
         filters = uriInfo.getQueryParameters().get("filters");
+
+        between = uriInfo.getQueryParameters().get("between") != null ? uriInfo.getQueryParameters().get("between").get(0) : "";
+
     }
 
     public Long getLimit() {
@@ -82,6 +86,14 @@ public class SearchModel {
 
     public void setFilters(List filters) {
         this.filters = filters;
+    }
+
+    public String getBetween() {
+        return between;
+    }
+
+    public void setBetween(String between) {
+        this.between = between;
     }
 
 }

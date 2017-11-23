@@ -33,9 +33,10 @@ public class TicketMaintenanceDAO extends GenericCRUDDAO {
         c.addOrder(Order.desc("lastUpdate"));
         c.addOrder(Order.desc("dateReg"));
         br.com.wsbasestructure.utils.Utils.buildCriteriaFilters(c, sm.getFilters());
-        if (sm != null && sm.getEntity() != null && sm.getEntity().getId() != null && sm.getEntity().getId() > 0) {
+        br.com.wsbasestructure.utils.Utils.buildBetweenFilter(c, sm.getBetween());
+        if (sm.getEntity() != null && sm.getEntity().getId() != null && sm.getEntity().getId() > 0) {
             readOne();
-        } else if (sm != null && sm.getEntity() != null && sm.getEntity() instanceof Interaction) {
+        } else if (sm.getEntity() != null && sm.getEntity() instanceof Interaction) {
             Interaction inte = null;
             for (Object interaction : t.getInteractions()) {
                 inte = (Interaction) interaction;
@@ -50,7 +51,7 @@ public class TicketMaintenanceDAO extends GenericCRUDDAO {
             c.setProjection(Projections.rowCount());
             holder.setTotalEntities((long) c.uniqueResult());
             message.setText("read");
-        } else if (sm != null && sm.getEntity() != null && sm.getSearch() != null && !sm.getSearch().isEmpty()) {
+        } else if (sm.getEntity() != null && sm.getSearch() != null && !sm.getSearch().isEmpty()) {
             c.createAlias("responsible", "resp", JoinType.LEFT_OUTER_JOIN);
             c.createAlias("owner", "owner");
             c.createAlias("equipment", "equip", JoinType.LEFT_OUTER_JOIN);
