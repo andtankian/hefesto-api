@@ -11,6 +11,7 @@ import br.com.hefesto.resources.impl.user.view.ReadUserViewHelper;
 import br.com.hefesto.resources.impl.user.view.ReadUsersViewHelper;
 import br.com.hefesto.resources.impl.user.view.RedefinePasswordViewHelper;
 import br.com.hefesto.resources.impl.user.view.UpdateUserViewHelper;
+import br.com.hefesto.resources.impl.user.view.widgets.ReadUserRecentInteractionsWidgetViewHelper;
 import br.com.wsbasestructure.control.Facade;
 import br.com.wsbasestructure.domain.abstracts.AbstractResource;
 import br.com.wsbasestructure.dto.FlowContainer;
@@ -132,6 +133,14 @@ public class ResourceUser extends AbstractResource {
          return new Facade(new FlowContainer(new RedefinePasswordViewHelper(),
                 (Session)httpRequest.getAttribute("session"), cr, httpRequest))
                 .process();         
+     }
+     
+     @GET
+     @Path("{id}/widgets/recentinteractions/")
+     public String getWidgetsRecentInteractions(){
+         return new Facade(new FlowContainer(new ReadUserRecentInteractionsWidgetViewHelper(),
+                (Session)httpRequest.getAttribute("session"), cr, httpRequest))
+                .process();
      }
 
 }

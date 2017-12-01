@@ -123,7 +123,7 @@ public class NewUserViewHelper extends AbstractViewHelper {
     @Override
     public void loadBusinessRulesAfterMainFlow() {
         this.getRulesAfterMainFlow().add(new PermissionAssociationsPersistenceHelperCommand());
-        this.getRulesAfterMainFlow().add(new AcceptUserAttributesCommand(new String[]{"groups", ""}, rejects));
+        this.getRulesAfterMainFlow().add(new AcceptUserAttributesCommand(new String[]{"groups"}, rejects));
         this.getRulesAfterMainFlow().add(new NotifyContentCommand(new String[]{"users"}));
     }
     

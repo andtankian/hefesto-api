@@ -2,6 +2,7 @@ package br.com.wsbasestructure.control;
 
 import br.com.wsbasestructure.dao.impl.BulkCenter;
 import br.com.wsbasestructure.dao.impl.CRUDCenter;
+import br.com.wsbasestructure.dao.impl.WidgetCenter;
 import br.com.wsbasestructure.dao.interfaces.IPersistenceCenter;
 import br.com.wsbasestructure.dto.FlowContainer;
 import br.com.wsbasestructure.dto.Message;
@@ -92,6 +93,8 @@ public class Facade {
             persistenceCenter = new BulkCenter();
         } else if(typeRequest.equalsIgnoreCase("profile")){
             
+        } else if(typeRequest.equalsIgnoreCase("widgets")){
+            persistenceCenter = new WidgetCenter();
         }
 
         //Now, it needs to execute the action as requested and the persistence center will execute according to the action
